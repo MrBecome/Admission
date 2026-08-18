@@ -1,0 +1,83 @@
+body { background: var(--bg); }
+
+/* ---- Masthead ---- */
+.masthead { background: var(--navy); color: #fff; }
+.masthead .bar { display: flex; align-items: center; justify-content: space-between; padding: .9rem 0; flex-wrap: wrap; gap: .75rem; }
+.masthead .brand { text-decoration: none; }
+.masthead nav { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+.masthead nav a {
+  color: rgba(255,255,255,.78); text-decoration: none; font-family: var(--font-mono);
+  font-size: .78rem; letter-spacing: .05em; text-transform: uppercase;
+}
+.masthead nav a:hover { color: #fff; }
+
+.site-search { display: flex; }
+.site-search input[type="search"] {
+  padding: .5rem .9rem; border-radius: 100px; border: 1px solid rgba(255,255,255,.25);
+  background: rgba(255,255,255,.08); color: #fff; font: inherit; font-size: .85rem; width: 190px;
+}
+.site-search input[type="search"]::placeholder { color: rgba(255,255,255,.5); }
+.site-search input[type="search"]:focus { outline: none; background: rgba(255,255,255,.16); }
+
+/* ---- Structure ---- */
+.block { padding: 3rem 0; }
+.section-head { margin-bottom: 2rem; }
+.section-head h2 { font-size: 1.8rem; }
+.section-head p { color: var(--muted); max-width: 56ch; }
+
+/* ---- Cards / panels ---- */
+.panel-card, .card-panel {
+  background: var(--paper); border: 1px solid var(--rule); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 2rem; max-width: 560px; margin: 0 auto;
+}
+.panel-card .helper-text, .helper-text { text-align: center; color: var(--muted); font-size: .85rem; margin-top: 1rem; }
+.panel-title { font-family: var(--font-display); font-size: 1.2rem; color: var(--navy); margin-bottom: .5rem; }
+
+/* ---- Ledger / receipt-style data blocks ---- */
+.ledger, .receipt-wrapper {
+  background: var(--paper); border: 1px solid var(--rule); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 2rem; max-width: 640px; margin: 0 auto;
+}
+.grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 2rem; }
+.grid-2col .full-width { grid-column: 1 / -1; }
+.data-item { display: flex; flex-direction: column; }
+.data-label { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: .2rem; }
+.data-value, .highlight-text { font-weight: 600; color: var(--ink); }
+.date { font-family: var(--font-mono); color: var(--navy); font-weight: 600; white-space: nowrap; }
+.event { font-weight: 600; }
+.note { color: var(--muted); font-size: .9rem; }
+@media (max-width: 560px) { .grid-2col { grid-template-columns: 1fr; } }
+
+/* ---- Application ID pill ---- */
+.app-id-pill {
+  font-family: var(--font-mono); background: var(--bg); color: var(--navy);
+  padding: .3rem .8rem; border: 1px solid var(--rule); border-radius: var(--radius-sm);
+  display: inline-flex; align-items: center; gap: .5rem; font-weight: 600;
+}
+.copy-icon { cursor: pointer; }
+
+/* ---- Status badges (profile / receipt) ---- */
+.status-badge-wrapper, .status-bar { text-align: center; margin: 1.5rem 0; }
+.status-label {
+  display: inline-block; font-family: var(--font-mono); font-size: .75rem; letter-spacing: .06em;
+  text-transform: uppercase; padding: .35rem 1rem; border-radius: 100px; font-weight: 600;
+}
+
+/* ---- Student profile page wrapper ---- */
+.profile-page-container { max-width: 720px; margin: 0 auto; }
+.profile-header { text-align: center; margin-bottom: 2rem; }
+.profile-content-wrapper { display: flex; flex-direction: column; gap: 1.5rem; }
+.student-name-wrapper { display: flex; align-items: center; gap: .75rem; }
+.student-name { font-family: var(--font-display); font-size: 1.4rem; color: var(--navy); }
+
+/* ---- Action buttons row ---- */
+.action-buttons { display: flex; gap: .75rem; flex-wrap: wrap; justify-content: center; margin-top: 1.5rem; }
+
+/* ---- Footer ---- */
+.site-footer { background: var(--navy); color: rgba(255,255,255,.65); padding: 2.5rem 0; margin-top: 3rem; font-size: .88rem; }
+.site-footer .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 2rem; }
+.site-footer h4 { color: #fff; font-family: var(--font-mono); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .6rem; }
+.site-footer a { color: rgba(255,255,255,.65); }
+.site-footer a:hover { color: #fff; }
+.fine-print, .copyright { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,.15); margin-top: 1rem; padding-top: 1.2rem; font-size: .78rem; text-align: center; }
+@media (max-width: 700px) { .site-footer .container { grid-template-columns: 1fr; text-align: center; } }

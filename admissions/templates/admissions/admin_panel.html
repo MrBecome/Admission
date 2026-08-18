@@ -1,0 +1,157 @@
+{% extends 'admissions/admin_base.html' %}
+
+{% block content %}
+<div class="console-shell">
+    <div class="console-head">
+        <div>
+            <span class="eyebrow">Registrar console</span>
+            <h1>Payment verification</h1>
+        </div>
+        <a href="{% url 'announcement_list' %}" class="tag-btn tag-btn-quiet">Manage announcements</a>
+        <a href="/admin/" class="tag-btn tag-btn-quiet">Open Django admin site</a>
+    </div>
+
+    <div class="stat-row">
+        <div class="stat-cell">
+            <span class="n">{{ pending|length }}</span>
+            <span class="l">Pending</span>
+        </div>
+        <div class="stat-cell">
+            <span class="n">{{ verified|length }}</span>
+            <span class="l">Verified</span>
+        </div>
+        <div class="stat-cell">
+            <span class="n">{{ rejected|length }}</span>
+            <span class="l">Rejected</span>
+        </div>
+        <div class="stat-cell">
+            <span class="n">{{ all_students|length }}</span>
+            <span class="l">Total applications</span>
+        </div>
+    </div>
+
+    <div class="tabset">
+        <input type="radio" name="tab" id="t-pending" class="tab-input" checked>
+        <input type="radio" name="tab" id="t-verified" class="tab-input">
+        <input type="radio" name="tab" id="t-rejected" class="tab-input">
+        <input type="radio" name="tab" id="t-all" class="tab-input">
+
+        <div class="tabs">
+            <label for="t-pending">Pending ({{ pending|length }})</label>
+            <label for="t-verified">Verified ({{ verified|length }})</label>
+            <label for="t-rejected">Rejected ({{ rejected|length }})</label>
+            <label for="t-all">All applications</label>
+        </div>
+
+        <div class="tab-panel" data-panel="pending">
+            <div class="table-scroll">
+                <table class="console-table">
+                    <thead>
+                        <tr>
+                            <th>Applicant</th>
+                            <th>Email</th>
+                            <th>Course</th>
+                            <th>Amount</th>
+                            <th>Transaction</th>
+                            <th>Decision</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in pending %}
+                        <tr>
+                            <td><a class="row-link" href="/admin/admissions/student/{{ s.id }}/change/">{{ s.full_name }}</a></td>
+                            <td>{{ s.email }}</td>
+                            <td>{{ s.course }}</td>
+                            <td>&#8377;{{ s.amount_paid }}</td>
+                            <td>{{ s.transaction_id|default:"—" }}</td>
+                            <td>
+                                <a href="{% url 'admin_verify' s.id %}" class="tag-btn tag-btn-verify">Verify</a>
+                                <a href="{% url 'admin_reject' s.id %}" class="tag-btn tag-btn-reject">Reject</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr class="empty-row"><td colspan="6">No payments awaiting verification.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tab-panel" data-panel="verified">
+            <div class="table-scroll">
+                <table class="console-table">
+                    <thead>
+                        <tr><th>Applicant</th><th>Email</th><th>Amount</th><th>Payment date</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for s in verified %}
+                        <tr>
+                            <td><a class="row-link" href="/admin/admissions/student/{{ s.id }}/change/">{{ s.full_name }}</a></td>
+                            <td>{{ s.email }}</td>
+                            <td>&#8377;{{ s.amount_paid }}</td>
+                            <td>{{ s.payment_date|date:"d M Y" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr class="empty-row"><td colspan="4">No verified payments yet.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tab-panel" data-panel="rejected">
+            <div class="table-scroll">
+                <table class="console-table">
+                    <thead>
+                        <tr><th>Applicant</th><th>Email</th><th>Course</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for s in rejected %}
+                        <tr>
+                            <td><a class="row-link" href="/admin/admissions/student/{{ s.id }}/change/">{{ s.full_name }}</a></td>
+                            <td>{{ s.email }}</td>
+                            <td>{{ s.course }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr class="empty-row"><td colspan="3">No rejected payments.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tab-panel" data-panel="all">
+            <div class="table-scroll">
+                <table class="console-table">
+                    <thead>
+                        <tr>
+                            <th>Applicant</th>
+                            <th>Email</th>
+                            <th>Course</th>
+                            <th>Payment</th>
+                            <th>Verification</th>
+                            <th>Submitted</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in all_students %}
+                        <tr>
+                            <td><a class="row-link" href="/admin/admissions/student/{{ s.id }}/change/">{{ s.full_name }}</a></td>
+                            <td>{{ s.email }}</td>
+                            <td>{{ s.course }}</td>
+                            <td>{% if s.payment_status %}&#8377;{{ s.amount_paid }}{% else %}Not paid{% endif %}</td>
+                            <td>
+                                <span class="status-tag status-{{ s.payment_verification }}">{{ s.get_payment_verification_display }}</span>
+                            </td>
+                            <td>{{ s.admission_date|date:"d M Y" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr class="empty-row"><td colspan="6">No applications yet.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

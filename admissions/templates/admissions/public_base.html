@@ -1,0 +1,223 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Infinity Academy{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/tokens.css' %}">
+<link rel="stylesheet" href="{% static 'css/public.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<!-- ^ FIX: home.html uses fa-solid icons (fa-users, fa-briefcase, fa-chart-simple,
+     fa-phone) but no Font Awesome stylesheet was ever linked - those rendered as
+     blank squares. Added here since public_base.html is the shared shell. -->
+
+<!-- ✅ FIX: NAVBAR CONSTANT, LOGO TO LEFT, FOOTER TO BOTTOM -->
+<style>
+    /* --- Navbar Styling --- */
+    .masthead .container {
+        max-width: 100% !important;
+        padding-left: 1.2rem !important;
+        padding-right: 1.5rem !important;
+    }
+    .masthead .bar {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+    .masthead .brand {
+        margin-left: 0 !important;
+    }
+
+    /* --- FIX 1: Make the Top Bar Constant (Sticky) --- */
+    .masthead {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        z-index: 1000 !important;
+        background-color: #0A2540 !important; 
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* --- FIX 2: Permanently lock Footer at the bottom --- */
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+    main {
+        flex: 1; /* Pushes footer down */
+    }
+    .site-footer {
+        flex-shrink: 0; /* Locks footer in place */
+    }
+</style>
+
+{% block extra_head %}{% endblock %}
+</head>
+<body>
+<header class="masthead">
+    <div class="container bar">
+        <a class="brand" href="{% url 'home' %}" style="display: flex; align-items: center; text-decoration: none; gap: 12px;">
+            <img src="{% static 'images/logo_01.png' %}" alt="Infinity Academy logo" class="brand-logo" style="height: 45px; width: auto;">
+            <!-- ✅ ADDED: Assamese Name next to English in the Top Bar -->
+            <span class="brand-text" style="display: flex; flex-direction: column; line-height: 1.2;">
+                <span class="name" style="font-size: 1.1rem; color: #fff; font-weight: 700;">Infinity Academy</span>
+                <span style="font-size: 0.9rem; color: rgba(255,255,255,0.9); font-weight: 500;">ইনফিনিটি একাডেমী</span>
+                <small style="font-size: 0.6rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px;">Registrar &amp; Admissions Office</small>
+            </span>
+        </a>
+        <nav>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'admission_form' %}">Admissions</a>
+            <a href="{% url 'student_login' %}">Track Application</a>
+            
+            <!-- ✅ UPGRADED: Search with Autocomplete & Auto-Clear -->
+            <form action="{% url 'search' %}" method="get" class="site-search" role="search" id="search-form" onsubmit="document.getElementById('site-search-input').value = '';">
+                <div style="position: relative; display: inline-block;">
+                    <!-- Added ID for JavaScript & Removed value="{{ request.GET.q }}" so it clears automatically -->
+                    <input type="search" name="q" id="site-search-input" placeholder="Search..." aria-label="Search" autocomplete="off" style="padding-right: 10px;">
+                    
+                    <!-- Google-style autocomplete dropdown container -->
+                    <div id="autocomplete-list" style="position: absolute; top: 100%; left: 0; width: 100%; background: #fff; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 4px 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: none; z-index: 9999; max-height: 250px; overflow-y: auto;"></div>
+                </div>
+            </form>
+            
+        </nav>
+    </div>
+</header>
+
+<!-- ✅ FIX 2: Spacer to prevent content from hiding under the fixed Top Bar -->
+<div style="height: 80px; width: 100%; flex-shrink: 0;"></div>
+
+{% block hero %}{% endblock %}
+
+<main>
+    <div class="container" style="padding-top: 2.5rem;">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="notice notice-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+    <div class="container">
+        <div>
+            <h4>Infinity Academy</h4>
+            <p>An independent tuition centre offering structured coursework in Mathematics, Science and English.</p>
+        </div>
+        <!-- ✅ UPDATED: Office Address -->
+        <div>
+            <h4>Office</h4>
+            <p>Bhutuni Duba, Udalguri<br>Assam, India</p>
+        </div>
+        <!-- ✅ UPDATED: Clickable Email Address -->
+        <div>
+            <h4>Contact</h4>
+            <p>+916003458087<br>
+            <a href="mailto:academyeduuniverse@gmail.com" style="color: #9ca3af; text-decoration: none; transition: 0.2s;">academyeduuniverse@gmail.com</a></p>
+        </div>
+        <div class="fine-print">&copy; 2026 Infinity Academy. All rights reserved.</div>
+    </div>
+</footer>
+
+<!-- ✅ AUTOMATIC AUTOCOMPLETE JAVASCRIPT -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('site-search-input');
+        const autocompleteList = document.getElementById('autocomplete-list');
+        let currentTimeout;
+
+        searchInput.addEventListener('input', function() {
+            const val = this.value;
+            
+            // Hide dropdown if empty or too short
+            if (val.length < 2) {
+                autocompleteList.style.display = 'none';
+                autocompleteList.innerHTML = '';
+                return;
+            }
+
+            // Clear previous search request (Debounce 300ms)
+            clearTimeout(currentTimeout);
+            currentTimeout = setTimeout(() => {
+                fetch(`/autocomplete/?term=${encodeURIComponent(val)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        autocompleteList.innerHTML = '';
+                        if (data.length === 0) {
+                            autocompleteList.style.display = 'none';
+                            return;
+                        }
+                        
+                        data.forEach(item => {
+                            const div = document.createElement('div');
+                            div.innerHTML = `<div style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #f1f5f9; font-size: 0.9rem; color: #1e293b;">${item.label}</div>`;
+                            
+                            // On Click: Redirect to the search page with the value
+                            div.addEventListener('click', function() {
+                                window.location.href = `/search/?q=${encodeURIComponent(item.value)}`;
+                            });
+                            
+                            // Hover Effect
+                            div.addEventListener('mouseover', function() {
+                                this.querySelector('div').style.background = '#f1f5f9';
+                            });
+                            div.addEventListener('mouseout', function() {
+                                this.querySelector('div').style.background = 'transparent';
+                            });
+                            
+                            autocompleteList.appendChild(div);
+                        });
+                        autocompleteList.style.display = 'block';
+                    })
+                    .catch(err => console.error('Autocomplete Error:', err));
+            }, 300);
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.site-search')) {
+                autocompleteList.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+<!-- CSRF helper: expose cookie-reading helper and a fetch wrapper that adds X-CSRFToken for POST/PUT/DELETE requests -->
+<script>
+    (function(){
+        function getCookie(name) {
+            const match = document.cookie.match(new RegExp('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)'));
+            return match ? decodeURIComponent(match.pop()) : '';
+        }
+        // Make available globally if other scripts need it
+        window.getCsrfTokenFromCookie = function(){ return getCookie('csrftoken'); };
+
+        // Small fetch wrapper that adds X-CSRFToken header when not present
+        window.csrfFetch = function(url, options){
+            options = options || {};
+            options.headers = options.headers || {};
+            // Only add for unsafe methods
+            const method = (options.method || 'GET').toUpperCase();
+            if (['POST','PUT','PATCH','DELETE'].includes(method)) {
+                if (!options.headers['X-CSRFToken'] && !options.headers['x-csrf-token']) {
+                    options.headers['X-CSRFToken'] = getCookie('csrftoken');
+                }
+            }
+            return fetch(url, options);
+        };
+    })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+{% extends 'admissions/public_base.html' %}
+{% load static %}
+
+{% block content %}
+<div style="display: flex; flex-direction: column; min-height: 80vh;">
+    <div class="container" style="max-width: 700px; margin: 0 auto; flex: 1 0 auto;">
+
+        <!-- ========================================== -->
+        <!--  SINGLE SUCCESS MESSAGE (ONLY ONE)          -->
+        <!-- ========================================== -->
+        <div class="notice notice-success" style="max-width:640px; margin:0 auto 1.5rem;">
+            ✅ Application received! Check your email for your Application ID and a link to set your student-portal password.
+        </div>
+
+        <!-- ========================================== -->
+        <!--  APPLICATION STATUS PROFILE (PASS student)  -->
+        <!-- ========================================== -->
+        {% include 'admissions/_application_status.html' with student=student eyebrow_label="Admission receipt" %}
+
+        <!-- ========================================== -->
+        <!--  QR PAYMENT IMAGE                           -->
+        <!-- ========================================== -->
+        {% if qr_base64 %}
+            {% if not student.payment_status or student.payment_verification != 'verified' %}
+                <div style="text-align:center; margin: 1.5rem 0;">
+                    <p style="margin-bottom:0.5rem; color: #475569;">Scan this QR to pay</p>
+                    <img src="data:image/png;base64,{{ qr_base64 }}" alt="Payment QR" style="max-width:260px; width:100%; border:1px solid #e2e8f0; padding:8px; border-radius:8px; background:#fff; display:inline-block;">
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <!-- ========================================== -->
+        <!--  RECEIPT LINK (ONLY IF VERIFIED)            -->
+        <!-- ========================================== -->
+        {% if student.payment_status and student.payment_verification == 'verified' %}
+            <div style="text-align:center; margin: 1.5rem 0;">
+                <a href="{% url 'payment_receipt' student.application_id %}" class="btn btn-fill" style="background:#0A2540; color:#fff; padding:0.6rem 1.5rem; border-radius:100px; text-decoration:none; display:inline-block; font-weight:600;">
+                    📄 View &amp; Print Receipt
+                </a>
+            </div>
+        {% endif %}
+
+        <!-- ========================================== -->
+        <!--  BOTTOM ACTION LINKS                        -->
+        <!-- ========================================== -->
+        <p style="text-align:center; margin-top: 2rem;">
+            <a href="{% url 'admission_form' %}" class="btn">Submit another application</a>
+            <a href="{% url 'student_login' %}" class="btn btn-fill">Sign in to track this application</a>
+        </p>
+
+    </div>
+</div>
+
+<style>
+    html, body { height: 100%; margin: 0; }
+    body { display: flex; flex-direction: column; }
+    main { flex: 1 0 auto; }
+    footer.site-footer { flex-shrink: 0; }
+</style>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admission Confirmation - Infinity Academy</title>
+</head>
+<body style="margin:0; padding:0; background:#f8fafc; font-family: Arial, Helvetica, sans-serif;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc; padding:32px 16px;">
+  <tr>
+    <td align="center">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px; background:#ffffff; border-radius:12px; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,0.06);">
+
+        <!-- Header / branding -->
+        <tr>
+          <td style="background:#0A2540; padding:28px 32px; border-bottom:3px solid #c4a45c;" align="center">
+            <!-- ✅ UPDATED: Now uses logo_01.png from your static folder -->
+            <img src="{% static 'images/logo_01.png' %}" alt="Infinity Academy" width="44" height="44" style="display:block; margin:0 auto 8px; border-radius:8px;">
+            <div style="font-size:20px; font-weight:bold; color:#ffffff; letter-spacing:0.02em;">
+                Infinity Academy
+            </div>
+            <div style="font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.6); margin-top:4px;">
+                Registrar &amp; Admissions Office
+            </div>
+          </td>
+        </tr>
+
+        <!-- Body -->
+        <tr>
+          <td style="padding:32px;">
+            <p style="margin:0 0 16px; color:#0f172a; font-size:16px;">Dear {{ student.full_name }},</p>
+            <p style="font-size:15px; color:#334155; line-height:1.6; margin:0 0 24px;">
+              Thank you for applying to Infinity Academy. Your application has been received and is on record with our registrar's office.
+            </p>
+
+            <!-- Application details -->
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e1e5ea; border-radius:8px; margin-bottom:24px;">
+              <tr>
+                <td style="padding:14px 18px; border-bottom:1px solid #e1e5ea; font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:#64748b; width:40%;">Application ID</td>
+                <td style="padding:14px 18px; border-bottom:1px solid #e1e5ea; font-size:15px; font-weight:bold; color:#0f172a;">{{ application_id }}</td>
+              </tr>
+              <tr>
+                <td style="padding:14px 18px; border-bottom:1px solid #e1e5ea; font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:#64748b;">Course</td>
+                <td style="padding:14px 18px; border-bottom:1px solid #e1e5ea; font-size:15px; color:#0f172a;">{{ course_display }}</td>
+              </tr>
+              <tr>
+                <td style="padding:14px 18px; font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:#64748b;">Username</td>
+                <td style="padding:14px 18px; font-size:15px; color:#0f172a;">{{ username }}</td>
+              </tr>
+            </table>
+
+            <p style="margin:0 0 20px; color:#334155; font-size:15px; line-height:1.6;">
+              Set your student-portal password to check your admission and payment status any time:
+            </p>
+
+            <!-- CTA button -->
+            <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 28px auto;">
+              <tr>
+                <td style="border-radius:100px; background:#c4a45c;">
+                  <a href="{{ set_password_url }}" target="_blank" style="display:inline-block; padding:13px 32px; font-size:15px; font-weight:bold; color:#ffffff; text-decoration:none; border-radius:100px;">Set Password</a>
+                </td>
+              </tr>
+            </table>
+
+            <p style="margin:0 0 8px; color:#94a3b8; font-size:13px; line-height:1.5;">
+              This link is valid for 24 hours. If the button doesn't work, copy and paste this URL into your browser:
+            </p>
+            <p style="margin:0 0 24px; word-break:break-all; color:#0A2540; font-size:12px; font-family:'Courier New', monospace;">{{ set_password_url }}</p>
+
+            <p style="margin:0 0 4px; color:#334155; font-size:14px; line-height:1.6;">For queries, contact <a href="mailto:info@infinityacademy.example" style="color:#0A2540;">info@infinityacademy.example</a>.</p>
+            <p style="margin:20px 0 0; color:#0f172a; font-size:14px;">- Infinity Academy Registrar's Office</p>
+          </td>
+        </tr>
+
+        <!-- Footer -->
+        <tr>
+          <td style="background:#f8fafc; padding:20px 32px; border-top:1px solid #e1e5ea;" align="center">
+            <p style="font-size:11px; color:#cbd5e1; margin:0;">
+                &copy; 2026 Infinity Academy. All rights reserved.
+            </p>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

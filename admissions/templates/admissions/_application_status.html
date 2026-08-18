@@ -1,0 +1,307 @@
+{% load static %}
+
+<div class="profile-page-container">
+    <div class="profile-content-wrapper">
+        
+        <!-- ===========================================================
+             HEADER: Logo Only (Name removed per your request)
+             =========================================================== -->
+        <div class="profile-header">
+            <img src="{% static 'images/logo_02.png' %}" alt="Infinity Academy" class="brand-logo">
+            <p class="tagline">
+                Your application details and contact information, updated whenever the registrar's office receives your payment.
+            </p>
+        </div>
+
+        <!-- ===========================================================
+             STATUS BAR: Name (Left) | Status (Right)
+             =========================================================== -->
+        <div class="status-bar">
+            <div class="student-name-wrapper">
+                <h2 class="student-name">{{ student.full_name }}</h2>
+                <!-- Advanced Copy-Pill for Application ID -->
+                <span class="app-id-pill" onclick="navigator.clipboard.writeText('{{ student.application_id }}'); alert('Application ID copied!');">
+                    {{ student.application_id }} <span class="copy-icon">📋</span>
+                </span>
+            </div>
+            
+            <div class="status-badge-wrapper">
+                <span class="status-label">Application Status</span>
+                <span class="status-badge 
+                    {% if student.payment_status and student.payment_verification == 'verified' %}badge-success
+                    {% elif student.payment_status and student.payment_verification == 'pending' %}badge-pending
+                    {% elif student.payment_verification == 'rejected' %}badge-rejected
+                    {% else %}badge-open{% endif %}">
+                    {% if student.payment_status and student.payment_verification == 'verified' %}✅ Verified
+                    {% elif student.payment_status and student.payment_verification == 'pending' %}⏳ Pending Verification
+                    {% elif student.payment_verification == 'rejected' %}❌ Rejected
+                    {% else %}📂 Open{% endif %}
+                </span>
+            </div>
+        </div>
+
+        <!-- ===========================================================
+             ACCOUNT DETAILS
+             =========================================================== -->
+        <div class="card-panel">
+            <h3 class="panel-title">Account Details</h3>
+            <div class="grid-2col">
+                <div class="data-item">
+                    <span class="data-label">Full Name</span>
+                    <span class="data-value">{{ student.full_name }}</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Application ID</span>
+                    <span class="data-value"><code>{{ student.application_id }}</code></span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Phone</span>
+                    <span class="data-value">{{ student.phone }}</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Email</span>
+                    <span class="data-value">{{ student.email }}</span>
+                </div>
+                <div class="data-item full-width border-top">
+                    <span class="data-label">Selected Course</span>
+                    <span class="data-value highlight-text">{{ student.course }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===========================================================
+             PAYMENT CONFIRMATION
+             =========================================================== -->
+        <div class="card-panel">
+            <h3 class="panel-title">Payment Confirmation</h3>
+            
+            {% if student.payment_status and student.payment_verification == 'verified' %}
+                <div class="alert alert-success">✅ Payment confirmed by the registrar's office.</div>
+                <div class="grid-2col">
+                    <div class="data-item"><span class="data-label">Amount Paid</span><span class="data-value">₹{{ student.amount_paid|floatformat:2 }}</span></div>
+                    <div class="data-item"><span class="data-label">Invoice Paid</span><span class="data-value" style="color:#22c55e; font-weight:600;">✅ Yes</span></div>
+                    <div class="data-item"><span class="data-label">Invoice Date</span><span class="data-value">{{ student.payment_date|date:"d M Y, H:i" }}</span></div>
+                    <div class="data-item"><span class="data-label">Invoice Number</span><span class="data-value">{{ student.transaction_id|default:"N/A" }}</span></div>
+                </div>
+            {% elif student.payment_status and student.payment_verification == 'pending' %}
+                <div class="alert alert-warning">⏳ Payment submitted, awaiting verification by the registrar's office.</div>
+                <div class="grid-2col">
+                    <div class="data-item"><span class="data-label">Amount Submitted</span><span class="data-value">₹{{ student.amount_paid|floatformat:2 }}</span></div>
+                    <div class="data-item"><span class="data-label">Transaction ID</span><span class="data-value">{{ student.transaction_id|default:"N/A" }}</span></div>
+                </div>
+            {% elif student.payment_verification == 'rejected' %}
+                <div class="alert alert-danger">❌ Payment rejected. Please contact the registrar's office.</div>
+            {% else %}
+                <div class="alert alert-info">💳 Payment not yet received. Use the QR code on the success page to pay.</div>
+            {% endif %}
+        </div>
+
+        <!-- ===========================================================
+             ACTION BUTTONS
+             =========================================================== -->
+        <div class="action-buttons">
+            {% if student.payment_status and student.payment_verification == 'verified' %}
+                <a href="{% url 'payment_receipt' student.application_id %}" class="btn btn-primary">
+                    📄 View & Print Receipt
+                </a>
+            {% endif %}
+            <button onclick="window.print();" class="btn btn-primary">
+                🖨️ Print Profile
+            </button>
+            <a href="{% url 'home' %}" class="btn btn-secondary">
+                🏠 Back to Home
+            </a>
+        </div>
+
+        <!-- ===========================================================
+             CONTACT FOOTER
+             =========================================================== -->
+        <div class="contact-footer">
+            <h4>Contact Us</h4>
+            <p>We're here to help!</p>
+            <p>📧 info@infinityacademy.com<br>🌐 www.infinityacademy.com</p>
+            <p class="copyright">&copy; 2026 Infinity Academy. All Rights Reserved.</p>
+        </div>
+
+    </div>
+</div>
+
+<!-- ===========================================================
+     ADVANCED CSS
+     =========================================================== -->
+<style>
+    :root {
+        --oxford-blue: #0A2540;
+        --oxford-light: #1a3a5c;
+        --bg-light: #f8fafc;
+        --border-color: #e2e8f0;
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        --radius: 12px;
+        --text-dark: #1e293b;
+        --text-muted: #64748b;
+    }
+
+    .profile-page-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+        display: flex;
+        flex-direction: column;
+        min-height: 80vh;
+    }
+
+    .profile-content-wrapper {
+        flex: 1 0 auto;
+    }
+
+    /* ─── HEADER ─── */
+    .profile-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    .brand-logo { max-height: 85px; width: auto; margin-bottom: 0.5rem; }
+    .tagline { color: var(--text-muted); font-size: 0.95rem; margin-top: 0.25rem; }
+
+    /* ─── STATUS BAR ─── */
+    .status-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        background: #ffffff;
+        padding: 1.25rem 1.5rem;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-sm);
+        margin-bottom: 2rem;
+        border: 1px solid var(--border-color);
+    }
+    .student-name { font-size: 1.25rem; font-weight: 700; color: var(--oxford-blue); margin: 0; }
+    .app-id-pill {
+        display: inline-block;
+        background: #f1f5f9;
+        padding: 0.2rem 0.8rem;
+        border-radius: 50px;
+        font-family: monospace;
+        font-size: 0.85rem;
+        border: 1px solid var(--border-color);
+        cursor: pointer;
+        transition: 0.2s;
+    }
+    .app-id-pill:hover { background: #e2e8f0; transform: scale(1.02); }
+    .copy-icon { font-size: 0.75rem; }
+    
+    .status-badge-wrapper { text-align: right; }
+    .status-label { display: block; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); }
+    .status-badge {
+        display: inline-block;
+        padding: 0.25rem 1.2rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
+    .badge-success { background: #dcfce7; color: #166534; }
+    .badge-pending { background: #fef9c3; color: #854d0e; }
+    .badge-rejected { background: #fee2e2; color: #991b1b; }
+    .badge-open { background: #e2e8f0; color: #475569; }
+
+    /* ─── CARDS ─── */
+    .card-panel {
+        background: #ffffff;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-sm);
+        transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+    .card-panel:hover { box-shadow: var(--shadow-md); }
+    .panel-title { font-size: 1.1rem; font-weight: 600; color: var(--oxford-blue); margin: 0 0 1rem 0; }
+
+    /* ─── DATA GRID ─── */
+    .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .data-item { display: flex; flex-direction: column; gap: 0.25rem; }
+    .data-label { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; }
+    .data-value { font-size: 0.95rem; color: var(--text-dark); word-break: break-all; }
+    .highlight-text { font-weight: 600; color: var(--oxford-blue); }
+    .full-width { grid-column: 1 / -1; }
+    .border-top { border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: 0.5rem; }
+
+    /* ─── ALERTS ─── */
+    .alert { padding: 0.75rem 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; font-weight: 500; }
+    .alert-success { background: #dcfce7; color: #166534; border-left: 4px solid #198754; }
+    .alert-warning { background: #fef9c3; color: #854d0e; border-left: 4px solid #f59e0b; }
+    .alert-danger { background: #fee2e2; color: #991b1b; border-left: 4px solid #dc3545; }
+    .alert-info { background: #f1f5f9; color: #475569; border-left: 4px solid #0A2540; }
+
+    /* ─── BUTTONS ─── */
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 1.5rem 0 3rem 0;
+    }
+    .btn {
+        padding: 0.6rem 1.5rem;
+        border-radius: 100px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .btn-primary {
+        background: var(--oxford-blue);
+        color: #ffffff;
+        box-shadow: var(--shadow-sm);
+    }
+    .btn-primary:hover {
+        background: var(--oxford-light);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+    }
+    .btn-secondary {
+        background: #e2e8f0;
+        color: var(--oxford-blue);
+    }
+    .btn-secondary:hover { background: #cbd5e1; }
+
+    /* ─── CONTACT ─── */
+    .contact-footer { text-align: center; padding-top: 1.5rem; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.85rem; }
+    .contact-footer h4 { font-weight: 600; color: var(--oxford-blue); margin: 0 0 0.5rem 0; }
+    .contact-footer p { margin: 0.25rem 0; }
+    .copyright { font-size: 0.7rem; opacity: 0.6; margin-top: 1rem !important; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 600px) {
+        .status-bar { flex-direction: column; align-items: stretch; text-align: center; }
+        .status-badge-wrapper { text-align: center; }
+        .grid-2col { grid-template-columns: 1fr; gap: 1rem; }
+        .full-width { grid-column: 1; }
+        .action-buttons { flex-direction: column; align-items: center; width: 100%; }
+        .btn { width: 100%; text-align: center; }
+    }
+
+    /* ─── PRINT STYLES ─── */
+    @media print {
+        html, body { margin: 0; padding: 0; background: white; }
+        body * { visibility: hidden; }
+        .profile-content-wrapper, .profile-content-wrapper * { visibility: visible; }
+        .profile-content-wrapper {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem;
+            background: white;
+            margin: 0;
+        }
+        .masthead, .site-footer, .action-buttons, .btn, .btn-primary, .btn-secondary { display: none !important; }
+        .card-panel { box-shadow: none !important; border: 1px solid #ddd !important; }
+        .app-id-pill { background: transparent !important; border: none !important; }
+        .app-id-pill .copy-icon { display: none; }
+    }
+</style>

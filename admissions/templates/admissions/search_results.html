@@ -1,0 +1,89 @@
+{% extends 'admissions/public_base.html' %}
+
+{% block content %}
+<section class="block">
+    <div class="container">
+        <div class="section-head" style="text-align: center;">
+            <span class="eyebrow">Search</span>
+            <h2>{% if query %}Results for &ldquo;{{ query }}&rdquo;{% else %}Search Infinity Academy{% endif %}</h2>
+        </div>
+
+        {% if not query %}
+            <p style="text-align:center; color: var(--muted);">Use the search box above to find announcements, classes, courses and tuition programs.</p>
+
+        {% elif not has_results %}
+            <div class="panel-card" style="text-align:center;">
+                <span class="eyebrow">No matches</span>
+                <h2 style="margin-bottom: .5rem;">No details found for &ldquo;{{ query }}&rdquo;</h2>
+                <p class="helper-text" style="margin-bottom: 1.5rem;">Try a different search term, or head back to the homepage.</p>
+                <a href="{% url 'home' %}" class="btn btn-fill" style="border-color: var(--brass); background: var(--brass);">Go Back Home</a>
+            </div>
+
+        {% else %}
+            {% if smart_links %}
+            <div class="panel-card" style="max-width: 640px; margin-bottom: 2rem;">
+                <span class="eyebrow">Quick links</span>
+                <div style="display:flex; gap: .75rem; flex-wrap: wrap;">
+                    {% for link in smart_links %}
+                        <a href="{{ link.url }}" class="btn btn-fill">{{ link.label }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if announcements %}
+            <div style="max-width: 760px; margin: 0 auto 2rem;">
+                <span class="eyebrow">Announcements</span>
+                {% for a in announcements %}
+                    <div class="notice notice-info">
+                        <strong>{{ a.title }}</strong> — {{ a.message }}
+                    </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if classes %}
+            <div style="max-width: 760px; margin: 0 auto 2rem;">
+                <span class="eyebrow">Classes</span>
+                <table class="ledger">
+                    <thead><tr><th>Class</th><th>Core Subjects</th></tr></thead>
+                    <tbody>
+                        {% for c in classes %}
+                        <tr><td class="date">{{ c.class_level }}</td><td>{{ c.core_subjects }}</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+
+            {% if courses %}
+            <div style="max-width: 760px; margin: 0 auto 2rem;">
+                <span class="eyebrow">Courses</span>
+                <table class="ledger">
+                    <thead><tr><th>Class</th><th>Subject</th><th>Category</th></tr></thead>
+                    <tbody>
+                        {% for c in courses %}
+                        <tr><td class="date">{{ c.class_level }}</td><td class="event">{{ c.subject }}</td><td>{{ c.category }}</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+
+            {% if programs %}
+            <div style="max-width: 760px; margin: 0 auto 2rem;">
+                <span class="eyebrow">Tuition Programs</span>
+                <table class="ledger">
+                    <thead><tr><th>Program</th><th>Target Classes</th><th>Coverage</th></tr></thead>
+                    <tbody>
+                        {% for p in programs %}
+                        <tr><td class="event">{{ p.name }}</td><td class="date">{{ p.target_classes }}</td><td class="note">{{ p.coverage }}</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

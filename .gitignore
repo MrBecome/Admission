@@ -1,0 +1,101 @@
+# ============================================ 
+# PYTHON & DJANGO IGNORES 
+# ============================================ 
+__pycache__/ 
+*.py[cod] 
+*.pyc 
+*.pyd 
+*.so 
+.Python 
+build/ 
+develop-eggs/ 
+dist/ 
+downloads/ 
+eggs/ 
+.eggs/ 
+lib/ 
+lib64/ 
+parts/ 
+sdist/ 
+var/ 
+wheels/ 
+*.egg-info/ 
+.installed.cfg 
+*.egg 
+ECHO is on.
+# Virtual environments 
+.venv/ 
+venv/ 
+ENV/ 
+env/ 
+vimo/ 
+Vimo/ 
+venv.bak/ 
+env.bak/ 
+pyvenv.cfg 
+ECHO is on.
+# Database files 
+*.db 
+*.sqlite 
+*.sqlite3 
+db.sqlite3 
+db.sqlite3-journal 
+ECHO is on.
+# Environment variables 
+.env 
+.env.local 
+.env.*.local 
+*.env 
+ECHO is on.
+# Private data 
+private_data/ 
+media/ 
+mediafiles/ 
+staticfiles/ 
+qr_codes/ 
+uploads/ 
+downloads/ 
+ECHO is on.
+# IDE files 
+.vscode/ 
+.idea/ 
+*.iml 
+*.iws 
+*.ipr 
+*.swp 
+*.swo 
+*~ 
+.DS_Store 
+Thumbs.db 
+Desktop.ini 
+ECHO is on.
+# Logs 
+*.log 
+*.pid 
+*.seed 
+*.pid.lock 
+*.tmp 
+*.bak 
+ECHO is on.
+# Testing 
+.coverage 
+htmlcov/ 
+.tox/ 
+.pytest_cache/ 
+.mypy_cache/ 
+ECHO is on.
+# Personal files 
+my_project_files.txt 
+*.txt.backup 
+Folder PATH listing.txt 
+ECHO is on.
+# Excel files 
+*.xlsx 
+*.xls 
+*.csv 
+ECHO is on.
+# SSL certificates 
+*.pem 
+*.crt 
+*.key 
+*.p12 

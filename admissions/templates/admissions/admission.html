@@ -1,0 +1,29 @@
+{% extends 'admissions/public_base.html' %}
+
+{% block content %}
+<section class="block">
+    <div class="container">
+        <div class="section-head" style="text-align: center;">
+            <span class="eyebrow">Enrollment</span>
+            <h2>Application for admission</h2>
+            <p style="margin: 0 auto;">Fill in the details below to start your enrollment. Once submitted you will receive an application number and a payment code for the course fee.</p>
+        </div>
+
+        <div class="panel-card">
+            <form method="post" novalidate>
+                {% csrf_token %}  <!-- ✅ CORRECT - KEEP THIS -->
+                {% for field in form %}
+                    <div class="field">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.errors %}{{ field.errors }}{% endif %}
+                        {% if field.help_text %}<p class="helper-text" style="text-align:left; margin-top:.3rem;">{{ field.help_text }}</p>{% endif %}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-fill btn-block">Submit application</button>
+            </form>
+            <p class="helper-text">You will receive an application number immediately after submitting.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

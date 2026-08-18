@@ -1,0 +1,55 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- CSRF token exposed as a meta tag for client-side JS that may need it -->
+<meta name="csrf-token" content="{{ csrf_token }}">
+<title>{% block title %}Registrar Console — Infinity Academy{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/tokens.css' %}">
+<link rel="stylesheet" href="{% static 'css/console.css' %}">
+</head>
+<body class="console">
+<!-- ✅ FORCED TO EXTREME LEFT CORNER: Padding set to 0, flex-start on the bar -->
+<div class="console-bar" style="background: #0A2540; padding: 0.6rem 1.5rem 0.6rem 0; border-bottom: 2px solid #1a3a5c; display: flex; width: 100%; box-sizing: border-box;">
+    
+    <div class="container bar" style="display: flex; justify-content: flex-start; align-items: center; width: 100%; padding: 0; margin: 0; max-width: none;">
+        
+        <!-- Left Side: Branding (Perfectly aligned to the left edge) -->
+        <div class="brand" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: #ffffff; margin-left: 1.5rem;">
+            <img src="{% static 'images/logo_01.png' %}" alt="Logo" style="height: 44px; width: auto; border-radius: 50%;">
+            
+            <div style="display: flex; flex-direction: column; line-height: 1.1;">
+                <!-- Gold Serif Name -->
+                <span style="font-weight: 700; font-size: 1.1rem; font-family: 'Source Serif 4', serif; color: #c4a45c; letter-spacing: 0.05em;">INFINITY ACADEMY</span>
+                <!-- White Assamese Name -->
+                <span style="font-size: 0.85rem; font-weight: 500; color: #ffffff; font-family: 'Inter', sans-serif;">ইনফিনিটি একাডেমী</span>
+                <!-- Teal Registrar Console -->
+                <span style="font-size: 0.6rem; color: #81d4fa; text-transform: uppercase; letter-spacing: 0.08em; font-family: 'IBM Plex Mono', monospace; margin-top: 2px;">Registrar Console</span>
+            </div>
+        </div>
+
+        <!-- Right Side: User Session (Pushed to the far right edge with margin-left: auto) -->
+        {% if user.is_authenticated and user.is_superuser %}
+            <div class="session" style="font-size: 0.85rem; color: rgba(255,255,255,0.8); display: flex; align-items: center; gap: 1.2rem; margin-left: auto; padding-right: 0;">
+                <span style="color: #94a3b8;">Signed in as <strong style="color: #fff;">{{ user.username }}</strong></span>
+                <a href="{% url 'admin_logout' %}" style="color: #fff; text-decoration: none; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); padding: 0.3rem 1rem; border-radius: 6px; font-weight: 600; transition: 0.2s;">Sign out</a>
+            </div>
+        {% endif %}
+        
+    </div>
+</div>
+
+{% if messages %}
+    <div class="container" style="padding-top: 1.5rem;">
+        {% for message in messages %}
+            <div class="notice notice-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% block content %}{% endblock %}
+</body>
+</html>

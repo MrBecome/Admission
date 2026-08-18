@@ -1,0 +1,166 @@
+{% extends 'admissions/public_base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Wrapper to ensure footer stays at bottom -->
+<div style="display: flex; flex-direction: column; min-height: 80vh;">
+    <div class="container" style="max-width: 700px; margin: 0 auto; flex: 1 0 auto;">
+
+        <div class="receipt-wrapper" id="receipt-content" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.06); padding: 2.5rem;">
+            
+            <!-- Header with Logo -->
+            <div style="text-align: center; border-bottom: 2px solid #0A2540; padding-bottom: 1.5rem; margin-bottom: 1.5rem;">
+                <img src="{% static 'images/logo_02.png' %}" alt="Infinity Academy Logo" style="height: 65px; width: auto; display: block; margin: 0 auto 0.75rem;">
+                <h1 style="font-family: 'Georgia', serif; font-size: 2rem; color: #0A2540; margin: 0; font-weight: 700;">Infinity Academy</h1>
+                <p style="color: #64748b; font-size: 0.9rem; margin: 0.25rem 0;">Registrar &amp; Admissions Office</p>
+                <p style="color: #64748b; font-size: 0.85rem; margin: 0;">123 Education Street, New Delhi</p>
+            </div>
+
+            <!-- Receipt Title -->
+            <h2 style="text-align: center; margin: 0 0 0.5rem 0; font-weight: 600; color: #0A2540;">Payment Receipt</h2>
+            <p style="text-align: center; color: #64748b; font-size: 0.9rem; margin-bottom: 1.5rem;">
+                <strong>Receipt No:</strong> {{ student.application_id }} &nbsp;|&nbsp;
+                <strong>Date:</strong> {{ student.payment_date|date:"d M Y, h:i A" }}
+            </p>
+
+            <!-- Student Details -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; margin-bottom: 2rem; background: #f8fafc; padding: 1.25rem; border-radius: 8px;">
+                <div><strong style="font-size: 0.8rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Student Name</strong><br><span style="font-weight: 500;">{{ student.full_name }}</span></div>
+                <div><strong style="font-size: 0.8rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Application ID</strong><br><span style="font-family: monospace; font-weight: 600; background: #e2e8f0; padding: 0.2rem 0.6rem; border-radius: 4px;">{{ student.application_id }}</span></div>
+                <div><strong style="font-size: 0.8rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Email</strong><br><span style="font-weight: 500;">{{ student.email }}</span></div>
+                <div><strong style="font-size: 0.8rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Phone</strong><br><span style="font-weight: 500;">{{ student.phone }}</span></div>
+                <div><strong style="font-size: 0.8rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Course</strong><br><span style="font-weight: 500;">{{ student.course }}</span></div>
+                <div><strong style="font-size: 0.8rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Payment Status</strong><br>
+                    {% if student.payment_status and student.payment_verification == 'verified' %}
+                        <span style="color: #16a34a; font-weight: 600; background: #dcfce7; padding: 0.2rem 0.8rem; border-radius: 50px;">Verified</span>
+                    {% elif student.payment_status and student.payment_verification == 'pending' %}
+                        <span style="color: #b45309; font-weight: 600; background: #fef3c7; padding: 0.2rem 0.8rem; border-radius: 50px;">Pending Verification</span>
+                    {% elif student.payment_verification == 'rejected' %}
+                        <span style="color: #b91c1c; font-weight: 600; background: #fee2e2; padding: 0.2rem 0.8rem; border-radius: 50px;">Rejected</span>
+                    {% else %}
+                        <span style="color: #64748b; font-weight: 600; background: #f1f5f9; padding: 0.2rem 0.8rem; border-radius: 50px;">Not Paid</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Payment Summary -->
+            <table style="width: 100%; border-collapse: collapse; margin: 1rem 0; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
+                <thead>
+                    <tr style="background: #0A2540;">
+                        <th style="padding: 0.75rem 1rem; text-align: left; color: #ffffff; font-weight: 600;">Description</th>
+                        <th style="padding: 0.75rem 1rem; text-align: right; color: #ffffff; font-weight: 600;">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 0.75rem 1rem;">Tuition Fee ({{ student.course }})</td>
+                        <td style="padding: 0.75rem 1rem; text-align: right;">₹{{ student.amount_paid|floatformat:2 }}</td>
+                    </tr>
+                    <tr style="background: #f8fafc;">
+                        <td style="padding: 0.75rem 1rem; font-weight: 700;">Total Paid</td>
+                        <td style="padding: 0.75rem 1rem; text-align: right; font-weight: 700;">₹{{ student.amount_paid|floatformat:2 }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Footer Notes -->
+            <div style="text-align: center; color: #64748b; font-size: 0.85rem; border-top: 1px solid #e2e8f0; padding-top: 1.25rem; margin-top: 1rem;">
+                <p style="margin: 0.25rem 0;">Transaction ID: {{ student.transaction_id|default:"N/A" }}</p>
+                <p style="margin: 0.25rem 0;">Payment Date: {{ student.payment_date|date:"d M Y, h:i A" }}</p>
+                <p style="margin-top: 0.75rem; opacity: 0.7;">This receipt is system-generated and does not require a physical signature.</p>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="text-align: center; margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; padding-bottom: 2rem;">
+            <button onclick="window.print();" class="btn btn-fill">🖨️ Print Receipt</button>
+            <a href="{% url 'success' student.id %}" class="btn">Back to Dashboard</a>
+            <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* ── Force footer to stay at bottom ── */
+    html, body { height: 100%; margin: 0; }
+    body { display: flex; flex-direction: column; }
+    main { flex: 1 0 auto; }
+    footer.site-footer { flex-shrink: 0; }
+
+    /* ── Button styling ── */
+    .btn-fill {
+        background: #0A2540;
+        color: #fff;
+        padding: 0.6rem 1.5rem;
+        border-radius: 100px;
+        text-decoration: none;
+        display: inline-block;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .btn-fill:hover { background: #1a3a5c; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    
+    .btn {
+        background: #f1f5f9;
+        color: #0A2540;
+        padding: 0.6rem 1.5rem;
+        border-radius: 100px;
+        text-decoration: none;
+        display: inline-block;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .btn:hover { background: #e2e8f0; transform: translateY(-2px); }
+    
+    .btn-secondary {
+        background: #e2e8f0;
+        color: #0A2540;
+        padding: 0.6rem 1.5rem;
+        border-radius: 100px;
+        text-decoration: none;
+        display: inline-block;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .btn-secondary:hover { background: #cbd5e1; }
+
+    /* ── Print styles (FIXED) ── */
+    @media print {
+        body * { visibility: hidden; }
+        #receipt-content, #receipt-content * { visibility: visible; }
+        #receipt-content {
+            position: static !important;
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto !important;
+            padding: 1.5rem;
+            box-shadow: none !important;
+            border: none !important;
+            background: white !important;
+        }
+        /* Hide only the elements we don't want printed */
+        .btn, .btn-fill, .btn-secondary, .container > div:last-child,
+        .masthead, .site-footer {
+            display: none !important;
+        }
+        .container {
+            max-width: 100% !important;
+            padding: 0 !important;
+        }
+        .receipt-wrapper {
+            box-shadow: none !important;
+            border: none !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    }
+</style>
+{% endblock %}

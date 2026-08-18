@@ -1,0 +1,192 @@
+{% extends 'admissions/admin_base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .auth-shell {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 80vh;
+        background: #f8fafc;
+        padding: 2rem 1rem;
+    }
+    .auth-card {
+        max-width: 440px;
+        width: 100%;
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 2.5rem 2rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        text-align: center;
+        border: 1px solid #e2e8f0;
+    }
+    .auth-card .logo {
+        height: 60px;
+        width: auto;
+        margin-bottom: 0.5rem;
+    }
+    .auth-card .brand-name {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #0A2540;
+        font-family: 'Georgia', serif;
+        margin-bottom: 0.5rem;
+    }
+    .auth-card .eyebrow {
+        display: block;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #94a3b8;
+        margin-bottom: 0.2rem;
+    }
+    .auth-card h1 {
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: #0A2540;
+        margin: 0 0 0.5rem 0;
+    }
+    .auth-card .lede {
+        color: #64748b;
+        font-size: 0.85rem;
+        line-height: 1.5;
+        margin-bottom: 2rem;
+    }
+    .auth-card .field {
+        margin-bottom: 1.5rem;
+        text-align: left;
+    }
+    .auth-card .field label {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #475569;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    .auth-card .otp-input {
+        width: 100%;
+        padding: 0.8rem 1rem !important;
+        font-size: 1.5rem !important;
+        letter-spacing: 10px !important;
+        text-align: center !important;
+        color: #0A2540 !important;
+        background: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 8px !important;
+        font-weight: 700 !important;
+        caret-color: #0A2540 !important;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        outline: none;
+        box-sizing: border-box;
+    }
+    .auth-card .otp-input:focus {
+        border-color: #0A2540 !important;
+        box-shadow: 0 0 0 3px rgba(10, 37, 64, 0.1) !important;
+    }
+    .auth-card .otp-input:-webkit-autofill,
+    .auth-card .otp-input:-webkit-autofill:hover, 
+    .auth-card .otp-input:-webkit-autofill:focus {
+        -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+        -webkit-text-fill-color: #0A2540 !important;
+        caret-color: #0A2540 !important;
+    }
+    .auth-card .btn {
+        width: 100%;
+        padding: 0.8rem;
+        background: #0A2540;
+        color: #ffffff;
+        border: none;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        font-weight: 700;
+        cursor: pointer;
+        letter-spacing: 0.05em;
+        transition: background 0.2s, transform 0.1s;
+    }
+    .auth-card .btn:hover {
+        background: #1a3a5c;
+    }
+    .auth-card .back-link {
+        margin-top: 1.25rem;
+        font-size: 0.85rem;
+    }
+    .auth-card .back-link a {
+        color: #94a3b8;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+    .auth-card .back-link a:hover {
+        color: #64748b;
+    }
+    .alert {
+        padding: 12px 16px;
+        margin: 10px 0 20px 0;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        text-align: left;
+        border: 1px solid transparent;
+    }
+    .alert-error {
+        background: #fde8e8;
+        color: #9b2c2c;
+        border-color: #f5c6cb;
+    }
+    .alert-success {
+        background: #e6f9ed;
+        color: #0b6e3b;
+        border-color: #c3e6cb;
+    }
+    .alert-info {
+        background: #e1f0fa;
+        color: #0a558c;
+        border-color: #bee5eb;
+    }
+    .alert-warning {
+        background: #fff3cd;
+        color: #856404;
+        border-color: #ffeeba;
+    }
+    @media (max-width: 480px) {
+        .auth-card { padding: 1.5rem; }
+    }
+</style>
+
+<div class="auth-shell">
+    <div class="auth-card">
+        <img src="{% static 'images/logo_02.png' %}" alt="Logo" class="logo">
+        <div class="brand-name">Infinity Academy</div>
+
+        <span class="eyebrow">Verification</span>
+        <h1>Enter code</h1>
+        <p class="lede">OTP sent to {{ user.email }}. It expires in 5 minutes.</p>
+
+        <!-- ✅ DISPLAY MESSAGES -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- ✅ FORM WITH CSRF TOKEN - THIS IS CRITICAL! -->
+        <form method="post" novalidate action="{% url 'admin_otp' %}">
+            {% csrf_token %}
+            
+            <div class="field">
+                <label for="id_otp">Verification code</label>
+                <input type="text" id="id_otp" name="otp" class="otp-input"
+                       maxlength="6" inputmode="numeric" pattern="[0-9]{6}"
+                       required autofocus>
+            </div>
+            
+            <button type="submit" class="btn">Verify and sign in</button>
+        </form>
+
+        <p class="back-link"><a href="{% url 'admin_login' %}">Start over</a></p>
+    </div>
+</div>
+{% endblock %}

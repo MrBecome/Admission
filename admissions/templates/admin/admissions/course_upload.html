@@ -1,0 +1,38 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block content %}
+<div style="max-width:640px;">
+    <h1>Upload course spreadsheet</h1>
+    <p>
+        Replaces the source file <code>courses.xlsx</code> used by
+        <code>python manage.py import_courses</code>. The uploaded workbook is
+        opened and validated with <strong>openpyxl</strong> before anything is
+        overwritten — if it fails to open, or is missing a required sheet, the
+        current file is left untouched.
+    </p>
+
+    <p>Required sheets (all must be present, spelled exactly this way):</p>
+    <ul>
+        {% for sheet in required_sheets %}
+            <li><code>{{ sheet }}</code></li>
+        {% endfor %}
+    </ul>
+
+    <form method="post" enctype="multipart/form-data" style="margin-top:1.5rem;">
+        {% csrf_token %}
+        <p>
+            <label for="spreadsheet"><strong>Spreadsheet file (.xlsx):</strong></label><br>
+            <input type="file" name="spreadsheet" id="spreadsheet" accept=".xlsx,.xlsm" required>
+        </p>
+        <input type="submit" class="default" value="Validate &amp; Upload">
+        <a href="{% url 'admin:admissions_course_changelist' %}" class="button" style="margin-left:.5rem;">Cancel</a>
+    </form>
+
+    <p style="margin-top:2rem; color:#666;">
+        This only replaces the file. After a successful upload, run
+        <code>python manage.py import_courses</code> from a terminal/console to
+        actually load the new rows into the database.
+    </p>
+</div>
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends 'admissions/public_base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="block">
+    <div class="container" style="max-width: 800px; margin: 0 auto;" id="profile-content">
+
+        <!-- ===== HEADER with Branding (CENTERED) ===== -->
+        <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; margin-bottom: 2rem;">
+            
+            <!-- ✅ OXFORD BLUE LOGO - NOW RENDERS CORRECTLY -->
+            <img src="{% static 'images/logo_02.png' %}" alt="Infinity Academy Logo" 
+                 style="max-height: 90px; width: auto; object-fit: contain; background-color: #ffffff; padding: 5px; border-radius: 8px; display: block;">
+            
+            <!-- Academy Names -->
+            <div style="line-height: 1.2;">
+                <div style="font-size: 1.8rem; font-weight: 700; color: #0A2540; font-family: 'Source Serif 4', serif;">Infinity Academy</div>
+                <div style="font-size: 1.3rem; font-weight: 500; color: #1a3a5c; margin-top: 2px;">ইনফিনিটি একাডেমী</div>
+                <div style="font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-top: 6px;">Registrar &amp; Admissions Office</div>
+            </div>
+            
+        </div>
+
+        <!-- ===== Tagline ===== -->
+        <p style="text-align: center; color: #64748b; font-size: 0.95rem; margin: -1rem 0 2rem 0;">
+            Your application details and contact information, updated whenever the registrar's office receives your payment.
+        </p>
+
+        <!-- ===== STATUS BADGES ===== -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; background: #f8fafc; padding: 1rem 1.5rem; border-radius: 0.5rem; margin-bottom: 2rem;">
+            
+            <!-- Left Side: Dynamic Student Name -->
+            <div>
+                <strong style="font-weight: 600; font-size: 1.1rem; color: #0A2540;">{{ student.full_name }}</strong>
+            </div>
+
+            <!-- Right Side: Application Status Badge -->
+            <div style="text-align: center;">
+                <span style="display: block; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: #64748b;">Application Status</span>
+                <span style="display: inline-block; padding: 0.25rem 1.2rem; border-radius: 100px; font-weight: 600; font-size: 0.85rem;
+                    {% if student.payment_status and student.payment_verification == 'verified' %}
+                        background: #dcfce7; color: #166534;
+                    {% elif student.payment_status and student.payment_verification == 'pending' %}
+                        background: #fef9c3; color: #854d0e;
+                    {% elif student.payment_verification == 'rejected' %}
+                        background: #fee2e2; color: #991b1b;
+                    {% else %}
+                        background: #e2e8f0; color: #475569;
+                    {% endif %}
+                ">
+                    {% if student.payment_status and student.payment_verification == 'verified' %}Verified
+                    {% elif student.payment_status and student.payment_verification == 'pending' %}Pending Verification
+                    {% elif student.payment_verification == 'rejected' %}Rejected
+                    {% else %}Open
+                    {% endif %}
+                </span>
+            </div>
+
+        </div>
+
+        <!-- ===== ACCOUNT DETAILS ===== -->
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 0.5rem; padding: 1.5rem; margin-bottom: 2rem;">
+            <h3 style="font-size: 1.1rem; font-weight: 600; color: #0A2540; margin: 0 0 1rem 0;">Account Details</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem;">
+                <div><strong style="font-size: 0.85rem; color: #64748b;">Account Name</strong><br>{{ student.full_name }}</div>
+                <div><strong style="font-size: 0.85rem; color: #64748b;">Application ID</strong><br>IVA{{ student.id|stringformat:"06d" }}</div>
+                <div><strong style="font-size: 0.85rem; color: #64748b;">Phone</strong><br>{{ student.phone }}</div>
+                <div><strong style="font-size: 0.85rem; color: #64748b;">Email</strong><br>{{ student.email }}</div>
+                <div style="grid-column: 1 / -1; padding-top: 0.75rem; border-top: 1px solid #f1f5f9;">
+                    <strong style="font-size: 0.85rem; color: #64748b;">Selected Course</strong><br>{{ student.course }}
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== PAYMENT CONFIRMATION ===== -->
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 0.5rem; padding: 1.5rem; margin-bottom: 2rem;">
+            <h3 style="font-size: 1.1rem; font-weight: 600; color: #0A2540; margin: 0 0 1rem 0;">Payment Confirmation</h3>
+
+            {% if student.payment_status and student.payment_verification == 'verified' %}
+                <div style="color: #166534; background: #dcfce7; padding: 0.5rem 1rem; border-radius: 0.25rem; margin-bottom: 1rem;">
+                    ✅ Payment confirmed by the registrar's office.
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem;">
+                    <div><strong style="font-size: 0.85rem; color: #64748b;">Amount Paid</strong><br>₹{{ student.amount_paid|floatformat:2 }}</div>
+                    <div><strong style="font-size: 0.85rem; color: #64748b;">Invoice Paid</strong><br>✅ 1</div>
+                    <div><strong style="font-size: 0.85rem; color: #64748b;">Invoice Date</strong><br>{{ student.payment_date|date:"d M Y, H:i" }}</div>
+                    <div><strong style="font-size: 0.85rem; color: #64748b;">Invoice Number</strong><br>{{ student.transaction_id|default:"N/A" }}</div>
+                </div>
+            {% elif student.payment_status and student.payment_verification == 'pending' %}
+                <div style="color: #854d0e; background: #fef9c3; padding: 0.5rem 1rem; border-radius: 0.25rem;">
+                    ⏳ Payment submitted, awaiting verification by the registrar's office.
+                </div>
+            {% elif student.payment_verification == 'rejected' %}
+                <div style="color: #991b1b; background: #fee2e2; padding: 0.5rem 1rem; border-radius: 0.25rem;">
+                    ❌ Payment rejected. Please contact the registrar's office.
+                </div>
+            {% else %}
+                <div style="color: #475569; background: #f1f5f9; padding: 0.5rem 1rem; border-radius: 0.25rem;">
+                    💳 Payment not yet received. Use the QR code on the success page to pay.
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- ===== ACTION BUTTONS ===== -->
+        <div style="text-align: center; margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            {% if student.payment_status and student.payment_verification == 'verified' %}
+                <a href="{% url 'payment_receipt' student.id %}" class="btn btn-fill" style="background:#0A2540; color:#fff; padding:0.6rem 1.5rem; border-radius:100px; text-decoration:none; display:inline-block; font-weight:600;">
+                    📄 View & Print Receipt
+                </a>
+            {% endif %}
+            <button onclick="window.print();" class="btn btn-fill" style="background:#0A2540; color:#fff; padding:0.6rem 1.5rem; border-radius:100px; border:none; cursor:pointer; font-weight:600;">
+                🖨️ Print Profile
+            </button>
+            <a href="{% url 'home' %}" class="btn btn-secondary" style="background:#e2e8f0; color:#0A2540; padding:0.6rem 1.5rem; border-radius:100px; text-decoration:none; display:inline-block; font-weight:600;">
+                🏠 Back to Home
+            </a>
+        </div>
+
+        <!-- ===== CONTACT US ===== -->
+        <div style="text-align: center; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0; color: #64748b; font-size: 0.85rem;">
+            <h4 style="font-weight: 600; color: #0A2540;">Contact Us</h4>
+            <p>We're here to help!</p>
+            <p>📧 info@infinityacademy.com<br>🌐 www.infinityacademy.com</p>
+            <p style="margin-top: 1rem; font-size: 0.7rem; opacity: 0.6;">
+                &copy; 2026 Infinity Academy. All Rights Reserved.<br>
+                Infinity Academy is a registered trademark of Infinity Academy.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    @media print {
+        body * { visibility: hidden; }
+        #profile-content, #profile-content * { visibility: visible; }
+        #profile-content {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            margin: 0 auto;
+            padding: 1.5rem;
+            background: white;
+        }
+        .btn, .btn-fill, .btn-secondary, button { display: none !important; }
+        .masthead, .site-footer, .nav-links, .brand, footer { display: none !important; }
+        .container { max-width: 100% !important; padding: 0 !important; }
+        .block, .card, .panel { box-shadow: none !important; border: 1px solid #ddd !important; }
+    }
+</style>
+{% endblock %}

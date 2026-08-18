@@ -1,0 +1,32 @@
+{% extends 'admissions/public_base.html' %}
+
+{% block content %}
+<section class="block">
+    <div class="container">
+        <div class="section-head" style="text-align: center;">
+            <span class="eyebrow">Student portal</span>
+            <h2>Track your application</h2>
+            <p style="margin: 0 auto;">Sign in with the username and password from your admission-confirmation email to view your current status.</p>
+        </div>
+
+        <div class="panel-card">
+            <form method="post" novalidate>
+                {% csrf_token %}
+                <div class="field">
+                    {{ form.username.label_tag }}
+                    {{ form.username }}
+                    {% if form.username.errors %}{{ form.username.errors }}{% endif %}
+                </div>
+                <div class="field">
+                    {{ form.password.label_tag }}
+                    {{ form.password }}
+                    {% if form.password.errors %}{{ form.password.errors }}{% endif %}
+                </div>
+                <button type="submit" class="btn btn-fill btn-block">View my status</button>
+            </form>
+            <p class="helper-text">Your username and password-setup link were sent by email when you applied.</p>
+            <p class="helper-text"><a href="{% url 'student_password_setup_request' %}">Didn't get the email? Set your password here instead</a></p>
+        </div>
+    </div>
+</section>
+{% endblock %}
