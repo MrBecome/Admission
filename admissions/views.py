@@ -636,3 +636,291 @@ def announcement_delete(request, announcement_id):
     announcement.delete()
     messages.info(request, "Announcement deleted.")
     return redirect('announcement_list')
+
+
+# ============================================================
+# CONTACT PAGE
+# ============================================================
+
+@csrf_protect
+def contact(request):
+    """
+    Contact page.
+
+    GET:
+        Displays the contact page.
+
+    POST:
+        Validates the contact form and sends the submitted
+        message to the configured administrator email.
+
+    Recipient priority:
+        1. settings.ADMIN_EMAIL
+        2. First active superuser with an email address
+        3. settings.DEFAULT_FROM_EMAIL
+
+    The visitor's email is placed in Reply-To so the admin
+    can reply directly to the person who submitted the form.
+    """
+
+    # --------------------------------------------------------
+    # GET: display the contact page
+    # --------------------------------------------------------
+
+    if request.method != 'POST':
+        return render(
+            request,
+            'admissions/contact.html'
+        )
+
+    # --------------------------------------------------------
+    # Read submitted form data
+    # --------------------------------------------------------
+
+    name = request.POST.get(
+        'name',
+        ''
+    ).strip()
+
+    email = request.POST.get(
+        'email',
+        ''
+    ).strip()
+
+    subject = request.POST.get(
+        'subject',
+        ''
+    ).strip()
+
+    complaint_type = request.POST.get(
+        'complaint_type',
+        ''
+    ).strip()
+
+    message = request.POST.get(
+        'message',
+        ''
+    ).strip()
+
+    # --------------------------------------------------------
+    # Validate name
+    # --------------------------------------------------------
+
+    if not name:
+        messages.error(
+            request,
+            'Please enter your name.'
+        )
+        return redirect('contact')
+
+    if len(name) > 100:
+        messages.error(
+            request,
+            'Name is too long.'
+        )
+        return redirect('contact')
+
+    # --------------------------------------------------------
+    # Validate email
+    # --------------------------------------------------------
+
+    if not email:
+        messages.error(
+            request,
+            'Please enter your email address.'
+        )
+        return redirect('contact')
+
+    email_pattern = (
+        r'^[A-Za-z0-9._%+-]+@'
+        r'[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'
+    )
+
+    if not re.match(
+        email_pattern,
+        email
+    ):
+        messages.error(
+            request,
+            'Please enter a valid email address.'
+        )
+        return redirect('contact')
+
+    if len(email) > 254:
+        messages.error(
+            request,
+            'Email address is too long.'
+        )
+        return redirect('contact')
+
+    # --------------------------------------------------------
+    # Validate complaint/message type
+    # --------------------------------------------------------
+
+    if not complaint_type:
+        messages.error(
+            request,
+            'Please select a message type.'
+        )
+        return redirect('contact')
+
+    allowed_types = {
+        'admission',
+        'payment',
+        'technical',
+        'complaint',
+        'suggestion',
+        'general',
+        'other',
+    }
+
+    if complaint_type not in allowed_types:
+        messages.error(
+            request,
+            'Please select a valid message type.'
+        )
+        return redirect('contact')
+
+    # --------------------------------------------------------
+    # Validate subject
+    # --------------------------------------------------------
+
+    if len(subject) > 200:
+        messages.error(
+            request,
+            'Subject is too long.'
+        )
+        return redirect('contact')
+
+    if not subject:
+        subject = 'New Contact Message'
+
+    # --------------------------------------------------------
+    # Validate message
+    # --------------------------------------------------------
+
+    if not message:
+        messages.error(
+            request,
+            'Please enter your message.'
+        )
+        return redirect('contact')
+
+    if len(message) > 5000:
+        messages.error(
+            request,
+            'Message is too long. Maximum 5000 characters.'
+        )
+        return redirect('contact')
+
+    # --------------------------------------------------------
+    # CONTACT / COMPLAINT RECIPIENT
+    #
+    # Every contact/complaint form submission is delivered to
+    # the academy complaint email address below.
+    #
+    # The Gmail account configured in EMAIL_HOST_USER is only
+    # the account used to SEND the email.
+    # --------------------------------------------------------
+
+    recipient_email = 'academyeduuniverse@gmail.com'
+
+    # --------------------------------------------------------
+    # Email subject
+    # --------------------------------------------------------
+
+    email_subject = (
+        f'[Infinity Academy Contact] {subject}'
+    )
+
+    # --------------------------------------------------------
+    # Email body
+    # --------------------------------------------------------
+
+    email_body = f"""
+Infinity Academy
+Contact Form Submission
+
+============================================================
+
+Name:
+{name}
+
+Email:
+{email}
+
+Message Type:
+{complaint_type}
+
+Subject:
+{subject}
+
+============================================================
+
+Message:
+
+{message}
+
+============================================================
+
+This message was submitted through the
+Infinity Academy Contact Us page.
+
+Reply directly to this email to respond to the visitor.
+"""
+
+    # --------------------------------------------------------
+    # Send email
+    # --------------------------------------------------------
+
+    try:
+
+        send_mail(
+            subject=email_subject,
+            message=email_body,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[
+                recipient_email
+            ],
+            fail_silently=False,
+            reply_to=[
+                email
+            ],
+        )
+
+        logger.info(
+            'Contact form email sent successfully. '
+            'From=%s To=%s Type=%s',
+            email,
+            recipient_email,
+            complaint_type
+        )
+
+        messages.success(
+            request,
+            'Your message has been sent successfully. '
+            'We will get back to you soon.'
+        )
+
+    except Exception as exc:
+
+        logger.exception(
+            'Contact/complaint email failed. '
+            'From=%s To=%s Error=%s',
+            email,
+            recipient_email,
+            exc
+        )
+
+        messages.error(
+            request,
+            'We could not send your message right now. '
+            'Please try again or contact us directly by email.'
+        )
+
+    # --------------------------------------------------------
+    # Return to contact page
+    # --------------------------------------------------------
+
+    return redirect('contact')
+

@@ -1,0 +1,2833 @@
+{% extends 'admissions/public_base.html' %}
+{% load static %}
+
+{% block title %}
+Contact Us | Infinity Academy
+{% endblock %}
+
+
+{% block extra_head %}
+
+<style>
+
+/* ============================================================
+   INFINITY ACADEMY
+   CONTACT PAGE
+   ------------------------------------------------------------
+   Responsive:
+   • Mobile
+   • Small phones
+   • Tablets
+   • Laptops
+   • Desktop
+   • 2K / 4K
+   ------------------------------------------------------------
+   No SMTP contact form is used on this page.
+   Email links open the user's configured email application.
+   ============================================================ */
+
+
+/* ============================================================
+   ROOT
+   ============================================================ */
+
+.contact-page,
+.contact-page *,
+.contact-page *::before,
+.contact-page *::after {
+    box-sizing: border-box;
+}
+
+.contact-page {
+    --primary: #0a2540;
+    --primary-hover: #123b61;
+
+    --text: #102033;
+    --muted: #64748b;
+
+    --background: #f5f8fb;
+    --surface: #ffffff;
+    --surface-soft: #f8fafc;
+
+    --border: #dbe4ee;
+    --border-hover: #bfd0df;
+
+    --icon-bg: #edf3f8;
+
+    --whatsapp: #128c7e;
+    --danger: #9f1239;
+    --success: #15803d;
+
+    --warning-bg: #fffbeb;
+    --warning-border: #fde68a;
+    --warning-text: #854d0e;
+
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --radius-lg: 18px;
+
+    --shadow-sm:
+        0 2px 8px rgba(15, 23, 42, .045);
+
+    --shadow:
+        0 8px 24px rgba(15, 23, 42, .075);
+
+    --shadow-hover:
+        0 12px 30px rgba(15, 23, 42, .10);
+
+    width: 100%;
+    min-width: 0;
+
+    color: var(--text);
+    background: var(--background);
+
+    overflow-x: clip;
+}
+
+
+/* ============================================================
+   BASIC RESET
+   ============================================================ */
+
+.contact-page h1,
+.contact-page h2,
+.contact-page h3,
+.contact-page p {
+    margin-top: 0;
+}
+
+.contact-page a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.contact-page img,
+.contact-page svg {
+    max-width: 100%;
+}
+
+.contact-page a:focus-visible,
+.contact-page summary:focus-visible {
+    outline: 3px solid #60a5fa;
+    outline-offset: 3px;
+}
+
+
+/* ============================================================
+   PAGE CONTAINER
+   ============================================================ */
+
+.contact-container {
+    width: min(
+        1240px,
+        calc(100% - 32px)
+    );
+
+    margin-inline: auto;
+}
+
+
+/* ============================================================
+   COMPACT PAGE INTRO
+   ------------------------------------------------------------
+   This replaces the huge hero area.
+   ============================================================ */
+
+.contact-intro {
+    width: 100%;
+
+    padding:
+        clamp(18px, 2.5vw, 28px)
+        0
+        clamp(14px, 2vw, 22px);
+
+    background: var(--background);
+}
+
+.contact-intro-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    min-width: 0;
+}
+
+.contact-intro-content {
+    min-width: 0;
+}
+
+.contact-intro-title {
+    margin: 0 0 5px;
+
+    color: var(--primary);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(
+            1.45rem,
+            3vw,
+            2.15rem
+        );
+
+    font-weight: 800;
+
+    line-height: 1.15;
+
+    letter-spacing: -.025em;
+}
+
+.contact-intro-text {
+    margin: 0;
+
+    max-width: 700px;
+
+    color: var(--muted);
+
+    font-size:
+        clamp(
+            .68rem,
+            1vw,
+            .82rem
+        );
+
+    line-height: 1.55;
+}
+
+.contact-intro-badge {
+    flex: 0 0 auto;
+
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 7px 11px;
+
+    border:
+        1px solid
+        #bbf7d0;
+
+    border-radius: 999px;
+
+    background: #f0fdf4;
+
+    color: var(--success);
+
+    font-size: .62rem;
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+.contact-intro-badge i {
+    font-size: .42rem;
+}
+
+
+/* ============================================================
+   MAIN CONTENT
+   ============================================================ */
+
+.contact-main {
+    width: 100%;
+
+    padding:
+        0
+        0
+        clamp(35px, 5vw, 65px);
+}
+
+
+/* ============================================================
+   QUICK CONTACT
+   ============================================================ */
+
+.quick-contact {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0, 1fr)
+        );
+
+    gap: 12px;
+
+    margin-bottom:
+        clamp(
+            18px,
+            2.5vw,
+            28px
+        );
+}
+
+.quick-contact-button {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    min-width: 0;
+    min-height: 68px;
+
+    padding: 10px 13px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        var(--radius-md);
+
+    background:
+        var(--surface);
+
+    color: var(--primary);
+
+    text-decoration: none;
+
+    box-shadow:
+        var(--shadow-sm);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        border-color .2s ease,
+        background .2s ease;
+}
+
+.quick-contact-button:hover {
+    transform: translateY(-2px);
+
+    border-color:
+        var(--border-hover);
+
+    background:
+        #ffffff;
+
+    box-shadow:
+        var(--shadow-hover);
+}
+
+.quick-contact-icon {
+    width: 40px;
+    height: 40px;
+
+    flex: 0 0 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        var(--icon-bg);
+
+    color:
+        var(--primary);
+
+    font-size: .82rem;
+}
+
+.quick-contact-text {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.quick-contact-text strong {
+    display: block;
+
+    color:
+        var(--primary);
+
+    font-size: .72rem;
+
+    font-weight: 800;
+
+    line-height: 1.25;
+}
+
+.quick-contact-text span {
+    display: block;
+
+    margin-top: 3px;
+
+    color:
+        var(--muted);
+
+    font-size: .61rem;
+
+    line-height: 1.3;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* ============================================================
+   MAIN TWO COLUMN LAYOUT
+   ============================================================ */
+
+.contact-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, .92fr)
+        minmax(0, 1.08fr);
+
+    gap:
+        clamp(
+            16px,
+            2.5vw,
+            28px
+        );
+
+    align-items: start;
+}
+
+
+/* ============================================================
+   CARD
+   ============================================================ */
+
+.contact-card {
+    min-width: 0;
+
+    background:
+        var(--surface);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        var(--radius-lg);
+
+    box-shadow:
+        var(--shadow-sm);
+
+    overflow: hidden;
+}
+
+.contact-card-content {
+    padding:
+        clamp(
+            20px,
+            2.5vw,
+            32px
+        );
+}
+
+
+/* ============================================================
+   CARD HEADING
+   ============================================================ */
+
+.contact-card-title {
+    margin: 0 0 7px;
+
+    color:
+        var(--primary);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(
+            1.35rem,
+            2.4vw,
+            1.75rem
+        );
+
+    font-weight: 800;
+
+    line-height: 1.2;
+
+    letter-spacing: -.02em;
+}
+
+.contact-card-description {
+    margin: 0 0 20px;
+
+    color:
+        var(--muted);
+
+    font-size:
+        clamp(
+            .68rem,
+            .95vw,
+            .82rem
+        );
+
+    line-height: 1.65;
+}
+
+
+/* ============================================================
+   CONTACT INFORMATION
+   ============================================================ */
+
+.contact-information {
+    display: flex;
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+.contact-information-item {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    min-width: 0;
+
+    padding:
+        11px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        var(--radius-sm);
+
+    background:
+        var(--surface);
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        transform .2s ease;
+}
+
+.contact-information-item:hover {
+    border-color:
+        var(--border-hover);
+
+    box-shadow:
+        var(--shadow-sm);
+
+    transform:
+        translateY(-1px);
+}
+
+.contact-information-icon {
+    width: 42px;
+    height: 42px;
+
+    flex: 0 0 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        var(--icon-bg);
+
+    color:
+        var(--primary);
+
+    font-size: .78rem;
+}
+
+.contact-information-content {
+    min-width: 0;
+}
+
+.contact-information-content strong {
+    display: block;
+
+    margin-bottom: 2px;
+
+    color:
+        var(--primary);
+
+    font-size: .7rem;
+
+    font-weight: 800;
+
+    line-height: 1.3;
+}
+
+.contact-information-content span,
+.contact-information-content a {
+    display: block;
+
+    color:
+        var(--muted);
+
+    font-size: .67rem;
+
+    line-height: 1.5;
+
+    text-decoration: none;
+
+    overflow-wrap: anywhere;
+}
+
+.contact-information-content a:hover {
+    color:
+        var(--primary);
+
+    text-decoration:
+        underline;
+}
+
+
+/* ============================================================
+   DIRECT CONTACT BUTTONS
+   ============================================================ */
+
+.direct-contact-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap: 9px;
+
+    margin-top: 17px;
+}
+
+.direct-contact-button {
+    min-width: 0;
+    min-height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    padding:
+        9px 10px;
+
+    border: 0;
+
+    border-radius:
+        var(--radius-sm);
+
+    color:
+        #ffffff;
+
+    text-decoration: none;
+
+    font-size: .66rem;
+
+    font-weight: 800;
+
+    text-align: center;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        filter .2s ease;
+}
+
+.direct-contact-button:hover {
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        var(--shadow);
+
+    filter:
+        brightness(1.06);
+}
+
+.direct-call {
+    background:
+        var(--primary);
+}
+
+.direct-whatsapp {
+    background:
+        var(--whatsapp);
+}
+
+.direct-email {
+    background:
+        #334155;
+}
+
+.direct-complaint {
+    background:
+        var(--danger);
+}
+
+
+/* ============================================================
+   COMPLAINT PANEL
+   ============================================================ */
+
+.complaint-panel {
+    margin-top: 17px;
+
+    padding:
+        14px;
+
+    border:
+        1px solid
+        var(--warning-border);
+
+    border-radius:
+        var(--radius-sm);
+
+    background:
+        var(--warning-bg);
+}
+
+.complaint-panel-title {
+    margin: 0 0 5px;
+
+    color:
+        #713f12;
+
+    font-size: .78rem;
+
+    font-weight: 800;
+}
+
+.complaint-panel-description {
+    margin: 0 0 10px;
+
+    color:
+        var(--warning-text);
+
+    font-size: .63rem;
+
+    line-height: 1.55;
+}
+
+.complaint-email-box {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    min-width: 0;
+
+    padding: 8px;
+
+    border:
+        1px solid
+        #f3df9a;
+
+    border-radius: 8px;
+
+    background:
+        #ffffff;
+}
+
+.complaint-email-icon {
+    width: 31px;
+    height: 31px;
+
+    flex: 0 0 31px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        #fef3c7;
+
+    color:
+        var(--warning-text);
+
+    font-size: .66rem;
+}
+
+.complaint-email-link {
+    min-width: 0;
+
+    color:
+        var(--primary);
+
+    font-size: .64rem;
+
+    font-weight: 800;
+
+    text-decoration: none;
+
+    overflow-wrap: anywhere;
+}
+
+.complaint-email-link:hover {
+    text-decoration:
+        underline;
+}
+
+
+/* ============================================================
+   RIGHT CARD HEADER
+   ============================================================ */
+
+.contact-action-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 14px;
+
+    margin-bottom: 18px;
+}
+
+.contact-action-header-content {
+    min-width: 0;
+}
+
+.contact-badge {
+    flex: 0 0 auto;
+
+    display: inline-flex;
+    align-items: center;
+
+    gap: 5px;
+
+    padding:
+        5px 9px;
+
+    border:
+        1px solid
+        #bbf7d0;
+
+    border-radius:
+        999px;
+
+    background:
+        #f0fdf4;
+
+    color:
+        var(--success);
+
+    font-size: .57rem;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+.contact-badge i {
+    font-size: .38rem;
+}
+
+
+/* ============================================================
+   ACTION LIST
+   ============================================================ */
+
+.contact-action-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+.contact-action {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    min-width: 0;
+    min-height: 68px;
+
+    padding:
+        10px 12px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        var(--radius-sm);
+
+    background:
+        #ffffff;
+
+    color:
+        var(--text);
+
+    text-decoration: none;
+
+    box-shadow:
+        0 2px 7px
+        rgba(15,23,42,.025);
+
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+}
+
+.contact-action:hover {
+    transform:
+        translateY(-2px);
+
+    border-color:
+        var(--border-hover);
+
+    background:
+        #fbfdff;
+
+    box-shadow:
+        var(--shadow);
+}
+
+.contact-action-icon {
+    width: 43px;
+    height: 43px;
+
+    flex: 0 0 43px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius:
+        10px;
+
+    background:
+        var(--icon-bg);
+
+    color:
+        var(--primary);
+
+    font-size: .78rem;
+}
+
+.contact-action-content {
+    min-width: 0;
+
+    flex: 1 1 auto;
+}
+
+.contact-action-content strong {
+    display: block;
+
+    margin-bottom: 2px;
+
+    color:
+        var(--primary);
+
+    font-size: .7rem;
+
+    font-weight: 800;
+
+    line-height: 1.3;
+}
+
+.contact-action-content span {
+    display: block;
+
+    color:
+        var(--muted);
+
+    font-size: .61rem;
+
+    line-height: 1.45;
+}
+
+.contact-action-arrow {
+    flex: 0 0 auto;
+
+    color:
+        #94a3b8;
+
+    font-size: .6rem;
+}
+
+
+/* ============================================================
+   IMPORTANT NOTICE
+   ============================================================ */
+
+.contact-notice {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 9px;
+
+    margin-top: 16px;
+
+    padding:
+        10px 11px;
+
+    border:
+        1px solid
+        var(--warning-border);
+
+    border-radius:
+        var(--radius-sm);
+
+    background:
+        var(--warning-bg);
+}
+
+.contact-notice-icon {
+    width: 30px;
+    height: 30px;
+
+    flex: 0 0 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        #fef3c7;
+
+    color:
+        var(--warning-text);
+
+    font-size: .65rem;
+}
+
+.contact-notice-content {
+    min-width: 0;
+}
+
+.contact-notice-content strong {
+    display: block;
+
+    margin-bottom: 2px;
+
+    color:
+        #713f12;
+
+    font-size: .66rem;
+}
+
+.contact-notice-content p {
+    margin: 0;
+
+    color:
+        var(--warning-text);
+
+    font-size: .6rem;
+
+    line-height: 1.5;
+}
+
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+
+.contact-faq-section {
+    margin-top:
+        clamp(
+            26px,
+            4vw,
+            48px
+        );
+}
+
+.contact-section-heading {
+    margin-bottom: 18px;
+
+    text-align: center;
+}
+
+.contact-section-heading h2 {
+    margin: 0 0 6px;
+
+    color:
+        var(--primary);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(
+            1.25rem,
+            2.7vw,
+            1.8rem
+        );
+
+    font-weight: 800;
+
+    line-height: 1.2;
+}
+
+.contact-section-heading p {
+    width: min(680px, 100%);
+
+    margin: 0 auto;
+
+    color:
+        var(--muted);
+
+    font-size: .66rem;
+
+    line-height: 1.6;
+}
+
+.contact-faq-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap: 10px;
+}
+
+.contact-faq-item {
+    min-width: 0;
+
+    padding:
+        13px 14px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        var(--radius-sm);
+
+    background:
+        var(--surface);
+
+    box-shadow:
+        var(--shadow-sm);
+}
+
+.contact-faq-item summary {
+    position: relative;
+
+    padding-right: 24px;
+
+    cursor: pointer;
+
+    color:
+        var(--primary);
+
+    font-size: .65rem;
+
+    font-weight: 800;
+
+    line-height: 1.5;
+
+    list-style: none;
+}
+
+.contact-faq-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.contact-faq-item summary::after {
+    content: "+";
+
+    position: absolute;
+
+    right: 0;
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    color:
+        #64748b;
+
+    font-size: .85rem;
+}
+
+.contact-faq-item[open]
+summary::after {
+    content: "−";
+}
+
+.contact-faq-answer {
+    margin-top: 10px;
+
+    padding-top: 10px;
+
+    border-top:
+        1px solid
+        var(--border);
+
+    color:
+        var(--muted);
+
+    font-size: .61rem;
+
+    line-height: 1.6;
+}
+
+.contact-faq-answer a {
+    color:
+        var(--primary);
+
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.contact-faq-answer a:hover {
+    text-decoration:
+        underline;
+}
+
+
+/* ============================================================
+   FINAL PANEL
+   ============================================================ */
+
+.contact-final-panel {
+    position: relative;
+
+    margin-top:
+        clamp(
+            24px,
+            4vw,
+            45px
+        );
+
+    padding:
+        clamp(
+            22px,
+            3.5vw,
+            32px
+        );
+
+    border-radius:
+        var(--radius-lg);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            var(--primary-hover)
+        );
+
+    color:
+        #ffffff;
+
+    text-align:
+        center;
+
+    overflow:
+        hidden;
+}
+
+.contact-final-panel::before {
+    content: "";
+
+    position: absolute;
+
+    width: 220px;
+    height: 220px;
+
+    top: -150px;
+    right: -80px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.055);
+
+    pointer-events: none;
+}
+
+.contact-final-panel h2 {
+    position: relative;
+    z-index: 1;
+
+    margin: 0 0 6px;
+
+    color:
+        #ffffff;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(
+            1.1rem,
+            2.5vw,
+            1.5rem
+        );
+}
+
+.contact-final-panel p {
+    position: relative;
+    z-index: 1;
+
+    width:
+        min(
+            650px,
+            100%
+        );
+
+    margin:
+        0 auto 16px;
+
+    color:
+        rgba(255,255,255,.82);
+
+    font-size: .64rem;
+
+    line-height: 1.6;
+}
+
+.final-buttons {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 8px;
+}
+
+.final-button {
+    min-height: 42px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    padding:
+        8px 15px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.23);
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(255,255,255,.09);
+
+    color:
+        #ffffff;
+
+    text-decoration: none;
+
+    font-size: .62rem;
+
+    font-weight: 800;
+
+    transition:
+        transform .2s ease,
+        background .2s ease;
+}
+
+.final-button:hover {
+    transform:
+        translateY(-2px);
+
+    background:
+        rgba(255,255,255,.17);
+}
+
+
+/* ============================================================
+   TABLET
+   ============================================================ */
+
+@media (max-width: 950px) {
+
+    .contact-layout {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+/* ============================================================
+   SMALL TABLET
+   ============================================================ */
+
+@media (max-width: 720px) {
+
+    .quick-contact {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+    .contact-faq-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-intro-inner {
+        align-items:
+            flex-start;
+    }
+
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 520px) {
+
+    .contact-container {
+        width:
+            calc(100% - 20px);
+    }
+
+    .contact-intro {
+        padding:
+            15px 0 13px;
+    }
+
+    .contact-intro-inner {
+        display: block;
+    }
+
+    .contact-intro-title {
+        font-size:
+            1.35rem;
+    }
+
+    .contact-intro-text {
+        margin-top: 4px;
+
+        font-size: .64rem;
+    }
+
+    .contact-intro-badge {
+        margin-top: 9px;
+
+        font-size: .55rem;
+    }
+
+    .quick-contact {
+        gap: 8px;
+
+        margin-bottom: 16px;
+    }
+
+    .quick-contact-button {
+        min-height: 58px;
+
+        padding:
+            8px;
+    }
+
+    .quick-contact-icon {
+        width: 34px;
+        height: 34px;
+
+        flex-basis: 34px;
+
+        font-size: .7rem;
+    }
+
+    .quick-contact-text strong {
+        font-size: .58rem;
+    }
+
+    .quick-contact-text span {
+        display: none;
+    }
+
+    .contact-card-content {
+        padding:
+            16px;
+    }
+
+    .contact-card-title {
+        font-size:
+            1.25rem;
+    }
+
+    .contact-card-description {
+        font-size: .64rem;
+
+        margin-bottom:
+            15px;
+    }
+
+    .contact-information-item {
+        padding:
+            9px;
+    }
+
+    .contact-information-icon {
+        width: 37px;
+        height: 37px;
+
+        flex-basis: 37px;
+    }
+
+    .direct-contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-action {
+        min-height:
+            63px;
+
+        padding:
+            9px;
+    }
+
+    .contact-action-arrow {
+        display: none;
+    }
+
+    .contact-action-content strong {
+        font-size: .65rem;
+    }
+
+    .contact-action-content span {
+        font-size: .58rem;
+    }
+
+    .final-buttons {
+        flex-direction: column;
+    }
+
+    .final-button {
+        width:
+            100%;
+    }
+
+}
+
+
+/* ============================================================
+   VERY SMALL PHONES
+   ============================================================ */
+
+@media (max-width: 375px) {
+
+    .contact-container {
+        width:
+            calc(100% - 14px);
+    }
+
+    .contact-intro-title {
+        font-size:
+            1.22rem;
+    }
+
+    .contact-intro-text {
+        font-size:
+            .59rem;
+    }
+
+    .quick-contact {
+        gap:
+            6px;
+    }
+
+    .quick-contact-button {
+        min-height:
+            53px;
+
+        padding:
+            6px;
+    }
+
+    .quick-contact-icon {
+        width: 30px;
+        height: 30px;
+
+        flex-basis: 30px;
+    }
+
+    .quick-contact-text strong {
+        font-size:
+            .51rem;
+    }
+
+    .contact-card-content {
+        padding:
+            13px;
+    }
+
+    .contact-information-item {
+        gap:
+            8px;
+
+        padding:
+            8px;
+    }
+
+    .contact-information-icon {
+        width: 33px;
+        height: 33px;
+
+        flex-basis: 33px;
+    }
+
+    .contact-information-content strong {
+        font-size:
+            .59rem;
+    }
+
+    .contact-information-content span,
+    .contact-information-content a {
+        font-size:
+            .56rem;
+    }
+
+    .contact-action-icon {
+        width: 35px;
+        height: 35px;
+
+        flex-basis: 35px;
+    }
+
+}
+
+
+/* ============================================================
+   LARGE DESKTOP
+   ============================================================ */
+
+@media (min-width: 1600px) {
+
+    .contact-container {
+        width:
+            min(
+                calc(100% - 80px),
+                1400px
+            );
+    }
+
+}
+
+
+/* ============================================================
+   2K / 4K
+   ============================================================ */
+
+@media (min-width: 2200px) {
+
+    .contact-container {
+        width:
+            min(
+                calc(100% - 120px),
+                1650px
+            );
+    }
+
+    .contact-card-content {
+        padding:
+            36px;
+    }
+
+}
+
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .contact-page *,
+    .contact-page *::before,
+    .contact-page *::after {
+
+        transition:
+            none !important;
+
+        animation:
+            none !important;
+    }
+
+}
+
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+
+@media print {
+
+    .contact-page {
+        background:
+            #ffffff;
+    }
+
+    .quick-contact-button,
+    .contact-card,
+    .contact-faq-item {
+        box-shadow:
+            none;
+
+        break-inside:
+            avoid;
+    }
+
+}
+
+</style>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="contact-page">
+
+
+    <!-- ========================================================
+         COMPACT INTRO
+         ======================================================== -->
+
+    <section
+        class="contact-intro"
+        aria-labelledby="contact-page-title"
+    >
+
+        <div class="contact-container">
+
+            <div class="contact-intro-inner">
+
+                <div class="contact-intro-content">
+
+                    <h1
+                        id="contact-page-title"
+                        class="contact-intro-title"
+                    >
+                        Contact Infinity Academy
+                    </h1>
+
+                    <p class="contact-intro-text">
+                        Have a question, admission enquiry,
+                        payment issue, technical problem,
+                        complaint, or suggestion? We're here
+                        to help.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="contact-intro-badge"
+                    aria-label="Contact available"
+                >
+
+                    <i
+                        class="fa-solid fa-circle"
+                        aria-hidden="true"
+                    ></i>
+
+                    Contact Available
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ========================================================
+         MAIN
+         ======================================================== -->
+
+    <main
+        id="main-content"
+        class="contact-main"
+    >
+
+        <div class="contact-container">
+
+
+            <!-- ==================================================
+                 QUICK CONTACT
+                 ================================================== -->
+
+            <nav
+                class="quick-contact"
+                aria-label="Quick contact options"
+            >
+
+
+                <!-- CALL -->
+
+                <a
+                    href="tel:+916003458087"
+                    class="quick-contact-button"
+                    aria-label="Call Infinity Academy"
+                >
+
+                    <span
+                        class="quick-contact-icon"
+                        aria-hidden="true"
+                    >
+                        <i class="fa-solid fa-phone"></i>
+                    </span>
+
+                    <span class="quick-contact-text">
+
+                        <strong>
+                            Call
+                        </strong>
+
+                        <span>
+                            +91 60034 58087
+                        </span>
+
+                    </span>
+
+                </a>
+
+
+                <!-- WHATSAPP -->
+
+                <a
+                    href="https://wa.me/916003458087"
+                    class="quick-contact-button"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Contact Infinity Academy on WhatsApp"
+                >
+
+                    <span
+                        class="quick-contact-icon"
+                        aria-hidden="true"
+                    >
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </span>
+
+                    <span class="quick-contact-text">
+
+                        <strong>
+                            WhatsApp
+                        </strong>
+
+                        <span>
+                            Chat with us
+                        </span>
+
+                    </span>
+
+                </a>
+
+
+                <!-- EMAIL -->
+
+                <a
+                    href="mailto:academyeduuniverse@gmail.com"
+                    class="quick-contact-button"
+                    aria-label="Email Infinity Academy"
+                >
+
+                    <span
+                        class="quick-contact-icon"
+                        aria-hidden="true"
+                    >
+                        <i class="fa-solid fa-envelope"></i>
+                    </span>
+
+                    <span class="quick-contact-text">
+
+                        <strong>
+                            Email
+                        </strong>
+
+                        <span>
+                            Send an email
+                        </span>
+
+                    </span>
+
+                </a>
+
+
+                <!-- COMPLAINT -->
+
+                <a
+                    href="mailto:academyeduuniverse@gmail.com?subject=Infinity%20Academy%20Complaint"
+                    class="quick-contact-button"
+                    aria-label="Send a complaint to Infinity Academy"
+                >
+
+                    <span
+                        class="quick-contact-icon"
+                        aria-hidden="true"
+                    >
+                        <i class="fa-solid fa-flag"></i>
+                    </span>
+
+                    <span class="quick-contact-text">
+
+                        <strong>
+                            Complaint
+                        </strong>
+
+                        <span>
+                            Submit complaint
+                        </span>
+
+                    </span>
+
+                </a>
+
+
+            </nav>
+
+
+
+            <!-- ==================================================
+                 MAIN TWO-COLUMN AREA
+                 ================================================== -->
+
+            <div class="contact-layout">
+
+
+                <!-- ==================================================
+                     LEFT CARD
+                     ================================================== -->
+
+                <section
+                    class="contact-card"
+                    aria-labelledby="contact-information-title"
+                >
+
+                    <div class="contact-card-content">
+
+
+                        <h2
+                            id="contact-information-title"
+                            class="contact-card-title"
+                        >
+                            Contact Information
+                        </h2>
+
+
+                        <p class="contact-card-description">
+                            Choose the contact method that is most
+                            convenient for you. All important contact
+                            options are available directly from this page.
+                        </p>
+
+
+
+                        <!-- CONTACT INFORMATION -->
+
+                        <div class="contact-information">
+
+
+                            <!-- ADDRESS -->
+
+                            <div
+                                class="contact-information-item"
+                            >
+
+                                <span
+                                    class="contact-information-icon"
+                                    aria-hidden="true"
+                                >
+                                    <i
+                                        class="fa-solid fa-location-dot"
+                                    ></i>
+                                </span>
+
+                                <div
+                                    class="contact-information-content"
+                                >
+
+                                    <strong>
+                                        Address
+                                    </strong>
+
+                                    <span>
+                                        Bhutuni Duba,
+                                        Udalguri, Assam, India
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- PHONE -->
+
+                            <div
+                                class="contact-information-item"
+                            >
+
+                                <span
+                                    class="contact-information-icon"
+                                    aria-hidden="true"
+                                >
+                                    <i
+                                        class="fa-solid fa-phone"
+                                    ></i>
+                                </span>
+
+                                <div
+                                    class="contact-information-content"
+                                >
+
+                                    <strong>
+                                        Phone
+                                    </strong>
+
+                                    <a
+                                        href="tel:+916003458087"
+                                    >
+                                        +91 60034 58087
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- EMAIL -->
+
+                            <div
+                                class="contact-information-item"
+                            >
+
+                                <span
+                                    class="contact-information-icon"
+                                    aria-hidden="true"
+                                >
+                                    <i
+                                        class="fa-solid fa-envelope"
+                                    ></i>
+                                </span>
+
+                                <div
+                                    class="contact-information-content"
+                                >
+
+                                    <strong>
+                                        Email
+                                    </strong>
+
+                                    <a
+                                        href="mailto:academyeduuniverse@gmail.com"
+                                    >
+                                        academyeduuniverse@gmail.com
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- OFFICE HOURS -->
+
+                            <div
+                                class="contact-information-item"
+                            >
+
+                                <span
+                                    class="contact-information-icon"
+                                    aria-hidden="true"
+                                >
+                                    <i
+                                        class="fa-solid fa-clock"
+                                    ></i>
+                                </span>
+
+                                <div
+                                    class="contact-information-content"
+                                >
+
+                                    <strong>
+                                        Office Hours
+                                    </strong>
+
+                                    <span>
+                                        Monday – Friday:
+                                        9:00 AM – 6:00 PM
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- ==================================================
+                             DIRECT CONTACT BUTTONS
+                             ================================================== -->
+
+                        <div
+                            class="direct-contact-grid"
+                            aria-label="Direct contact methods"
+                        >
+
+
+                            <a
+                                href="tel:+916003458087"
+                                class="direct-contact-button direct-call"
+                            >
+
+                                <i
+                                    class="fa-solid fa-phone"
+                                    aria-hidden="true"
+                                ></i>
+
+                                Call Academy
+
+                            </a>
+
+
+                            <a
+                                href="https://wa.me/916003458087"
+                                class="direct-contact-button direct-whatsapp"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+
+                                <i
+                                    class="fa-brands fa-whatsapp"
+                                    aria-hidden="true"
+                                ></i>
+
+                                WhatsApp
+
+                            </a>
+
+
+                            <a
+                                href="mailto:academyeduuniverse@gmail.com"
+                                class="direct-contact-button direct-email"
+                            >
+
+                                <i
+                                    class="fa-solid fa-envelope"
+                                    aria-hidden="true"
+                                ></i>
+
+                                Send Email
+
+                            </a>
+
+
+                            <a
+                                href="mailto:academyeduuniverse@gmail.com?subject=Infinity%20Academy%20Complaint"
+                                class="direct-contact-button direct-complaint"
+                            >
+
+                                <i
+                                    class="fa-solid fa-triangle-exclamation"
+                                    aria-hidden="true"
+                                ></i>
+
+                                Submit Complaint
+
+                            </a>
+
+
+                        </div>
+
+
+
+                        <!-- ==================================================
+                             COMPLAINT PANEL
+                             ================================================== -->
+
+                        <div class="complaint-panel">
+
+                            <h3 class="complaint-panel-title">
+                                Complaint &amp; Feedback
+                            </h3>
+
+                            <p class="complaint-panel-description">
+                                For complaints, feedback, payment issues,
+                                admission problems, technical issues, or
+                                other concerns, send an email directly
+                                to the academy.
+                            </p>
+
+                            <div class="complaint-email-box">
+
+                                <span
+                                    class="complaint-email-icon"
+                                    aria-hidden="true"
+                                >
+                                    <i
+                                        class="fa-solid fa-envelope"
+                                    ></i>
+                                </span>
+
+                                <a
+                                    class="complaint-email-link"
+                                    href="mailto:academyeduuniverse@gmail.com?subject=Infinity%20Academy%20Complaint"
+                                >
+                                    academyeduuniverse@gmail.com
+                                </a>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- ==================================================
+                     RIGHT CARD
+                     ================================================== -->
+
+                <section
+                    class="contact-card"
+                    aria-labelledby="contact-action-title"
+                >
+
+                    <div class="contact-card-content">
+
+
+                        <div class="contact-action-header">
+
+                            <div
+                                class="contact-action-header-content"
+                            >
+
+                                <h2
+                                    id="contact-action-title"
+                                    class="contact-card-title"
+                                >
+                                    How Can We Help?
+                                </h2>
+
+                                <p
+                                    class="contact-card-description"
+                                >
+                                    Select the option that best matches
+                                    your requirement.
+                                </p>
+
+                            </div>
+
+
+                            <span
+                                class="contact-badge"
+                                aria-label="Contact available"
+                            >
+
+                                <i
+                                    class="fa-solid fa-circle"
+                                    aria-hidden="true"
+                                ></i>
+
+                                Available
+
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- ==================================================
+                             ACTION LIST
+                             ================================================== -->
+
+                        <div class="contact-action-list">
+
+
+                            <!-- ADMISSION -->
+
+                            <a
+                                href="mailto:academyeduuniverse@gmail.com?subject=Infinity%20Academy%20Admission%20Enquiry"
+                                class="contact-action"
+                            >
+
+                                <span
+                                    class="contact-action-icon"
+                                    aria-hidden="true"
+                                >
+                                    <i
+                                        class="fa-solid fa-user-plus"
+                                    ></i>
+                                </span>
+
+                                <span
+                                    class="contact-action-content"
+                                >
+
+                                    <strong>
+                                        Admission Enquiry
+                                    </strong>
+
+                                    <span>
+                                        Ask about courses, admission,
+                                        eligibility, batches, and
+                                        registration.
+                                    </span>
+
+                                </span>
+
+                                <span
+                                    class="contact-action-arrow"
+                                    aria-hidden="true"
+                                >
+                                    <i
+                                        class="fa-solid fa-chevron-right"
+                                    ></i>
+                                </span>
+
+                            </a>
+
+
+
+                            <!-- PAYMENT -->
+
+                            <a
+                                href="mailto:academyeduuniverse@gmail.com?subject=Infinity%20Academy%20Payment%20Issue"
+                                class="contact-action"
+                            >
+
+                                <span
+                                    class="contact-action-icon"
+                                    aria-hidden="true"
+                                >
+                                    <i
+                                        class="fa-solid fa-credit-card"
+                                    ></i>
+                                </span>
+
+                                <span
+                                    class="contact-action-content"
+                                >
+
+                                    <strong>
+                                        Payment Issue
+                                    </strong>
+
+                                    <span>
+                                        Report a payment, fee, receipt,
+                                        or transaction-related problem.
+                                    </span>
+
+                                </span>
+
+                                <span
+                                    class="contact-action-arrow"
+                                    aria-hidden="true"
+                                >
+                                    <i
+                                        class="fa-solid fa-chevron-right"
+                                    ></i>
+                                </span>
+
+                            </a>
+
+
+
+                            <!-- TECHNICAL -->
+
+                            <a
+                                href="mailto:academyeduuniverse@gmail.com?subject=Infinity%20Academy%20Technical%20Issue"
+                                class="contact-action"
+                            >
+
+                                <span
+                                    class="contact-action-icon"
+                                    aria-hidden="true"
+                                >
+                                    <i
+                                        class="fa-solid fa-laptop"
+                                    ></i>
+                                </span>
+
+                                <span
+                                    class="contact-action-content"
+                                >
+
+                                    <strong>
+                                        Technical Issue
+                                    </strong>
+
+                                    <span>
+                                        Report website, application,
+                                        login, or technical problems.
+                                    </span>
+
+                                </span>
+
+                                <span
+                                    class="contact-action-arrow"
+                                    aria-hidden="true"
+                                >
+                                    <i
+                                        class="fa-solid fa-chevron-right"
+                                    ></i>
+                                </span>
+
+                            </a>
+
+
+
+                            <!-- GENERAL -->
+
+                            <a
+                                href="mailto:academyeduuniverse@gmail.com?subject=Infinity%20Academy%20General%20Enquiry"
+                                class="contact-action"
+                            >
+
+                                <span
+                                    class="contact-action-icon"
+                                    aria-hidden="true"
+                                >
+                                    <i
+                                        class="fa-solid fa-circle-question"
+                                    ></i>
+                                </span>
+
+                                <span
+                                    class="contact-action-content"
+                                >
+
+                                    <strong>
+                                        General Enquiry
+                                    </strong>
+
+                                    <span>
+                                        Contact us for general
+                                        questions or information.
+                                    </span>
+
+                                </span>
+
+                                <span
+                                    class="contact-action-arrow"
+                                    aria-hidden="true"
+                                >
+                                    <i
+                                        class="fa-solid fa-chevron-right"
+                                    ></i>
+                                </span>
+
+                            </a>
+
+
+
+                            <!-- SUGGESTION -->
+
+                            <a
+                                href="mailto:academyeduuniverse@gmail.com?subject=Infinity%20Academy%20Suggestion"
+                                class="contact-action"
+                            >
+
+                                <span
+                                    class="contact-action-icon"
+                                    aria-hidden="true"
+                                >
+                                    <i
+                                        class="fa-solid fa-lightbulb"
+                                    ></i>
+                                </span>
+
+                                <span
+                                    class="contact-action-content"
+                                >
+
+                                    <strong>
+                                        Suggestion &amp; Feedback
+                                    </strong>
+
+                                    <span>
+                                        Share your suggestions
+                                        and ideas with the academy.
+                                    </span>
+
+                                </span>
+
+                                <span
+                                    class="contact-action-arrow"
+                                    aria-hidden="true"
+                                >
+                                    <i
+                                        class="fa-solid fa-chevron-right"
+                                    ></i>
+                                </span>
+
+                            </a>
+
+
+
+                            <!-- COMPLAINT -->
+
+                            <a
+                                href="mailto:academyeduuniverse@gmail.com?subject=Infinity%20Academy%20Complaint"
+                                class="contact-action"
+                            >
+
+                                <span
+                                    class="contact-action-icon"
+                                    aria-hidden="true"
+                                >
+                                    <i
+                                        class="fa-solid fa-flag"
+                                    ></i>
+                                </span>
+
+                                <span
+                                    class="contact-action-content"
+                                >
+
+                                    <strong>
+                                        Submit a Complaint
+                                    </strong>
+
+                                    <span>
+                                        Send a complaint directly
+                                        to the academy email address.
+                                    </span>
+
+                                </span>
+
+                                <span
+                                    class="contact-action-arrow"
+                                    aria-hidden="true"
+                                >
+                                    <i
+                                        class="fa-solid fa-chevron-right"
+                                    ></i>
+                                </span>
+
+                            </a>
+
+
+                        </div>
+
+
+
+                        <!-- ==================================================
+                             NOTICE
+                             ================================================== -->
+
+                        <div class="contact-notice">
+
+                            <span
+                                class="contact-notice-icon"
+                                aria-hidden="true"
+                            >
+                                <i
+                                    class="fa-solid fa-circle-info"
+                                ></i>
+                            </span>
+
+                            <div
+                                class="contact-notice-content"
+                            >
+
+                                <strong>
+                                    Important
+                                </strong>
+
+                                <p>
+                                    Email options open your device's
+                                    configured email application.
+                                    You can review the message before
+                                    sending it.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </section>
+
+
+            </div>
+
+
+
+            <!-- ========================================================
+                 FAQ
+                 ======================================================== -->
+
+            <section
+                class="contact-faq-section"
+                aria-labelledby="contact-faq-title"
+            >
+
+                <div class="contact-section-heading">
+
+                    <h2 id="contact-faq-title">
+                        Frequently Asked Questions
+                    </h2>
+
+                    <p>
+                        Find quick answers to common questions
+                        about contacting Infinity Academy.
+                    </p>
+
+                </div>
+
+
+                <div class="contact-faq-grid">
+
+
+                    <details class="contact-faq-item">
+
+                        <summary>
+                            How can I contact Infinity Academy?
+                        </summary>
+
+                        <div class="contact-faq-answer">
+
+                            You can call
+                            <a href="tel:+916003458087">
+                                +91 60034 58087
+                            </a>,
+                            contact us through WhatsApp,
+                            or email
+                            <a
+                                href="mailto:academyeduuniverse@gmail.com"
+                            >
+                                academyeduuniverse@gmail.com
+                            </a>.
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="contact-faq-item">
+
+                        <summary>
+                            Where should I send a complaint?
+                        </summary>
+
+                        <div class="contact-faq-answer">
+
+                            All complaints can be sent directly to
+                            <a
+                                href="mailto:academyeduuniverse@gmail.com?subject=Infinity%20Academy%20Complaint"
+                            >
+                                academyeduuniverse@gmail.com
+                            </a>.
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="contact-faq-item">
+
+                        <summary>
+                            How can I report a payment problem?
+                        </summary>
+
+                        <div class="contact-faq-answer">
+
+                            Select the
+                            <strong>Payment Issue</strong>
+                            option above. Your email application
+                            will open with the appropriate subject.
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="contact-faq-item">
+
+                        <summary>
+                            How can I ask about admission?
+                        </summary>
+
+                        <div class="contact-faq-answer">
+
+                            Select
+                            <strong>Admission Enquiry</strong>
+                            or call the academy directly at
+                            <a href="tel:+916003458087">
+                                +91 60034 58087
+                            </a>.
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="contact-faq-item">
+
+                        <summary>
+                            Can I contact the academy through WhatsApp?
+                        </summary>
+
+                        <div class="contact-faq-answer">
+
+                            Yes. Click the WhatsApp button
+                            to start a direct conversation
+                            with the academy.
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="contact-faq-item">
+
+                        <summary>
+                            Does the website send emails directly?
+                        </summary>
+
+                        <div class="contact-faq-answer">
+
+                            The contact options on this page use
+                            your device's configured email application.
+                            They do not depend on the previous
+                            website SMTP contact form.
+
+                        </div>
+
+                    </details>
+
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ========================================================
+                 FINAL CONTACT PANEL
+                 ======================================================== -->
+
+            <section
+                class="contact-final-panel"
+                aria-labelledby="final-contact-title"
+            >
+
+                <h2 id="final-contact-title">
+                    Need Help Right Now?
+                </h2>
+
+                <p>
+                    For the quickest response, call the academy
+                    or contact us through WhatsApp. For complaints
+                    and written communication, use the academy email.
+                </p>
+
+
+                <div class="final-buttons">
+
+                    <a
+                        href="tel:+916003458087"
+                        class="final-button"
+                    >
+
+                        <i
+                            class="fa-solid fa-phone"
+                            aria-hidden="true"
+                        ></i>
+
+                        Call Now
+
+                    </a>
+
+
+                    <a
+                        href="https://wa.me/916003458087"
+                        class="final-button"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+
+                        <i
+                            class="fa-brands fa-whatsapp"
+                            aria-hidden="true"
+                        ></i>
+
+                        WhatsApp
+
+                    </a>
+
+
+                    <a
+                        href="mailto:academyeduuniverse@gmail.com"
+                        class="final-button"
+                    >
+
+                        <i
+                            class="fa-solid fa-envelope"
+                            aria-hidden="true"
+                        ></i>
+
+                        Email Us
+
+                    </a>
+
+
+                    <a
+                        href="mailto:academyeduuniverse@gmail.com?subject=Infinity%20Academy%20Complaint"
+                        class="final-button"
+                    >
+
+                        <i
+                            class="fa-solid fa-flag"
+                            aria-hidden="true"
+                        ></i>
+
+                        Complaint
+
+                    </a>
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+</div>
+
+{% endblock %}

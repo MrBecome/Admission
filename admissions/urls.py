@@ -36,4 +36,7 @@ urlpatterns = [
 
     # ---- Search Autocomplete ----
     path('autocomplete/', views.autocomplete_search, name='autocomplete_search'),
+
+    # ---- Contact page (NEW) ----
+    path('contact/', views.contact, name='contact'),
 ]
