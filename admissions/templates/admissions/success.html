@@ -2,59 +2,223 @@
 {% load static %}
 
 {% block content %}
-<div style="display: flex; flex-direction: column; min-height: 80vh;">
-    <div class="container" style="max-width: 700px; margin: 0 auto; flex: 1 0 auto;">
+<div class="success-page-wrapper">
+    <div class="container success-container">
 
-        <!-- ========================================== -->
-        <!--  SINGLE SUCCESS MESSAGE (ONLY ONE)          -->
-        <!-- ========================================== -->
-        <div class="notice notice-success" style="max-width:640px; margin:0 auto 1.5rem;">
-            ✅ Application received! Check your email for your Application ID and a link to set your student-portal password.
+        <!-- ========================================================== -->
+        <!-- SINGLE SUCCESS MESSAGE (ONLY ONE – NO DUPLICATE)           -->
+        <!-- ========================================================== -->
+        <div class="notice notice-success">
+            ✅ Application received! Check your email for your <strong>Application ID</strong>, <strong>username</strong> and <strong>password setup link</strong>.
         </div>
 
-        <!-- ========================================== -->
-        <!--  APPLICATION STATUS PROFILE (PASS student)  -->
-        <!-- ========================================== -->
+        <!-- ========================================================== -->
+        <!-- APPLICATION STATUS CARD (includes student details)           -->
+        <!-- ========================================================== -->
         {% include 'admissions/_application_status.html' with student=student eyebrow_label="Admission receipt" %}
 
-        <!-- ========================================== -->
-        <!--  QR PAYMENT IMAGE                           -->
-        <!-- ========================================== -->
+        <!-- ========================================================== -->
+        <!-- QR PAYMENT IMAGE (only if not verified)                     -->
+        <!-- ========================================================== -->
         {% if qr_base64 %}
             {% if not student.payment_status or student.payment_verification != 'verified' %}
-                <div style="text-align:center; margin: 1.5rem 0;">
-                    <p style="margin-bottom:0.5rem; color: #475569;">Scan this QR to pay</p>
-                    <img src="data:image/png;base64,{{ qr_base64 }}" alt="Payment QR" style="max-width:260px; width:100%; border:1px solid #e2e8f0; padding:8px; border-radius:8px; background:#fff; display:inline-block;">
+                <div class="qr-section">
+                    <p class="qr-label">Scan this QR to pay</p>
+                    <img src="data:image/png;base64,{{ qr_base64 }}" alt="Payment QR" class="qr-image">
                 </div>
             {% endif %}
         {% endif %}
 
-        <!-- ========================================== -->
-        <!--  RECEIPT LINK (ONLY IF VERIFIED)            -->
-        <!-- ========================================== -->
+        <!-- ========================================================== -->
+        <!-- RECEIPT LINK (only if payment verified)                     -->
+        <!-- ========================================================== -->
         {% if student.payment_status and student.payment_verification == 'verified' %}
-            <div style="text-align:center; margin: 1.5rem 0;">
-                <a href="{% url 'payment_receipt' student.application_id %}" class="btn btn-fill" style="background:#0A2540; color:#fff; padding:0.6rem 1.5rem; border-radius:100px; text-decoration:none; display:inline-block; font-weight:600;">
+            <div class="receipt-section">
+                <a href="{% url 'payment_receipt' student.application_id %}" class="btn btn-primary">
                     📄 View &amp; Print Receipt
                 </a>
             </div>
         {% endif %}
 
-        <!-- ========================================== -->
-        <!--  BOTTOM ACTION LINKS                        -->
-        <!-- ========================================== -->
-        <p style="text-align:center; margin-top: 2rem;">
-            <a href="{% url 'admission_form' %}" class="btn">Submit another application</a>
-            <a href="{% url 'student_login' %}" class="btn btn-fill">Sign in to track this application</a>
-        </p>
+        <!-- ========================================================== -->
+        <!-- BOTTOM ACTION LINKS                                          -->
+        <!-- ========================================================== -->
+        <div class="action-links">
+            <a href="{% url 'admission_form' %}" class="btn btn-outline">Submit another application</a>
+            <a href="{% url 'student_login' %}" class="btn btn-primary">Sign in to track this application</a>
+        </div>
 
     </div>
 </div>
 
 <style>
-    html, body { height: 100%; margin: 0; }
-    body { display: flex; flex-direction: column; }
-    main { flex: 1 0 auto; }
-    footer.site-footer { flex-shrink: 0; }
+    /* ================================================================
+       SUCCESS PAGE – ADVANCED & PERFECT
+    ================================================================ */
+    .success-page-wrapper {
+        display: flex;
+        flex-direction: column;
+        min-height: 80vh;
+        padding: 2rem 1rem;
+        background: #f8fafc;
+    }
+
+    .success-container {
+        max-width: 720px;
+        margin: 0 auto;
+        width: 100%;
+        flex: 1 0 auto;
+    }
+
+    /* ----- Notice (success message) ----- */
+    .notice {
+        padding: 1rem 1.5rem;
+        border-radius: 12px;
+        font-size: 1.05rem;
+        line-height: 1.6;
+        background: #ffffff;
+        border-left: 5px solid #22c55e;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        margin-bottom: 2rem;
+    }
+
+    .notice-success {
+        background: #f0fdf4;
+        border-left-color: #22c55e;
+        color: #166534;
+    }
+
+    .notice strong {
+        color: #0b2945;
+    }
+
+    /* ----- QR Section ----- */
+    .qr-section {
+        text-align: center;
+        margin: 2rem 0;
+        padding: 1.5rem;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    .qr-label {
+        margin-bottom: 0.75rem;
+        color: #475569;
+        font-weight: 500;
+        font-size: 0.95rem;
+    }
+
+    .qr-image {
+        max-width: 220px;
+        width: 100%;
+        height: auto;
+        padding: 8px;
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        display: inline-block;
+        transition: transform 0.2s ease;
+    }
+
+    .qr-image:hover {
+        transform: scale(1.02);
+    }
+
+    /* ----- Receipt Section ----- */
+    .receipt-section {
+        text-align: center;
+        margin: 2rem 0;
+    }
+
+    /* ----- Action Links ----- */
+    .action-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 2.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    /* ----- Buttons ----- */
+    .btn {
+        display: inline-block;
+        padding: 0.7rem 1.8rem;
+        border-radius: 100px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+        border: 2px solid transparent;
+        cursor: pointer;
+        text-align: center;
+        min-width: 180px;
+    }
+
+    .btn-primary {
+        background: #0b2945;
+        color: #ffffff;
+        border-color: #0b2945;
+        box-shadow: 0 4px 12px rgba(11, 41, 69, 0.15);
+    }
+
+    .btn-primary:hover {
+        background: #1a3a5e;
+        border-color: #1a3a5e;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(11, 41, 69, 0.2);
+    }
+
+    .btn-outline {
+        background: transparent;
+        color: #0b2945;
+        border-color: #d5e0ea;
+    }
+
+    .btn-outline:hover {
+        background: #f1f5f9;
+        border-color: #c9a24d;
+        transform: translateY(-2px);
+    }
+
+    /* ----- Responsive Tweaks ----- */
+    @media (max-width: 600px) {
+        .success-container {
+            padding: 0;
+        }
+        .notice {
+            font-size: 0.95rem;
+            padding: 0.9rem 1.2rem;
+        }
+        .qr-image {
+            max-width: 160px;
+        }
+        .action-links {
+            flex-direction: column;
+            align-items: center;
+        }
+        .btn {
+            width: 100%;
+            min-width: unset;
+        }
+    }
+
+    /* Override any parent layout issues */
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+    main {
+        flex: 1 0 auto;
+    }
+    footer.site-footer {
+        flex-shrink: 0;
+    }
 </style>
 {% endblock %}

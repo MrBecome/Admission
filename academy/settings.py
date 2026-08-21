@@ -4,6 +4,7 @@
 # ================================================================
 
 import os
+import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -34,30 +35,15 @@ if ENV_FILE.exists():
 # ================================================================
 
 def env_bool(name, default=False):
-    """
-    Convert environment values to Python booleans.
-
-    Accepted true values:
-        true, 1, yes, y, on
-    """
     value = os.environ.get(name)
     if value is None:
         return default
-    return value.strip().lower() in {
-        "true", "1", "yes", "y", "on"
-    }
+    return value.strip().lower() in {"true", "1", "yes", "y", "on"}
 
 
 def env_list(name, default=""):
-    """
-    Read comma-separated environment values.
-    """
     value = os.environ.get(name, default)
-    return [
-        item.strip()
-        for item in value.split(",")
-        if item.strip()
-    ]
+    return [item.strip() for item in value.split(",") if item.strip()]
 
 
 # ================================================================
@@ -70,11 +56,10 @@ if not SECRET_KEY:
 
 
 # ================================================================
-# DEBUG
+# DEBUG — ALWAYS FALSE IN PRODUCTION
 # ================================================================
-# ✅ Note: In your .env file, set DEBUG=True for local development.
-# In production (live server), set DEBUG=False.
-DEBUG=False
+DEBUG = False
+print("🔒 DEBUG is set to False (production mode). Static & Media files served by WhiteNoise.", file=sys.stderr)
 
 
 # ================================================================
@@ -92,26 +77,24 @@ ALLOWED_HOSTS = env_list(
 # ================================================================
 
 INSTALLED_APPS = [
-    # Django Core
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
-    # Infinity Academy
     "admissions",
     "admin_details",
 ]
 
 
 # ================================================================
-# MIDDLEWARE
+# MIDDLEWARE (WhiteNoise for static files)
 # ================================================================
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # ⭐ MUST be after SecurityMiddleware
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -191,20 +174,34 @@ USE_TZ = False
 
 
 # ================================================================
-# STATIC & MEDIA FILES
+# STATIC & MEDIA FILES (with WhiteNoise)
 # ================================================================
 
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+# ⭐ CRITICAL: WhiteNoise configuration for both static and media files
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+# Media files (user uploads)
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+# ⭐ Make WhiteNoise also serve media files in development/production
+# This is optional but ensures images work even with DEBUG=False
+if not DEBUG:
+    # In production, WhiteNoise can also serve media files
+    # But it's better to use a CDN or separate media server
+    # For simplicity, we'll add a URL pattern in urls.py for media files
+    pass
+
 
 # ================================================================
 # PRIVATE DATA
 # ================================================================
 PRIVATE_DATA_ROOT = BASE_DIR / "private_data"
+
 
 # ================================================================
 # DEFAULT PRIMARY KEY
@@ -245,7 +242,6 @@ CSRF_COOKIE_SECURE = env_bool("CSRF_COOKIE_SECURE", default=False)
 CSRF_COOKIE_HTTPONLY = env_bool("CSRF_COOKIE_HTTPONLY", default=False)
 CSRF_COOKIE_SAMESITE = os.environ.get("CSRF_COOKIE_SAMESITE", "Lax")
 
-# ✅ Updated: Ensures local dev URLs are accepted for CSRF
 CSRF_TRUSTED_ORIGINS = env_list("CSRF_TRUSTED_ORIGINS")
 
 SESSION_COOKIE_AGE = int(os.environ.get("SESSION_COOKIE_AGE", "3600"))

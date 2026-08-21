@@ -65,6 +65,18 @@ logger = logging.getLogger(__name__)
 
 
 # ============================================================
+# CUSTOM 404 HANDLER (prevents URL list exposure)
+# ============================================================
+
+def custom_404(request, exception):
+    """
+    Friendly 404 page that does NOT reveal the URL list.
+    This is used as handler404 in urls.py.
+    """
+    return render(request, "admissions/404.html", status=404)
+
+
+# ============================================================
 # DECORATORS
 # ============================================================
 
