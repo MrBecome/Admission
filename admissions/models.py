@@ -179,3 +179,28 @@ class FailedEmail(models.Model):
 
     def __str__(self):
         return f"Failed email for {self.student.full_name} ({'resolved' if self.resolved else 'pending'})"
+
+
+# ================================================================
+# ADMIN ACCOUNT (PROXY MODEL)
+# ================================================================
+#
+# NOT a new database table - this is a proxy over Django's built-in
+# auth.User model. It exists only so the admin site can show a
+# separate "Admin Details" section for superuser accounts, kept apart
+# from the "Users" section (which now shows students only - see
+# RestrictedUserAdmin in admin.py).
+#
+# Accounts here are created ONLY via:
+#     python manage.py createsuperuser
+#
+# AdminAccountAdmin (in admin.py) blocks add/change/delete on this
+# model entirely, so a superuser account can never be created, edited,
+# or have its password changed through this admin screen - terminal
+# access is the only way in, by design.
+class AdminAccount(User):
+    class Meta:
+        proxy = True
+        app_label = "admin_details"
+        verbose_name = "Admin Account"
+        verbose_name_plural = "Admin Accounts"

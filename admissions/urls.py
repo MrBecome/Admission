@@ -17,7 +17,7 @@ urlpatterns = [
     path('profile/', views.student_profile, name='student_profile'),
     path('track/logout/', views.student_logout, name='student_logout'),
 
-    # ---- Payment receipt (✅ CORRECTED: uses Application ID string) ----
+    # ---- Payment receipt ----
     path('receipt/<str:app_id>/', views.payment_receipt, name='payment_receipt'),
 
     # ---- Admin panel ----
@@ -37,6 +37,6 @@ urlpatterns = [
     # ---- Search Autocomplete ----
     path('autocomplete/', views.autocomplete_search, name='autocomplete_search'),
 
-    # ---- Contact page (NEW) ----
+    # ---- Contact page ----
     path('contact/', views.contact, name='contact'),
 ]

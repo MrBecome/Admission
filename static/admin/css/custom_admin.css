@@ -1,0 +1,300 @@
+
+/* ============================================================
+   Infinity Academy — Django Admin Custom UI
+   ============================================================ */
+
+:root {
+    --ia-navy: #0a2540;
+    --ia-navy-2: #123957;
+    --ia-gold: #c9a24d;
+    --ia-bg: #f4f7fa;
+    --ia-card: #ffffff;
+    --ia-border: #d9e3ec;
+    --ia-text: #16324a;
+    --ia-muted: #6f8294;
+    --ia-success: #198754;
+    --ia-danger: #dc3545;
+    --ia-warning: #b58105;
+}
+
+body {
+    background: var(--ia-bg) !important;
+    color: var(--ia-text);
+}
+
+/* Header */
+#header {
+    background: linear-gradient(135deg, var(--ia-navy), var(--ia-navy-2)) !important;
+    border-bottom: 3px solid var(--ia-gold);
+    min-height: 58px;
+}
+
+#branding h1,
+#branding h1 a {
+    color: #fff !important;
+    font-weight: 700;
+}
+
+#user-tools {
+    color: rgba(255,255,255,.82);
+}
+
+#user-tools a {
+    color: #fff !important;
+}
+
+/* Main content */
+#content {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+#content-main {
+    min-width: 0;
+}
+
+/* Breadcrumbs */
+div.breadcrumbs {
+    background: #fff !important;
+    color: var(--ia-muted) !important;
+    border: 1px solid var(--ia-border);
+    border-radius: 10px;
+    margin-bottom: 18px;
+    padding: 12px 16px;
+}
+
+div.breadcrumbs a {
+    color: var(--ia-navy) !important;
+}
+
+/* Modules / cards */
+.module {
+    border: 1px solid var(--ia-border) !important;
+    border-radius: 12px !important;
+    overflow: hidden;
+    background: var(--ia-card);
+    box-shadow: 0 5px 18px rgba(10,37,64,.06);
+    margin-bottom: 20px;
+}
+
+.module h2,
+.module caption,
+.inline-group h2 {
+    background: var(--ia-navy) !important;
+    color: #fff !important;
+    font-weight: 700;
+}
+
+.module h2 a,
+.module caption a {
+    color: #fff !important;
+}
+
+/* Tables */
+#result_list {
+    border: 1px solid var(--ia-border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+}
+
+#result_list thead th {
+    background: #eef3f7 !important;
+    color: var(--ia-navy) !important;
+    border-bottom: 1px solid var(--ia-border);
+    font-weight: 700;
+}
+
+#result_list tbody tr:nth-child(even) {
+    background: #fbfcfd;
+}
+
+#result_list tbody tr:hover {
+    background: #f0f6fa;
+}
+
+#result_list td,
+#result_list th {
+    padding: 10px 12px;
+    vertical-align: middle;
+}
+
+/* Links */
+a:link,
+a:visited {
+    color: #0a4f80;
+}
+
+a:hover {
+    color: #96742f;
+}
+
+/* Buttons */
+.button,
+input[type="submit"],
+input[type="button"],
+.submit-row input,
+button[type="submit"] {
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+}
+
+.button.default,
+input[type="submit"].default,
+.submit-row input.default {
+    background: var(--ia-navy) !important;
+    border-color: var(--ia-navy) !important;
+}
+
+.button.default:hover,
+input[type="submit"].default:hover {
+    background: var(--ia-navy-2) !important;
+}
+
+/* Search */
+#toolbar {
+    border: 1px solid var(--ia-border);
+    border-radius: 12px;
+    background: #fff;
+    padding: 14px;
+    margin-bottom: 16px;
+}
+
+#searchbar {
+    border-radius: 8px;
+    border: 1px solid #cbd8e3;
+    min-height: 38px;
+}
+
+/* Filters */
+#changelist-filter {
+    border: 1px solid var(--ia-border);
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 5px 18px rgba(10,37,64,.05);
+}
+
+#changelist-filter h2 {
+    background: var(--ia-navy);
+    color: #fff;
+    border-radius: 11px 11px 0 0;
+}
+
+/* Forms */
+.form-row {
+    border-bottom: 1px solid #edf1f4;
+    padding: 14px 12px;
+}
+
+fieldset.module {
+    margin-bottom: 20px;
+}
+
+fieldset.collapse h2 {
+    cursor: pointer;
+}
+
+input,
+textarea,
+select {
+    border-color: #cbd8e3 !important;
+    border-radius: 8px !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--ia-navy) !important;
+    box-shadow: 0 0 0 3px rgba(10,37,64,.08) !important;
+}
+
+/* Messages */
+.messagelist li {
+    border-radius: 9px !important;
+    margin-bottom: 8px !important;
+}
+
+/* Dashboard app list */
+#content-main .module table {
+    width: 100%;
+}
+
+#content-main .module table td,
+#content-main .module table th {
+    padding: 11px 13px;
+}
+
+/* Pagination */
+.paginator {
+    background: #fff;
+    border: 1px solid var(--ia-border);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+/* Object tools */
+.object-tools a {
+    border-radius: 8px !important;
+    background: var(--ia-navy) !important;
+}
+
+.object-tools a:hover {
+    background: var(--ia-navy-2) !important;
+}
+
+/* Status badges from admin.py */
+span[style*="background:#198754"] {
+    box-shadow: 0 2px 7px rgba(25,135,84,.18) !important;
+}
+
+span[style*="background:#dc3545"] {
+    box-shadow: 0 2px 7px rgba(220,53,69,.18) !important;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    #content {
+        padding: 18px;
+    }
+}
+
+@media (max-width: 767px) {
+    #header {
+        padding: 10px 14px;
+    }
+
+    #content {
+        padding: 12px;
+    }
+
+    .module {
+        overflow-x: auto;
+    }
+
+    #result_list {
+        min-width: 850px;
+    }
+
+    #changelist-filter {
+        margin-top: 15px;
+    }
+
+    .object-tools {
+        float: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+    }
+}
+
+@media (max-width: 480px) {
+    #content {
+        padding: 8px;
+    }
+
+    div.breadcrumbs {
+        border-radius: 8px;
+        padding: 9px 11px;
+    }
+}

@@ -1029,6 +1029,7 @@ Infinity Academy | Registrar & Admissions Office
 
 /* =====================================================================
    IMPORTANT NOTICE BAR
+   (single professional oxford-blue bar — replaces old bar + grid combo)
    ===================================================================== */
 
 .ia-notice-bar {
@@ -1040,7 +1041,7 @@ Infinity Academy | Registrar & Admissions Office
         100%;
 
     min-height:
-        58px;
+        64px;
 
     display:
         flex;
@@ -1049,14 +1050,14 @@ Infinity Academy | Registrar & Admissions Office
         center;
 
     gap:
-        10px;
+        14px;
 
     padding:
-        8px 12px;
+        14px 18px;
 
     border:
         1px solid
-        var(--ia-border);
+        rgba(255,255,255,.08);
 
     border-left:
         4px solid
@@ -1066,13 +1067,17 @@ Infinity Academy | Registrar & Admissions Office
         var(--ia-radius-md);
 
     background:
-        var(--ia-white);
+        linear-gradient(
+            135deg,
+            var(--ia-navy),
+            var(--ia-navy-light)
+        );
 
     color:
-        var(--ia-navy);
+        #ffffff;
 
     box-shadow:
-        var(--ia-shadow-sm);
+        var(--ia-shadow-md);
 
     cursor:
         pointer;
@@ -1090,26 +1095,26 @@ Infinity Academy | Registrar & Admissions Office
 .ia-notice-bar:hover {
 
     transform:
-        translateY(-1px);
+        translateY(-2px);
 
     box-shadow:
-        var(--ia-shadow-md);
+        var(--ia-shadow-lg);
 
-    border-color:
-        #cbd8e5;
+    border-left-color:
+        var(--ia-gold-light);
 }
 
 
 .ia-notice-icon {
 
     width:
-        36px;
+        40px;
 
     height:
-        36px;
+        40px;
 
     flex:
-        0 0 36px;
+        0 0 40px;
 
     display:
         flex;
@@ -1124,13 +1129,13 @@ Infinity Academy | Registrar & Admissions Office
         50%;
 
     background:
-        var(--ia-gold-soft);
+        rgba(255,255,255,.12);
 
     color:
-        #9b7627;
+        var(--ia-gold-light);
 
     font-size:
-        .72rem;
+        .78rem;
 }
 
 
@@ -1150,13 +1155,13 @@ Infinity Academy | Registrar & Admissions Office
         block;
 
     color:
-        var(--ia-navy);
+        #ffffff;
 
     font-size:
         clamp(
-            .61rem,
-            1vw,
-            .75rem
+            .66rem,
+            1.05vw,
+            .82rem
         );
 
     font-weight:
@@ -1170,20 +1175,20 @@ Infinity Academy | Registrar & Admissions Office
         block;
 
     margin-top:
-        2px;
+        3px;
 
     color:
-        var(--ia-muted);
+        rgba(255,255,255,.72);
 
     font-size:
         clamp(
-            .52rem,
-            .9vw,
-            .66rem
+            .55rem,
+            .95vw,
+            .7rem
         );
 
     line-height:
-        1.4;
+        1.5;
 
     overflow:
         hidden;
@@ -1196,19 +1201,13 @@ Infinity Academy | Registrar & Admissions Office
 }
 
 
-.ia-notice-arrow {
-
-    width:
-        30px;
-
-    height:
-        30px;
+.ia-notice-more {
 
     flex:
-        0 0 30px;
+        0 0 auto;
 
     display:
-        flex;
+        inline-flex;
 
     align-items:
         center;
@@ -1216,192 +1215,67 @@ Infinity Academy | Registrar & Admissions Office
     justify-content:
         center;
 
-    border-radius:
-        50%;
-
-    background:
-        var(--ia-surface-soft);
-
-    color:
-        var(--ia-navy);
-
-    font-size:
-        .58rem;
-}
-
-
-/* =====================================================================
-   ANNOUNCEMENTS GRID
-   ===================================================================== */
-
-.ia-announcements {
-
-    display:
-        grid;
-
-    grid-template-columns:
-        repeat(
-            2,
-            minmax(0,1fr)
-        );
-
-    gap:
-        11px;
-
-    margin-top:
-        12px;
-}
-
-
-.ia-announcement {
-
-    min-width:
-        0;
-
-    display:
-        flex;
-
-    align-items:
-        flex-start;
-
-    gap:
-        11px;
+    min-height:
+        24px;
 
     padding:
-        13px;
+        4px 11px;
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(212,175,90,.18);
 
     border:
         1px solid
-        var(--ia-border);
-
-    border-radius:
-        var(--ia-radius-md);
-
-    background:
-        var(--ia-white);
-
-    box-shadow:
-        var(--ia-shadow-xs);
-
-    transition:
-        transform .2s ease,
-        box-shadow .2s ease;
-}
-
-
-.ia-announcement:hover {
-
-    transform:
-        translateY(-2px);
-
-    box-shadow:
-        var(--ia-shadow-md);
-}
-
-
-.ia-announcement-marker {
-
-    width:
-        34px;
-
-    height:
-        34px;
-
-    flex:
-        0 0 34px;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    border-radius:
-        50%;
-
-    background:
-        var(--ia-gold-soft);
+        rgba(212,175,90,.4);
 
     color:
-        #9b7627;
+        var(--ia-gold-light);
 
     font-size:
-        .63rem;
-}
-
-
-.ia-announcement-body {
-
-    min-width:
-        0;
-
-    flex:
-        1;
-}
-
-
-.ia-announcement-title {
-
-    display:
-        block;
-
-    color:
-        var(--ia-navy);
-
-    font-size:
-        clamp(
-            .64rem,
-            1vw,
-            .8rem
-        );
+        .52rem;
 
     font-weight:
         800;
 
-    line-height:
-        1.4;
+    white-space:
+        nowrap;
 }
 
 
-.ia-announcement-message {
+.ia-notice-arrow {
 
-    margin-top:
-        4px;
+    width:
+        32px;
 
-    color:
-        var(--ia-muted);
+    height:
+        32px;
 
-    font-size:
-        clamp(
-            .54rem,
-            .9vw,
-            .67rem
-        );
-
-    line-height:
-        1.55;
-
-    overflow-wrap:
-        anywhere;
-}
-
-
-.ia-announcement-date {
+    flex:
+        0 0 32px;
 
     display:
-        block;
+        flex;
 
-    margin-top:
-        6px;
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(255,255,255,.1);
 
     color:
-        #94a3b8;
+        #ffffff;
 
     font-size:
-        .49rem;
+        .6rem;
 }
 
 
@@ -2368,6 +2242,7 @@ Infinity Academy | Registrar & Admissions Office
 
 /* =====================================================================
    NOTICE MODAL
+   (now lists ALL announcements — single source of truth, server-rendered)
    ===================================================================== */
 
 .ia-notice-modal {
@@ -2590,16 +2465,42 @@ Infinity Academy | Registrar & Admissions Office
 }
 
 
-.ia-notice-dialog-message {
+.ia-notice-entry-title {
+
+    display:
+        block;
+
+    color:
+        var(--ia-navy);
+
+    font-size:
+        clamp(
+            .72rem,
+            1.5vw,
+            .88rem
+        );
+
+    font-weight:
+        800;
+
+    line-height:
+        1.4;
+}
+
+
+.ia-notice-entry-message {
+
+    margin-top:
+        6px;
 
     color:
         var(--ia-text-soft);
 
     font-size:
-        .7rem;
+        .68rem;
 
     line-height:
-        1.8;
+        1.75;
 
     white-space:
         pre-wrap;
@@ -2609,26 +2510,33 @@ Infinity Academy | Registrar & Admissions Office
 }
 
 
-.ia-notice-dialog-date {
+.ia-notice-entry-date {
 
     display:
         block;
 
     margin-top:
-        15px;
-
-    padding-top:
-        12px;
-
-    border-top:
-        1px solid
-        var(--ia-border);
+        9px;
 
     color:
         var(--ia-muted);
 
     font-size:
-        .51rem;
+        .5rem;
+}
+
+
+.ia-notice-divider {
+
+    border:
+        none;
+
+    border-top:
+        1px solid
+        var(--ia-border);
+
+    margin:
+        17px 0;
 }
 
 
@@ -2749,13 +2657,6 @@ Infinity Academy | Registrar & Admissions Office
                 2,
                 minmax(0,1fr)
             );
-    }
-
-
-    .ia-announcements {
-
-        grid-template-columns:
-            1fr;
     }
 
 
@@ -2954,10 +2855,10 @@ Infinity Academy | Registrar & Admissions Office
     }
 
 
-    .ia-announcement {
+    .ia-notice-more {
 
-        padding:
-            10px;
+        display:
+            none;
     }
 
 
@@ -3166,7 +3067,6 @@ and
     .ia-action:hover,
     .ia-course:hover,
     .ia-feature:hover,
-    .ia-announcement:hover,
     .ia-notice-bar:hover {
 
         transform:
@@ -3466,6 +3366,9 @@ and
 
 <!-- ================================================================
      IMPORTANT NOTICES
+     ONE bar only — clicking it opens a modal listing every active
+     announcement, rendered directly from Django below. There is no
+     longer a second grid duplicating the same content.
      ================================================================ -->
 
 <section
@@ -3519,9 +3422,6 @@ and
             type="button"
             class="ia-notice-bar"
             data-ia-notice-open
-            data-title="{{ first_notice.title|escape }}"
-            data-message="{{ first_notice.message|escape }}"
-            data-date="{{ first_notice.created_at|date:'d M Y, H:i' }}"
             aria-haspopup="dialog"
         >
 
@@ -3546,6 +3446,17 @@ and
             </span>
 
 
+            {% if announcements|length > 1 %}
+
+            <span class="ia-notice-more">
+
+                +{{ announcements|length|add:"-1" }} more
+
+            </span>
+
+            {% endif %}
+
+
             <span
                 class="ia-notice-arrow"
                 aria-hidden="true"
@@ -3556,63 +3467,6 @@ and
         </button>
 
         {% endwith %}
-
-
-
-        <div class="ia-announcements">
-
-
-            {% for a in announcements %}
-
-
-            <article class="ia-announcement">
-
-
-                <span
-                    class="ia-announcement-marker"
-                    aria-hidden="true"
-                >
-
-                    <i class="fa-solid fa-bullhorn"></i>
-
-                </span>
-
-
-                <div class="ia-announcement-body">
-
-
-                    <strong class="ia-announcement-title">
-
-                        {{ a.title }}
-
-                    </strong>
-
-
-                    <p class="ia-announcement-message">
-
-                        {{ a.message }}
-
-                    </p>
-
-
-                    <span class="ia-announcement-date">
-
-                        Published:
-                        {{ a.created_at|date:"d M Y, H:i" }}
-
-                    </span>
-
-
-                </div>
-
-
-            </article>
-
-
-            {% endfor %}
-
-
-        </div>
 
 
     {% else %}
@@ -4521,6 +4375,9 @@ and
 
 <!-- ================================================================
      ANNOUNCEMENT MODAL
+     Lists EVERY active announcement, rendered once, directly by
+     Django. This is the single source of truth for notice content —
+     the bar above only triggers open/close.
      ================================================================ -->
 
 <div
@@ -4545,7 +4402,7 @@ and
             <div>
 
                 <span class="ia-notice-dialog-label">
-                    Important Notice
+                    Infinity Academy
                 </span>
 
 
@@ -4553,7 +4410,7 @@ and
                     id="iaNoticeDialogTitle"
                     class="ia-notice-dialog-title"
                 >
-                    Notice
+                    Important Notices
                 </h2>
 
             </div>
@@ -4582,16 +4439,29 @@ and
         <div class="ia-notice-dialog-body">
 
 
-            <p
-                id="iaNoticeDialogMessage"
-                class="ia-notice-dialog-message"
-            ></p>
+            {% for a in announcements %}
 
+            <article class="ia-notice-entry">
 
-            <span
-                id="iaNoticeDialogDate"
-                class="ia-notice-dialog-date"
-            ></span>
+                <h3 class="ia-notice-entry-title">
+                    {{ a.title }}
+                </h3>
+
+                <p class="ia-notice-entry-message">
+                    {{ a.message }}
+                </p>
+
+                <span class="ia-notice-entry-date">
+                    Published: {{ a.created_at|date:"d M Y, H:i" }}
+                </span>
+
+            </article>
+
+            {% if not forloop.last %}
+                <hr class="ia-notice-divider">
+            {% endif %}
+
+            {% endfor %}
 
 
         </div>
@@ -4624,6 +4494,8 @@ and
 
 <!-- ================================================================
      ANNOUNCEMENT JAVASCRIPT
+     Only opens/closes the modal — content is already server-rendered
+     above, so there is nothing left to duplicate or sync via JS.
      ================================================================ -->
 
 <script>
@@ -4633,31 +4505,9 @@ and
     "use strict";
 
 
-    /* ================================================================
-       ELEMENTS
-       ================================================================ */
-
     const modal =
         document.getElementById(
             "iaNoticeModal"
-        );
-
-
-    const titleElement =
-        document.getElementById(
-            "iaNoticeDialogTitle"
-        );
-
-
-    const messageElement =
-        document.getElementById(
-            "iaNoticeDialogMessage"
-        );
-
-
-    const dateElement =
-        document.getElementById(
-            "iaNoticeDialogDate"
         );
 
 
@@ -4673,11 +4523,7 @@ and
         );
 
 
-    if (
-        !modal ||
-        !titleElement ||
-        !messageElement
-    ) {
+    if (!modal) {
 
         return;
 
@@ -4692,50 +4538,11 @@ and
        OPEN NOTICE
        ================================================================ */
 
-    function openNotice(button) {
+    function openNotice() {
 
 
         previousFocus =
             document.activeElement;
-
-
-        const title =
-            button.getAttribute(
-                "data-title"
-            ) ||
-            "Important Notice";
-
-
-        const message =
-            button.getAttribute(
-                "data-message"
-            ) ||
-            "No additional information is available.";
-
-
-        const date =
-            button.getAttribute(
-                "data-date"
-            ) ||
-            "";
-
-
-        titleElement.textContent =
-            title;
-
-
-        messageElement.textContent =
-            message;
-
-
-        if (dateElement) {
-
-            dateElement.textContent =
-                date
-                    ? "Published: " + date
-                    : "";
-
-        }
 
 
         modal.classList.add(
@@ -4822,9 +4629,7 @@ and
 
                     event.preventDefault();
 
-                    openNotice(
-                        button
-                    );
+                    openNotice();
 
                 }
             );

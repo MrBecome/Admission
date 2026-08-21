@@ -1,29 +1,986 @@
 {% extends 'admissions/public_base.html' %}
 
+{% block title %}
+Admission Application | Infinity Academy
+{% endblock %}
+
 {% block content %}
-<section class="block">
-    <div class="container">
-        <div class="section-head" style="text-align: center;">
-            <span class="eyebrow">Enrollment</span>
-            <h2>Application for admission</h2>
-            <p style="margin: 0 auto;">Fill in the details below to start your enrollment. Once submitted you will receive an application number and a payment code for the course fee.</p>
+
+<style>
+    /* =========================================================
+       ADMISSION PAGE
+       Responsive / Mobile / Tablet / Desktop / Large Screen
+       ========================================================= */
+
+    .admission-page {
+        width: 100%;
+        min-height: 100vh;
+        background: #f5f8fb;
+        color: #102a43;
+        padding: 48px 20px 70px;
+    }
+
+    .admission-container {
+        width: min(1180px, 100%);
+        margin: 0 auto;
+    }
+
+    /* =========================================================
+       HEADER
+       ========================================================= */
+
+    .admission-heading {
+        text-align: center;
+        max-width: 760px;
+        margin: 0 auto 35px;
+    }
+
+    .admission-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        margin-bottom: 12px;
+
+        padding: 7px 14px;
+
+        border-radius: 999px;
+
+        background: #edf4f9;
+
+        color: #0b3557;
+
+        font-size: 12px;
+        font-weight: 800;
+
+        letter-spacing: .08em;
+        text-transform: uppercase;
+    }
+
+    .admission-heading h1 {
+        margin: 0;
+
+        color: #092b49;
+
+        font-family:
+            Georgia,
+            "Times New Roman",
+            serif;
+
+        font-size: clamp(2rem, 5vw, 3.2rem);
+
+        line-height: 1.15;
+
+        font-weight: 700;
+    }
+
+    .admission-heading p {
+        max-width: 700px;
+
+        margin: 15px auto 0;
+
+        color: #63788d;
+
+        font-size: 15px;
+
+        line-height: 1.75;
+    }
+
+    .gold-divider {
+        width: 65px;
+        height: 3px;
+
+        margin: 20px auto 0;
+
+        background: #c9a24d;
+
+        border-radius: 999px;
+    }
+
+    /* =========================================================
+       MAIN GRID
+       ========================================================= */
+
+    .admission-grid {
+        display: grid;
+
+        grid-template-columns:
+            minmax(0, 1fr)
+            minmax(320px, 380px);
+
+        gap: 28px;
+
+        align-items: start;
+    }
+
+    /* =========================================================
+       CARDS
+       ========================================================= */
+
+    .admission-card {
+        background: #ffffff;
+
+        border: 1px solid #dce5ee;
+
+        border-radius: 18px;
+
+        box-shadow:
+            0 12px 35px rgba(10, 37, 64, .07);
+
+        overflow: hidden;
+    }
+
+    .admission-card-header {
+        padding: 26px 30px 20px;
+
+        border-bottom:
+            1px solid #edf1f5;
+    }
+
+    .admission-card-header h2 {
+        margin: 0;
+
+        color: #092b49;
+
+        font-family:
+            Georgia,
+            "Times New Roman",
+            serif;
+
+        font-size: 1.55rem;
+
+        line-height: 1.25;
+    }
+
+    .admission-card-header p {
+        margin: 8px 0 0;
+
+        color: #718397;
+
+        font-size: .9rem;
+
+        line-height: 1.6;
+    }
+
+    .admission-card-body {
+        padding: 28px 30px 32px;
+    }
+
+    /* =========================================================
+       FORM
+       ========================================================= */
+
+    .admission-form {
+        width: 100%;
+    }
+
+    .form-grid {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 20px;
+    }
+
+    .form-field {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .form-field.full {
+        grid-column: 1 / -1;
+    }
+
+    .form-label {
+        display: block;
+
+        margin-bottom: 8px;
+
+        color: #102a43;
+
+        font-size: .84rem;
+
+        font-weight: 700;
+    }
+
+    .required {
+        color: #c62828;
+    }
+
+    .form-control,
+    .admission-form input,
+    .admission-form select,
+    .admission-form textarea {
+        width: 100%;
+
+        min-height: 48px;
+
+        padding:
+            12px 14px;
+
+        border:
+            1px solid #cbd8e4;
+
+        border-radius: 9px;
+
+        background: #ffffff;
+
+        color: #102a43;
+
+        font-family: inherit;
+
+        font-size: .9rem;
+
+        outline: none;
+
+        transition:
+            border-color .2s ease,
+            box-shadow .2s ease,
+            background .2s ease;
+    }
+
+    .admission-form textarea {
+        min-height: 125px;
+
+        resize: vertical;
+    }
+
+    .admission-form input::placeholder,
+    .admission-form textarea::placeholder {
+        color: #9aaabd;
+    }
+
+    .admission-form input:hover,
+    .admission-form select:hover,
+    .admission-form textarea:hover {
+        border-color: #9fb4c8;
+    }
+
+    .admission-form input:focus,
+    .admission-form select:focus,
+    .admission-form textarea:focus {
+        border-color: #1c537d;
+
+        box-shadow:
+            0 0 0 3px rgba(28, 83, 125, .10);
+
+        background: #ffffff;
+    }
+
+    /* =========================================================
+       DJANGO ERROR MESSAGES
+       ========================================================= */
+
+    .field-errors,
+    .errorlist {
+        margin: 7px 0 0;
+        padding: 0;
+
+        list-style: none;
+
+        color: #b42318;
+
+        font-size: .78rem;
+
+        line-height: 1.5;
+    }
+
+    .has-error input,
+    .has-error select,
+    .has-error textarea {
+        border-color: #d92d20;
+
+        background: #fffafa;
+    }
+
+    .helper-text {
+        margin: 7px 0 0;
+
+        color: #7b8da0;
+
+        font-size: .76rem;
+
+        line-height: 1.5;
+    }
+
+    /* =========================================================
+       SUBMIT AREA
+       ========================================================= */
+
+    .form-submit {
+        margin-top: 8px;
+
+        padding-top: 22px;
+
+        border-top:
+            1px solid #edf1f5;
+    }
+
+    .submit-button {
+        width: 100%;
+
+        min-height: 52px;
+
+        border: 0;
+
+        border-radius: 10px;
+
+        background: #0b2945;
+
+        color: #ffffff;
+
+        font-family: inherit;
+
+        font-size: .9rem;
+
+        font-weight: 800;
+
+        cursor: pointer;
+
+        box-shadow:
+            0 8px 20px rgba(11, 41, 69, .15);
+
+        transition:
+            transform .2s ease,
+            background .2s ease,
+            box-shadow .2s ease;
+    }
+
+    .submit-button:hover {
+        background: #123d62;
+
+        transform: translateY(-1px);
+
+        box-shadow:
+            0 12px 25px rgba(11, 41, 69, .20);
+    }
+
+    .submit-button:active {
+        transform: translateY(0);
+    }
+
+    /* =========================================================
+       INFORMATION CARD
+       ========================================================= */
+
+    .info-list {
+        display: grid;
+
+        gap: 12px;
+    }
+
+    .info-item {
+        display: flex;
+
+        align-items: flex-start;
+
+        gap: 13px;
+
+        padding: 15px;
+
+        border:
+            1px solid #e0e8ef;
+
+        border-radius: 11px;
+
+        background: #fbfcfd;
+    }
+
+    .info-icon {
+        flex: 0 0 38px;
+
+        width: 38px;
+        height: 38px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 50%;
+
+        background: #edf4f9;
+
+        color: #0b3557;
+
+        font-size: .9rem;
+
+        font-weight: 800;
+    }
+
+    .info-content {
+        min-width: 0;
+    }
+
+    .info-content strong {
+        display: block;
+
+        margin-bottom: 3px;
+
+        color: #102a43;
+
+        font-size: .82rem;
+    }
+
+    .info-content span {
+        display: block;
+
+        color: #708397;
+
+        font-size: .78rem;
+
+        line-height: 1.5;
+    }
+
+    /* =========================================================
+       NOTICE
+       ========================================================= */
+
+    .admission-notice {
+        margin-top: 20px;
+
+        padding: 16px;
+
+        border:
+            1px solid #ead8a5;
+
+        border-radius: 11px;
+
+        background: #fffaf0;
+    }
+
+    .admission-notice strong {
+        display: block;
+
+        margin-bottom: 5px;
+
+        color: #73550d;
+
+        font-size: .82rem;
+    }
+
+    .admission-notice p {
+        margin: 0;
+
+        color: #806a35;
+
+        font-size: .76rem;
+
+        line-height: 1.6;
+    }
+
+    /* =========================================================
+       FOOTER NOTE
+       ========================================================= */
+
+    .form-note {
+        margin: 18px 0 0;
+
+        text-align: center;
+
+        color: #8292a3;
+
+        font-size: .75rem;
+
+        line-height: 1.6;
+    }
+
+    /* =========================================================
+       TABLET
+       ========================================================= */
+
+    @media (max-width: 900px) {
+
+        .admission-page {
+            padding:
+                38px 16px 55px;
+        }
+
+        .admission-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .info-column {
+            order: 2;
+        }
+
+        .form-column {
+            order: 1;
+        }
+    }
+
+    /* =========================================================
+       SMALL TABLET
+       ========================================================= */
+
+    @media (max-width: 700px) {
+
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .form-field.full {
+            grid-column: auto;
+        }
+
+        .admission-card-header {
+            padding:
+                22px 20px 17px;
+        }
+
+        .admission-card-body {
+            padding:
+                22px 20px 25px;
+        }
+    }
+
+    /* =========================================================
+       MOBILE
+       ========================================================= */
+
+    @media (max-width: 480px) {
+
+        .admission-page {
+            padding:
+                25px 12px 45px;
+        }
+
+        .admission-heading {
+            margin-bottom: 25px;
+        }
+
+        .admission-heading h1 {
+            font-size: 1.8rem;
+        }
+
+        .admission-heading p {
+            font-size: .83rem;
+        }
+
+        .admission-card {
+            border-radius: 14px;
+        }
+
+        .admission-card-header {
+            padding:
+                20px 17px 15px;
+        }
+
+        .admission-card-body {
+            padding:
+                20px 17px 22px;
+        }
+
+        .admission-card-header h2 {
+            font-size: 1.35rem;
+        }
+
+        .form-field {
+            margin-bottom: 17px;
+        }
+
+        .form-control,
+        .admission-form input,
+        .admission-form select,
+        .admission-form textarea {
+            min-height: 46px;
+
+            padding:
+                11px 12px;
+
+            font-size: .86rem;
+        }
+
+        .admission-form textarea {
+            min-height: 110px;
+        }
+    }
+
+    /* =========================================================
+       VERY SMALL MOBILE
+       ========================================================= */
+
+    @media (max-width: 360px) {
+
+        .admission-page {
+            padding:
+                20px 9px 35px;
+        }
+
+        .admission-heading h1 {
+            font-size: 1.55rem;
+        }
+
+        .admission-card-body {
+            padding:
+                17px 14px 20px;
+        }
+
+        .info-item {
+            padding: 12px;
+        }
+
+        .info-icon {
+            flex-basis: 34px;
+
+            width: 34px;
+            height: 34px;
+        }
+    }
+
+    /* =========================================================
+       LARGE DESKTOP
+       ========================================================= */
+
+    @media (min-width: 1600px) {
+
+        .admission-container {
+            width: min(1250px, 100%);
+        }
+
+        .admission-page {
+            padding-top: 60px;
+        }
+    }
+
+    /* =========================================================
+       REDUCED MOTION
+       ========================================================= */
+
+    @media (prefers-reduced-motion: reduce) {
+
+        *,
+        *::before,
+        *::after {
+            scroll-behavior: auto !important;
+
+            transition-duration: 0.01ms !important;
+
+            animation-duration: 0.01ms !important;
+
+            animation-iteration-count: 1 !important;
+        }
+    }
+</style>
+
+
+<section class="admission-page">
+
+    <div class="admission-container">
+
+        <!-- =====================================================
+             PAGE HEADER
+             ===================================================== -->
+
+        <header class="admission-heading">
+
+            <span class="admission-eyebrow">
+                Enrollment
+            </span>
+
+            <h1>
+                Application for Admission
+            </h1>
+
+            <p>
+                Complete the application form below to begin
+                your enrollment at Infinity Academy.
+                Please provide accurate information so that
+                our admissions office can process your
+                application correctly.
+            </p>
+
+            <div
+                class="gold-divider"
+                aria-hidden="true"
+            ></div>
+
+        </header>
+
+
+        <!-- =====================================================
+             MAIN CONTENT
+             ===================================================== -->
+
+        <div class="admission-grid">
+
+
+            <!-- =================================================
+                 FORM
+                 ================================================= -->
+
+            <div class="form-column">
+
+                <article class="admission-card">
+
+                    <div class="admission-card-header">
+
+                        <h2>
+                            Student Application
+                        </h2>
+
+                        <p>
+                            Enter your details carefully before
+                            submitting the application.
+                        </p>
+
+                    </div>
+
+
+                    <div class="admission-card-body">
+
+                        <form
+                            method="post"
+                            class="admission-form"
+                            novalidate
+                        >
+
+                            {% csrf_token %}
+
+
+                            <div class="form-grid">
+
+                                {% for field in form %}
+
+                                    <div
+                                        class="form-field
+                                        {% if field.errors %}
+                                            has-error
+                                        {% endif %}"
+                                    >
+
+                                        <label
+                                            for="{{ field.id_for_label }}"
+                                            class="form-label"
+                                        >
+
+                                            {{ field.label }}
+
+                                            {% if field.field.required %}
+                                                <span class="required">
+                                                    *
+                                                </span>
+                                            {% endif %}
+
+                                        </label>
+
+
+                                        {{ field }}
+
+
+                                        {% if field.errors %}
+
+                                            <div
+                                                class="field-errors"
+                                            >
+                                                {{ field.errors }}
+                                            </div>
+
+                                        {% endif %}
+
+
+                                        {% if field.help_text %}
+
+                                            <p
+                                                class="helper-text"
+                                            >
+                                                {{ field.help_text }}
+                                            </p>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+
+                            <!-- =================================
+                                 SUBMIT
+                                 ================================= -->
+
+                            <div class="form-submit">
+
+                                <button
+                                    type="submit"
+                                    class="submit-button"
+                                >
+                                    Submit Application
+                                </button>
+
+                            </div>
+
+
+                            <p class="form-note">
+
+                                Your application number will be
+                                provided after successful submission.
+
+                            </p>
+
+                        </form>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <!-- =================================================
+                 INFORMATION
+                 ================================================= -->
+
+            <aside class="info-column">
+
+                <article class="admission-card">
+
+                    <div class="admission-card-header">
+
+                        <h2>
+                            Admission Information
+                        </h2>
+
+                        <p>
+                            Important information before you
+                            submit your application.
+                        </p>
+
+                    </div>
+
+
+                    <div class="admission-card-body">
+
+                        <div class="info-list">
+
+
+                            <div class="info-item">
+
+                                <div class="info-icon">
+                                    01
+                                </div>
+
+                                <div class="info-content">
+
+                                    <strong>
+                                        Complete information
+                                    </strong>
+
+                                    <span>
+                                        Enter your name, email,
+                                        phone number and other
+                                        requested information
+                                        accurately.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="info-item">
+
+                                <div class="info-icon">
+                                    02
+                                </div>
+
+                                <div class="info-content">
+
+                                    <strong>
+                                        Application number
+                                    </strong>
+
+                                    <span>
+                                        A unique application
+                                        number is generated
+                                        after successful
+                                        submission.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="info-item">
+
+                                <div class="info-icon">
+                                    03
+                                </div>
+
+                                <div class="info-content">
+
+                                    <strong>
+                                        Payment information
+                                    </strong>
+
+                                    <span>
+                                        Payment instructions
+                                        and the applicable
+                                        payment code are
+                                        provided after
+                                        application submission.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="info-item">
+
+                                <div class="info-icon">
+                                    04
+                                </div>
+
+                                <div class="info-content">
+
+                                    <strong>
+                                        Keep your details safe
+                                    </strong>
+
+                                    <span>
+                                        Keep your application
+                                        number available for
+                                        tracking your admission
+                                        status.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="admission-notice">
+
+                            <strong>
+                                Before you submit
+                            </strong>
+
+                            <p>
+                                Please check all information
+                                carefully. Incorrect information
+                                may delay the processing of your
+                                application.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </aside>
+
         </div>
 
-        <div class="panel-card">
-            <form method="post" novalidate>
-                {% csrf_token %}  <!-- ✅ CORRECT - KEEP THIS -->
-                {% for field in form %}
-                    <div class="field">
-                        {{ field.label_tag }}
-                        {{ field }}
-                        {% if field.errors %}{{ field.errors }}{% endif %}
-                        {% if field.help_text %}<p class="helper-text" style="text-align:left; margin-top:.3rem;">{{ field.help_text }}</p>{% endif %}
-                    </div>
-                {% endfor %}
-                <button type="submit" class="btn btn-fill btn-block">Submit application</button>
-            </form>
-            <p class="helper-text">You will receive an application number immediately after submitting.</p>
-        </div>
     </div>
+
 </section>
+
 {% endblock %}

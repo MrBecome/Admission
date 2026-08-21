@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="robots"
+        content="noindex, nofollow, noarchive"
+    >
+
+    <title>404 | Infinity Academy</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background: #f5f8fb;
+
+            color: #0b2945;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+        }
+
+        .error-wrapper {
+            width: 100%;
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .error-card {
+            width: min(100%, 680px);
+
+            padding: clamp(35px, 7vw, 70px);
+
+            text-align: center;
+
+            background: #ffffff;
+
+            border: 1px solid #dce5ee;
+
+            border-radius: 22px;
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.08);
+        }
+
+        .brand {
+            margin-bottom: 28px;
+
+            font-size: 1rem;
+
+            font-weight: 800;
+
+            color: #0b2945;
+        }
+
+        .error-code {
+            margin: 0;
+
+            color: #0b2945;
+
+            font-size:
+                clamp(
+                    5rem,
+                    20vw,
+                    10rem
+                );
+
+            font-weight: 900;
+
+            line-height: .85;
+
+            letter-spacing: -.08em;
+        }
+
+        .gold-line {
+            width: 70px;
+            height: 3px;
+
+            margin: 28px auto;
+
+            background: #c9a24d;
+
+            border-radius: 999px;
+        }
+
+        .error-title {
+            margin: 0 0 12px;
+
+            color: #0b2945;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size:
+                clamp(
+                    1.6rem,
+                    5vw,
+                    2.4rem
+                );
+
+            line-height: 1.2;
+        }
+
+        .error-description {
+            max-width: 500px;
+
+            margin:
+                0 auto 30px;
+
+            color: #66788a;
+
+            font-size: .95rem;
+
+            line-height: 1.7;
+        }
+
+        .actions {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+        }
+
+        .button {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            min-height: 46px;
+
+            min-width: 150px;
+
+            padding:
+                10px 20px;
+
+            border-radius: 9px;
+
+            text-decoration: none;
+
+            font-size: .9rem;
+
+            font-weight: 700;
+
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease,
+                border-color .2s ease;
+        }
+
+        .button-home {
+            background: #0b2945;
+
+            color: #ffffff;
+
+            box-shadow:
+                0 8px 20px
+                rgba(11, 41, 69, .15);
+        }
+
+        .button-home:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 25px
+                rgba(11, 41, 69, .2);
+        }
+
+        .button-contact {
+            background: #ffffff;
+
+            color: #0b2945;
+
+            border:
+                1px solid #d5e0ea;
+        }
+
+        .button-contact:hover {
+            transform: translateY(-2px);
+
+            border-color: #c9a24d;
+        }
+
+        .footer {
+            margin-top: 30px;
+
+            color: #8b9aaa;
+
+            font-size: .75rem;
+        }
+
+        @media (max-width: 480px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .error-card {
+                padding:
+                    35px 18px;
+
+                border-radius: 18px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .button {
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <main class="error-wrapper">
+
+        <section class="error-card">
+
+            <div class="brand">
+                Infinity Academy
+            </div>
+
+            <div
+                class="error-code"
+                aria-label="404"
+            >
+                404
+            </div>
+
+            <div
+                class="gold-line"
+                aria-hidden="true"
+            ></div>
+
+            <h1 class="error-title">
+                Page Not Found
+            </h1>
+
+            <p class="error-description">
+                The page you requested could not be found.
+                It may have been moved, removed, or the
+                address may be incorrect.
+            </p>
+
+            <div class="actions">
+
+                <a
+                    href="/"
+                    class="button button-home"
+                >
+                    Back to Home
+                </a>
+
+                <a
+                    href="/contact/"
+                    class="button button-contact"
+                >
+                    Contact Us
+                </a>
+
+            </div>
+
+            <div class="footer">
+                Infinity Academy · Registrar &amp;
+                Admissions Office
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+</html>

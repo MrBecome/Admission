@@ -1,65 +1,89 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+
+    <!-- =========================================================
+         BASIC DOCUMENT CONFIGURATION
+         ========================================================= -->
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
 
-    <meta name="theme-color" content="#0A2540">
+    <meta
+        name="theme-color"
+        content="#0A2540"
+    >
 
-    <title>{% block title %}Infinity Academy{% endblock %}</title>
+    <meta
+        name="color-scheme"
+        content="light"
+    >
+
+    <title>
+        {% block title %}
+            Infinity Academy
+        {% endblock %}
+    </title>
 
 
-    <!-- Fonts -->
+    <!-- =========================================================
+         PERFORMANCE / FONT CONNECTIONS
+         ========================================================= -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
-    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
-          rel="stylesheet">
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet"
+    >
 
 
-    <!-- Site CSS -->
-    <link rel="stylesheet"
-          href="{% static 'css/tokens.css' %}">
+    <!-- =========================================================
+         WEBSITE CSS
+         ========================================================= -->
 
-    <link rel="stylesheet"
-          href="{% static 'css/public.css' %}">
+    <link
+        rel="stylesheet"
+        href="{% static 'css/tokens.css' %}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/public.css' %}"
+    >
 
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- =========================================================
+         FONT AWESOME
+         ========================================================= -->
 
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    >
+
+
+    <!-- =========================================================
+         BASE LAYOUT CSS
+         ========================================================= -->
 
     <style>
 
-        /* =========================================================
-           GLOBAL RESPONSIVE FOUNDATION
-           ========================================================= */
-
-        html {
-            width: 100%;
-            min-width: 0;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-        }
-
-        body {
-            width: 100%;
-            min-width: 0;
-            min-height: 100vh;
-            margin: 0;
-            padding: 0;
-
-            display: flex;
-            flex-direction: column;
-
-            overflow-x: hidden;
-        }
+        /* =====================================================
+           RESET
+           ===================================================== */
 
         *,
         *::before,
@@ -68,195 +92,355 @@
         }
 
 
-        /* =========================================================
-           NAVBAR
-           ========================================================= */
+        html {
+            width: 100%;
+            min-width: 320px;
+            margin: 0;
+            padding: 0;
+
+            overflow-x: hidden;
+
+            scroll-behavior: smooth;
+
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+
+
+        body {
+            width: 100%;
+            min-width: 320px;
+            min-height: 100vh;
+
+            margin: 0;
+            padding: 0;
+
+            background: #f5f8fb;
+            color: #0a2540;
+
+            font-family:
+                Inter,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            font-size: 16px;
+            line-height: 1.6;
+
+            overflow-x: hidden;
+
+            /*
+             * IMPORTANT:
+             * Do NOT use:
+             * transform: scale(...)
+             * zoom: ...
+             * max-width:none on every child
+             */
+            transform: none !important;
+            zoom: 1 !important;
+        }
+
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+        }
+
+
+        a {
+            color: inherit;
+        }
+
+
+        /* =====================================================
+           PAGE WRAPPER
+           ===================================================== */
+
+        .site-wrapper {
+            width: 100%;
+            min-height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        /* =====================================================
+           NAVIGATION HEADER
+           ===================================================== */
 
         .masthead {
-            position: fixed !important;
+            position: fixed;
 
             top: 0;
             left: 0;
             right: 0;
 
             width: 100%;
-            max-width: 100%;
+            height: auto;
 
             z-index: 10000;
 
-            background: #0A2540 !important;
+            background: #0a2540;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.08);
 
             box-shadow:
-                0 2px 8px rgba(0, 0, 0, .15);
+                0 4px 18px rgba(0,0,0,.12);
 
             isolation: isolate;
         }
 
 
-        .masthead .container {
-            width: 100% !important;
-            max-width: 1400px !important;
+        /*
+         * Gold accent line.
+         */
 
-            margin: 0 auto !important;
+        .masthead::after {
+            content: "";
 
-            padding-left: clamp(12px, 2vw, 28px) !important;
-            padding-right: clamp(12px, 2vw, 28px) !important;
+            position: absolute;
+
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            height: 2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent 0%,
+                    #c9a24d 18%,
+                    #e2c36b 50%,
+                    #c9a24d 82%,
+                    transparent 100%
+                );
+
+            opacity: .95;
         }
 
 
-        .masthead .bar {
+        /* =====================================================
+           HEADER CONTAINER
+           ===================================================== */
+
+        .masthead-inner {
             width: 100%;
 
-            min-height: 76px;
+            max-width: 1440px;
 
-            display: flex !important;
+            margin: 0 auto;
 
-            align-items: center !important;
-            justify-content: space-between !important;
-
-            gap: 18px;
-
-            padding-top: 8px;
-            padding-bottom: 8px;
+            padding:
+                10px clamp(16px, 3vw, 42px);
         }
 
 
-        /* =========================================================
+        /* =====================================================
+           HEADER BAR
+           ===================================================== */
+
+        .masthead-bar {
+            width: 100%;
+
+            min-height: 64px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 24px;
+        }
+
+
+        /* =====================================================
            BRAND
-           ========================================================= */
+           ===================================================== */
 
-        .masthead .brand {
-            display: flex !important;
-
-            align-items: center !important;
-
-            flex: 0 1 auto;
+        .masthead-brand {
+            flex:
+                0 1 auto;
 
             min-width: 0;
 
-            margin-left: 0 !important;
+            display: flex;
 
-            gap: 10px !important;
+            align-items: center;
 
-            text-decoration: none !important;
+            gap: 11px;
 
-            color: #fff;
+            color: #ffffff;
+
+            text-decoration: none;
+
+            user-select: none;
         }
 
 
-        .masthead .brand-logo {
+        .masthead-brand-logo {
             display: block;
 
-            flex: 0 0 auto;
+            width: auto;
 
-            width: auto !important;
-            height: clamp(38px, 4vw, 52px) !important;
+            height: 52px;
 
-            max-width: 52px;
+            max-width: 58px;
 
             object-fit: contain;
+
+            flex: 0 0 auto;
         }
 
 
-        .masthead .brand-text {
-            display: flex !important;
+        .masthead-brand-text {
+            min-width: 0;
+
+            display: flex;
 
             flex-direction: column;
 
             justify-content: center;
 
+            line-height: 1.1;
+        }
+
+
+        .masthead-brand-name {
+            display: block;
+
+            color: #ffffff;
+
+            font-family:
+                Inter,
+                sans-serif;
+
+            font-size:
+                clamp(
+                    .95rem,
+                    1.5vw,
+                    1.2rem
+                );
+
+            font-weight: 700;
+
+            line-height: 1.15;
+
+            white-space: nowrap;
+        }
+
+
+        .masthead-brand-local {
+            display: block;
+
+            margin-top: 1px;
+
+            color: rgba(255,255,255,.95);
+
+            font-size:
+                clamp(
+                    .62rem,
+                    .9vw,
+                    .78rem
+                );
+
+            font-weight: 600;
+
+            line-height: 1.15;
+
+            white-space: nowrap;
+        }
+
+
+        .masthead-brand-office {
+            display: block;
+
+            margin-top: 3px;
+
+            color: rgba(255,255,255,.65);
+
+            font-size:
+                clamp(
+                    .46rem,
+                    .65vw,
+                    .58rem
+                );
+
+            font-weight: 500;
+
+            letter-spacing: .2px;
+
+            line-height: 1.1;
+
+            white-space: nowrap;
+        }
+
+
+        /* =====================================================
+           NAVIGATION AREA
+           ===================================================== */
+
+        .masthead-navigation {
+            flex:
+                0 1 auto;
+
             min-width: 0;
 
-            line-height: 1.1 !important;
-        }
-
-
-        .masthead .brand-text .name {
-            display: block;
-
-            color: #fff !important;
-
-            font-size: clamp(
-                .82rem,
-                1.4vw,
-                1.1rem
-            ) !important;
-
-            line-height: 1.15 !important;
-
-            white-space: nowrap;
-        }
-
-
-        .masthead .brand-text span:not(.name) {
-            font-size: clamp(
-                .62rem,
-                1vw,
-                .9rem
-            ) !important;
-
-            line-height: 1.15 !important;
-
-            white-space: nowrap;
-        }
-
-
-        .masthead .brand-text small {
-            display: block;
-
-            margin-top: 2px !important;
-
-            font-size: clamp(
-                .43rem,
-                .65vw,
-                .6rem
-            ) !important;
-
-            line-height: 1.1 !important;
-
-            white-space: nowrap;
-        }
-
-
-        /* =========================================================
-           NAVIGATION
-           ========================================================= */
-
-        .masthead nav {
             display: flex;
 
             align-items: center;
+
             justify-content: flex-end;
 
-            flex: 1 1 auto;
-
-            min-width: 0;
-
-            gap: clamp(8px, 1.5vw, 18px);
+            gap:
+                clamp(
+                    10px,
+                    1.7vw,
+                    22px
+                );
         }
 
 
-        .masthead nav > a {
+        .masthead-navigation > a {
+            position: relative;
+
             display: inline-flex;
 
             align-items: center;
+
             justify-content: center;
 
-            min-width: 0;
+            min-height: 38px;
 
-            color: rgba(255,255,255,.9);
+            padding:
+                5px 0;
+
+            color:
+                rgba(255,255,255,.88);
 
             text-decoration: none;
 
-            font-family: Inter, sans-serif;
+            font-size:
+                clamp(
+                    .62rem,
+                    .82vw,
+                    .76rem
+                );
 
-            font-size: clamp(
-                .58rem,
-                .8vw,
-                .78rem
-            );
-
-            font-weight: 600;
+            font-weight: 700;
 
             line-height: 1.2;
 
@@ -268,44 +452,75 @@
         }
 
 
-        .masthead nav > a:hover {
-            color: #fff;
+        .masthead-navigation > a::after {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            right: 0;
+            bottom: 1px;
+
+            height: 2px;
+
+            border-radius: 999px;
+
+            background: #c9a24d;
+
+            transform:
+                scaleX(0);
+
+            transform-origin:
+                center;
+
+            transition:
+                transform .2s ease;
         }
 
 
-        /* =========================================================
+        .masthead-navigation > a:hover {
+            color: #ffffff;
+        }
+
+
+        .masthead-navigation > a:hover::after {
+            transform:
+                scaleX(1);
+        }
+
+
+        /* =====================================================
            SEARCH
-           ========================================================= */
+           ===================================================== */
 
         .site-search {
             position: relative;
 
-            flex: 0 1 180px;
+            flex:
+                0 1 180px;
 
-            min-width: 0;
+            min-width: 120px;
 
             margin: 0;
         }
 
 
-        .site-search > div {
-            display: block !important;
+        .site-search-wrapper {
+            position: relative;
 
-            width: 100% !important;
+            width: 100%;
         }
 
 
         #site-search-input {
             display: block;
 
-            width: 100% !important;
+            width: 100%;
 
-            min-width: 0;
-
-            height: 34px;
+            height: 36px;
 
             padding:
-                6px 12px !important;
+                7px 13px;
 
             border:
                 1px solid rgba(255,255,255,.25);
@@ -317,796 +532,1251 @@
             background:
                 rgba(255,255,255,.08);
 
-            color: #fff;
+            color: #ffffff;
 
-            font-family: Inter, sans-serif;
+            font-family:
+                Inter,
+                sans-serif;
 
-            font-size: .7rem !important;
+            font-size: .72rem;
 
             line-height: 1.2;
+
+            transition:
+                background .2s ease,
+                border-color .2s ease,
+                box-shadow .2s ease;
         }
 
 
         #site-search-input::placeholder {
-            color: rgba(255,255,255,.65);
+            color:
+                rgba(255,255,255,.65);
+        }
+
+
+        #site-search-input:hover {
+            border-color:
+                rgba(255,255,255,.38);
         }
 
 
         #site-search-input:focus {
             border-color:
-                rgba(255,255,255,.55);
+                rgba(255,255,255,.65);
 
             background:
-                rgba(255,255,255,.12);
+                rgba(255,255,255,.13);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(201,162,77,.12);
         }
 
+
+        /* =====================================================
+           AUTOCOMPLETE
+           ===================================================== */
 
         #autocomplete-list {
-            width: 100% !important;
+            position: absolute;
 
-            max-width: 100%;
-
-            overflow-x: hidden;
-        }
-
-
-        /* =========================================================
-           MAIN / FOOTER
-           ========================================================= */
-
-        main {
-            flex: 1 0 auto;
-
-            width: 100%;
-            min-width: 0;
-
-            overflow-x: clip;
-        }
-
-
-        .site-footer {
-            flex-shrink: 0;
+            top: calc(100% + 7px);
+            left: 0;
 
             width: 100%;
 
+            max-height: 280px;
+
+            overflow-y: auto;
+
             overflow-x: hidden;
+
+            display: none;
+
+            background: #ffffff;
+
+            border:
+                1px solid #dbe4ed;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 15px 35px
+                rgba(10,37,64,.16);
+
+            z-index: 11000;
         }
 
 
-        /* =========================================================
+        #autocomplete-list > div {
+            width: 100%;
+        }
+
+
+        #autocomplete-list > div > div {
+            width: 100%;
+
+            padding:
+                11px 13px;
+
+            color: #0a2540;
+
+            background: #ffffff;
+
+            border-bottom:
+                1px solid #edf2f6;
+
+            font-size: .82rem;
+
+            cursor: pointer;
+
+            transition:
+                background .15s ease;
+        }
+
+
+        #autocomplete-list > div > div:hover {
+            background:
+                #f3f7fa;
+        }
+
+
+        /* =====================================================
            HEADER SPACER
-           
-           This replaces the old fixed 80px spacer.
-           ========================================================= */
+           ===================================================== */
 
         .masthead-spacer {
             width: 100%;
 
-            height: 76px;
+            height: 84px;
 
-            flex: 0 0 76px;
+            flex:
+                0 0 84px;
         }
 
 
-        /* =========================================================
-           MOBILE NAVBAR
-           ========================================================= */
+        /* =====================================================
+           MAIN PAGE
+           ===================================================== */
 
-        @media (max-width: 700px) {
+        main {
+            width: 100%;
 
-            .masthead .container {
-                padding-left: 10px !important;
-                padding-right: 10px !important;
+            min-width: 0;
+
+            flex:
+                1 1 auto;
+
+            overflow: visible;
+        }
+
+
+        /*
+         * Do not force child containers to a strange width.
+         * The individual pages are allowed to define their own
+         * content width.
+         */
+
+        main > .container {
+            width:
+                min(
+                    1200px,
+                    calc(100% - 32px)
+                );
+
+            margin:
+                0 auto;
+
+            padding:
+                20px 0 0;
+        }
+
+
+        /* =====================================================
+           DJANGO MESSAGES
+           ===================================================== */
+
+        .base-messages {
+            width: 100%;
+
+            margin:
+                0 auto 20px;
+        }
+
+
+        .base-messages .notice {
+            width: 100%;
+
+            margin-bottom: 12px;
+
+            padding:
+                13px 16px;
+
+            border-radius: 10px;
+
+            border:
+                1px solid #dbe4ed;
+
+            background: #ffffff;
+
+            color: #0a2540;
+
+            font-size: .9rem;
+
+            line-height: 1.5;
+
+            box-shadow:
+                0 4px 15px
+                rgba(10,37,64,.05);
+        }
+
+
+        /* =====================================================
+           FOOTER
+           ===================================================== */
+
+        .site-footer {
+            width: 100%;
+
+            margin-top: auto;
+
+            background:
+                #0a2540;
+
+            color: #ffffff;
+
+            border-top:
+                2px solid #c9a24d;
+
+            overflow: hidden;
+        }
+
+
+        .site-footer-inner {
+            width: 100%;
+
+            max-width: 1440px;
+
+            margin: 0 auto;
+
+            padding:
+                34px clamp(16px, 3vw, 42px) 18px;
+        }
+
+
+        .site-footer-grid {
+            width: 100%;
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.5fr)
+                minmax(0, 1fr)
+                minmax(0, 1.2fr);
+
+            gap:
+                clamp(
+                    24px,
+                    4vw,
+                    70px
+                );
+        }
+
+
+        .site-footer-column {
+            min-width: 0;
+        }
+
+
+        .site-footer h4 {
+            margin:
+                0 0 10px;
+
+            color: #ffffff;
+
+            font-family:
+                "Source Serif 4",
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size:
+                1rem;
+
+            font-weight: 700;
+
+            line-height: 1.3;
+        }
+
+
+        .site-footer p {
+            margin: 0;
+
+            color:
+                rgba(255,255,255,.68);
+
+            font-size:
+                .78rem;
+
+            line-height: 1.75;
+        }
+
+
+        .site-footer a {
+            color:
+                rgba(255,255,255,.72);
+
+            text-decoration: none;
+
+            transition:
+                color .2s ease;
+        }
+
+
+        .site-footer a:hover {
+            color:
+                #ffffff;
+        }
+
+
+        .site-footer-bottom {
+            width: 100%;
+
+            margin-top:
+                25px;
+
+            padding-top:
+                14px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,.12);
+
+            text-align: center;
+        }
+
+
+        .site-footer-bottom p {
+            margin: 0;
+
+            color:
+                rgba(255,255,255,.48);
+
+            font-size:
+                .68rem;
+
+            line-height: 1.5;
+        }
+
+
+        /* =====================================================
+           TABLET
+           ===================================================== */
+
+        @media (max-width: 900px) {
+
+            .masthead-inner {
+                padding-left:
+                    18px;
+
+                padding-right:
+                    18px;
             }
 
 
-            .masthead .bar {
-                min-height: 88px;
+            .masthead-bar {
+                gap: 15px;
+            }
 
-                display: grid !important;
+
+            .masthead-navigation {
+                gap: 12px;
+            }
+
+
+            .site-search {
+                flex-basis: 150px;
+            }
+
+
+            .site-footer-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+
+            .site-footer-column:first-child {
+                grid-column:
+                    1 / -1;
+            }
+        }
+
+
+        /* =====================================================
+           MOBILE
+           ===================================================== */
+
+        @media (max-width: 700px) {
+
+            .masthead {
+                position: fixed;
+            }
+
+
+            .masthead-inner {
+                padding:
+                    7px 12px;
+            }
+
+
+            .masthead-bar {
+                min-height: 82px;
+
+                display: grid;
 
                 grid-template-columns:
-                    minmax(0, 1fr);
+                    1fr;
 
                 grid-template-rows:
                     auto auto;
 
-                align-items: center !important;
+                align-items: center;
 
                 gap: 5px;
-
-                padding-top: 7px;
-                padding-bottom: 7px;
             }
 
 
-            .masthead .brand {
+            .masthead-brand {
                 width: 100%;
 
-                min-width: 0;
-
-                gap: 8px !important;
+                gap: 8px;
             }
 
 
-            .masthead .brand-logo {
-                width: auto !important;
+            .masthead-brand-logo {
+                width: auto;
 
-                height: 38px !important;
+                height: 39px;
 
-                max-width: 42px;
+                max-width: 43px;
             }
 
 
-            .masthead .brand-text {
-                min-width: 0;
+            .masthead-brand-name {
+                font-size:
+                    .84rem;
             }
 
 
-            .masthead .brand-text .name {
-                font-size: .82rem !important;
+            .masthead-brand-local {
+                font-size:
+                    .59rem;
             }
 
 
-            .masthead .brand-text span:not(.name) {
-                font-size: .61rem !important;
+            .masthead-brand-office {
+                font-size:
+                    .41rem;
             }
 
 
-            .masthead .brand-text small {
-                font-size: .42rem !important;
-
-                letter-spacing: .25px !important;
-            }
-
-
-            /*
-             * Put navigation and search together below
-             * the brand instead of forcing everything
-             * into one horizontal row.
-             */
-
-            .masthead nav {
+            .masthead-navigation {
                 width: 100%;
 
                 display: flex;
 
-                align-items: center;
-
-                justify-content: flex-start;
+                justify-content:
+                    flex-start;
 
                 gap: 9px;
-
-                min-width: 0;
 
                 overflow: visible;
             }
 
 
-            .masthead nav > a {
-                flex: 0 0 auto;
+            .masthead-navigation > a {
+                min-height:
+                    28px;
 
-                font-size: .56rem;
-
-                line-height: 1.2;
+                font-size:
+                    .55rem;
             }
 
 
             .site-search {
-                flex: 1 1 auto;
+                flex:
+                    1 1 auto;
 
-                min-width: 70px;
+                min-width:
+                    70px;
 
-                max-width: 130px;
-
-                margin-left: 2px;
+                max-width:
+                    140px;
             }
 
 
             #site-search-input {
-                height: 29px;
+                height:
+                    29px;
 
                 padding:
-                    5px 9px !important;
+                    5px 9px;
 
-                font-size: .58rem !important;
+                font-size:
+                    .58rem;
             }
 
 
             .masthead-spacer {
-                height: 88px;
+                height:
+                    82px;
 
-                flex-basis: 88px;
+                flex-basis:
+                    82px;
+            }
+
+
+            main > .container {
+                width:
+                    calc(100% - 24px);
+
+                padding-top:
+                    16px;
+            }
+
+
+            .site-footer-inner {
+                padding:
+                    28px 16px 16px;
+            }
+
+
+            .site-footer-grid {
+                grid-template-columns:
+                    1fr;
+
+                gap:
+                    22px;
+            }
+
+
+            .site-footer-column:first-child {
+                grid-column:
+                    auto;
             }
         }
 
 
-        /* =========================================================
+        /* =====================================================
            SMALL PHONES
-           ========================================================= */
+           ===================================================== */
 
         @media (max-width: 400px) {
 
-            .masthead .container {
-                padding-left: 8px !important;
-                padding-right: 8px !important;
+            .masthead-inner {
+                padding:
+                    6px 9px;
             }
 
 
-            .masthead .bar {
-                min-height: 86px;
-
-                gap: 4px;
-
-                padding-top: 6px;
-                padding-bottom: 6px;
+            .masthead-bar {
+                min-height:
+                    78px;
             }
 
 
-            .masthead .brand-logo {
-                height: 34px !important;
+            .masthead-brand-logo {
+                height:
+                    35px;
 
-                max-width: 38px;
+                max-width:
+                    39px;
             }
 
 
-            .masthead .brand-text .name {
-                font-size: .75rem !important;
+            .masthead-brand-name {
+                font-size:
+                    .77rem;
             }
 
 
-            .masthead .brand-text span:not(.name) {
-                font-size: .55rem !important;
+            .masthead-brand-local {
+                font-size:
+                    .54rem;
             }
 
 
-            .masthead .brand-text small {
-                font-size: .37rem !important;
+            .masthead-brand-office {
+                font-size:
+                    .37rem;
             }
 
 
-            .masthead nav {
-                gap: 6px;
+            .masthead-navigation {
+                gap:
+                    6px;
             }
 
 
-            .masthead nav > a {
-                font-size: .49rem;
+            .masthead-navigation > a {
+                font-size:
+                    .49rem;
             }
 
 
             .site-search {
-                max-width: 108px;
+                max-width:
+                    110px;
             }
 
 
             #site-search-input {
-                height: 27px;
+                height:
+                    27px;
 
-                padding:
-                    4px 8px !important;
-
-                font-size: .52rem !important;
+                font-size:
+                    .52rem;
             }
 
 
             .masthead-spacer {
-                height: 86px;
+                height:
+                    78px;
 
-                flex-basis: 86px;
+                flex-basis:
+                    78px;
+            }
+
+
+            main > .container {
+                width:
+                    calc(100% - 18px);
             }
         }
 
 
-        /* =========================================================
-           VERY SMALL 320px DEVICES
-           ========================================================= */
+        /* =====================================================
+           VERY SMALL PHONES
+           ===================================================== */
 
         @media (max-width: 340px) {
 
-            .masthead .bar {
-                min-height: 82px;
+            .masthead-bar {
+                min-height:
+                    75px;
             }
 
 
-            .masthead .brand-logo {
-                height: 31px !important;
+            .masthead-brand-logo {
+                height:
+                    32px;
 
-                max-width: 35px;
+                max-width:
+                    36px;
             }
 
 
-            .masthead .brand-text .name {
-                font-size: .7rem !important;
+            .masthead-brand-name {
+                font-size:
+                    .7rem;
             }
 
 
-            .masthead .brand-text span:not(.name) {
-                font-size: .5rem !important;
+            .masthead-brand-local {
+                font-size:
+                    .49rem;
             }
 
 
-            .masthead .brand-text small {
-                font-size: .34rem !important;
+            .masthead-brand-office {
+                font-size:
+                    .34rem;
             }
 
 
-            .masthead nav {
-                gap: 5px;
+            .masthead-navigation {
+                gap:
+                    5px;
             }
 
 
-            .masthead nav > a {
-                font-size: .45rem;
+            .masthead-navigation > a {
+                font-size:
+                    .44rem;
             }
 
 
             .site-search {
-                max-width: 96px;
+                max-width:
+                    96px;
             }
 
 
             #site-search-input {
-                height: 25px;
+                height:
+                    25px;
 
-                font-size: .48rem !important;
+                padding:
+                    4px 8px;
+
+                font-size:
+                    .48rem;
             }
 
 
             .masthead-spacer {
-                height: 82px;
+                height:
+                    75px;
 
-                flex-basis: 82px;
+                flex-basis:
+                    75px;
             }
         }
 
 
-        /* =========================================================
-           LARGE SCREENS
-           ========================================================= */
+        /* =====================================================
+           LARGE DESKTOP
+           ===================================================== */
 
-        @media (min-width: 1920px) {
+        @media (min-width: 1600px) {
 
-            .masthead .bar {
-                min-height: 84px;
+            .masthead-bar {
+                min-height:
+                    70px;
             }
 
 
             .masthead-spacer {
-                height: 84px;
+                height:
+                    90px;
 
-                flex-basis: 84px;
+                flex-basis:
+                    90px;
             }
         }
 
 
-        /* =========================================================
-           REDUCED MOTION
-           ========================================================= */
+        /* =====================================================
+           ACCESSIBILITY
+           ===================================================== */
+
+        :focus-visible {
+            outline:
+                3px solid
+                rgba(201,162,77,.65);
+
+            outline-offset:
+                3px;
+        }
+
 
         @media (prefers-reduced-motion: reduce) {
 
-            .masthead nav > a,
-            #site-search-input {
-                transition: none !important;
+            html {
+                scroll-behavior:
+                    auto;
+            }
+
+
+            *,
+            *::before,
+            *::after {
+                animation-duration:
+                    .01ms !important;
+
+                animation-iteration-count:
+                    1 !important;
+
+                transition-duration:
+                    .01ms !important;
             }
         }
 
     </style>
 
 
-    {% block extra_head %}{% endblock %}
+    {% block extra_head %}
+    {% endblock %}
 
 </head>
 
 
 <body>
 
-
-<header class="masthead">
-
-    <div class="container bar">
+<div class="site-wrapper">
 
 
-        <!-- =====================================================
-             BRAND
-             ===================================================== -->
+    <!-- =========================================================
+         HEADER
+         ========================================================= -->
 
-        <a class="brand"
-           href="{% url 'home' %}">
+    <header class="masthead">
 
-            <img src="{% static 'images/logo_01.png' %}"
-                 alt="Infinity Academy logo"
-                 class="brand-logo">
+        <div class="masthead-inner">
 
-
-            <span class="brand-text">
-
-                <span class="name">
-                    Infinity Academy
-                </span>
-
-                <span>
-                    ইনফিনিটি একাডেমী
-                </span>
-
-                <small>
-                    Registrar &amp; Admissions Office
-                </small>
-
-            </span>
-
-        </a>
+            <div class="masthead-bar">
 
 
-        <!-- =====================================================
-             NAVIGATION
-             ===================================================== -->
+                <!-- =================================================
+                     BRAND
+                     ================================================= -->
 
-        <nav aria-label="Main navigation">
+                <a
+                    class="masthead-brand"
+                    href="{% url 'home' %}"
+                    aria-label="Infinity Academy Home"
+                >
 
-
-            <a href="{% url 'home' %}">
-                Home
-            </a>
-
-
-            <a href="{% url 'admission_form' %}">
-                Admissions
-            </a>
-
-
-            <a href="{% url 'student_login' %}">
-                Track Application
-            </a>
+                    <img
+                        src="{% static 'images/logo_01.png' %}"
+                        alt="Infinity Academy logo"
+                        class="masthead-brand-logo"
+                    >
 
 
-            <!-- =================================================
-                 SEARCH
-                 ================================================= -->
+                    <span class="masthead-brand-text">
 
-            <form action="{% url 'search' %}"
-                  method="get"
-                  class="site-search"
-                  role="search"
-                  id="search-form"
-                  onsubmit="document.getElementById('site-search-input').value = '';">
+                        <span class="masthead-brand-name">
+                            Infinity Academy
+                        </span>
 
+                        <span class="masthead-brand-local">
+                            ইনফিনিটি একাডেমী
+                        </span>
 
-                <div style="position:relative; width:100%;">
+                        <span class="masthead-brand-office">
+                            Registrar &amp; Admissions Office
+                        </span>
 
+                    </span>
 
-                    <input type="search"
-                           name="q"
-                           id="site-search-input"
-                           placeholder="Search..."
-                           aria-label="Search"
-                           autocomplete="off">
+                </a>
 
 
-                    <div id="autocomplete-list"
-                         style="
-                            position:absolute;
-                            top:100%;
-                            left:0;
-                            width:100%;
-                            background:#fff;
-                            border:1px solid #e2e8f0;
-                            border-top:none;
-                            border-radius:0 0 4px 4px;
-                            box-shadow:0 4px 6px rgba(0,0,0,.1);
-                            display:none;
-                            z-index:99999;
-                            max-height:250px;
-                            overflow-y:auto;
-                         ">
-                    </div>
+                <!-- =================================================
+                     NAVIGATION
+                     ================================================= -->
+
+                <nav
+                    class="masthead-navigation"
+                    aria-label="Main navigation"
+                >
+
+                    <a href="{% url 'home' %}">
+                        Home
+                    </a>
 
 
-                </div>
+                    <a href="{% url 'admission_form' %}">
+                        Admissions
+                    </a>
 
 
-            </form>
+                    <a href="{% url 'student_login' %}">
+                        Track Application
+                    </a>
 
 
-        </nav>
+                    <!-- =================================================
+                         SEARCH
+                         ================================================= -->
+
+                    <form
+                        action="{% url 'search' %}"
+                        method="get"
+                        class="site-search"
+                        role="search"
+                        id="search-form"
+                    >
+
+                        <div class="site-search-wrapper">
+
+                            <input
+                                type="search"
+                                name="q"
+                                id="site-search-input"
+                                placeholder="Search..."
+                                aria-label="Search"
+                                autocomplete="off"
+                            >
 
 
-    </div>
+                            <div
+                                id="autocomplete-list"
+                                aria-label="Search suggestions"
+                            ></div>
 
-</header>
+                        </div>
 
+                    </form>
 
-<!-- =========================================================
-     RESPONSIVE HEADER SPACER
-     ========================================================= -->
+                </nav>
 
-<div class="masthead-spacer"
-     aria-hidden="true">
-</div>
+            </div>
 
+        </div>
 
-{% block hero %}
-{% endblock %}
-
-
-<main>
+    </header>
 
 
-    <div class="container"
-         style="padding-top:2.5rem;">
+    <!-- =========================================================
+         HEADER SPACER
+         ========================================================= -->
 
-        {% if messages %}
-
-            {% for message in messages %}
-
-                <div class="notice notice-{{ message.tags }}">
-                    {{ message }}
-                </div>
-
-            {% endfor %}
-
-        {% endif %}
-
-    </div>
+    <div
+        class="masthead-spacer"
+        aria-hidden="true"
+    ></div>
 
 
-    {% block content %}
+    <!-- =========================================================
+         OPTIONAL HERO
+         ========================================================= -->
+
+    {% block hero %}
     {% endblock %}
 
 
-</main>
+    <!-- =========================================================
+         MAIN CONTENT
+         ========================================================= -->
+
+    <main id="main-content">
+
+        <!-- Django messages -->
+
+        {% if messages %}
+
+            <div class="container base-messages">
+
+                {% for message in messages %}
+
+                    <div
+                        class="notice notice-{{ message.tags }}"
+                        role="alert"
+                    >
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
 
 
-<!-- =========================================================
-     FOOTER
-     ========================================================= -->
+        {% block content %}
+        {% endblock %}
 
-<footer class="site-footer">
-
-    <div class="container">
+    </main>
 
 
-        <div>
+    <!-- =========================================================
+         FOOTER
+         ========================================================= -->
 
-            <h4>
-                Infinity Academy
-            </h4>
+    <footer class="site-footer">
 
-            <p>
-                An independent tuition centre offering structured coursework
-                in Mathematics, Science and English.
-            </p>
+        <div class="site-footer-inner">
+
+            <div class="site-footer-grid">
+
+
+                <!-- =================================================
+                     ABOUT
+                     ================================================= -->
+
+                <div class="site-footer-column">
+
+                    <h4>
+                        Infinity Academy
+                    </h4>
+
+                    <p>
+                        An independent tuition centre offering
+                        structured coursework in Mathematics,
+                        Science and English.
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     OFFICE
+                     ================================================= -->
+
+                <div class="site-footer-column">
+
+                    <h4>
+                        Office
+                    </h4>
+
+                    <p>
+                        Bhutuni Duba, Udalguri<br>
+                        Assam, India
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     CONTACT
+                     ================================================= -->
+
+                <div class="site-footer-column">
+
+                    <h4>
+                        Contact
+                    </h4>
+
+                    <p>
+
+                        <a href="tel:+916003458087">
+                            +91 60034 58087
+                        </a>
+
+                        <br>
+
+                        <a href="mailto:academyeduuniverse@gmail.com">
+                            academyeduuniverse@gmail.com
+                        </a>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 COPYRIGHT
+                 ================================================= -->
+
+            <div class="site-footer-bottom">
+
+                <p>
+                    &copy; 2026 Infinity Academy.
+                    All rights reserved.
+                </p>
+
+            </div>
 
         </div>
 
+    </footer>
 
-        <div>
-
-            <h4>
-                Office
-            </h4>
-
-            <p>
-                Bhutuni Duba, Udalguri<br>
-                Assam, India
-            </p>
-
-        </div>
+</div>
 
 
-        <div>
-
-            <h4>
-                Contact
-            </h4>
-
-            <p>
-                +916003458087<br>
-
-                <a href="mailto:academyeduuniverse@gmail.com"
-                   style="
-                       color:#9ca3af;
-                       text-decoration:none;
-                       transition:.2s;
-                   ">
-                    academyeduuniverse@gmail.com
-                </a>
-
-            </p>
-
-        </div>
-
-
-        <div class="fine-print">
-            &copy; 2026 Infinity Academy. All rights reserved.
-        </div>
-
-
-    </div>
-
-</footer>
-
-
-<!-- =========================================================
+<!-- =============================================================
      SEARCH AUTOCOMPLETE
-     ========================================================= -->
+     ============================================================= -->
 
 <script>
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-    const searchInput =
-        document.getElementById('site-search-input');
+        const searchInput =
+            document.getElementById(
+                "site-search-input"
+            );
 
-    const autocompleteList =
-        document.getElementById('autocomplete-list');
-
-    if (!searchInput || !autocompleteList) {
-        return;
-    }
-
-
-    let currentTimeout;
-
-
-    searchInput.addEventListener('input', function () {
-
-        const val = this.value.trim();
+        const autocompleteList =
+            document.getElementById(
+                "autocomplete-list"
+            );
 
 
-        if (val.length < 2) {
-
-            autocompleteList.style.display = 'none';
-
-            autocompleteList.innerHTML = '';
-
+        if (
+            !searchInput ||
+            !autocompleteList
+        ) {
             return;
         }
 
 
-        clearTimeout(currentTimeout);
+        let currentTimeout = null;
 
 
-        currentTimeout = setTimeout(() => {
+        /* =====================================================
+           SEARCH INPUT
+           ===================================================== */
+
+        searchInput.addEventListener(
+            "input",
+            function () {
+
+                const value =
+                    this.value.trim();
 
 
-            fetch(
-                `/autocomplete/?term=${encodeURIComponent(val)}`
-            )
+                if (value.length < 2) {
 
-            .then(response => {
+                    autocompleteList.style.display =
+                        "none";
 
-                if (!response.ok) {
-                    throw new Error(
-                        `Autocomplete request failed: ${response.status}`
-                    );
-                }
-
-                return response.json();
-
-            })
-
-
-            .then(data => {
-
-                autocompleteList.innerHTML = '';
-
-
-                if (!Array.isArray(data) || data.length === 0) {
-
-                    autocompleteList.style.display = 'none';
+                    autocompleteList.innerHTML =
+                        "";
 
                     return;
                 }
 
 
-                data.forEach(item => {
-
-                    const wrapper =
-                        document.createElement('div');
-
-
-                    const option =
-                        document.createElement('div');
-
-
-                    option.textContent =
-                        item.label || item.value || '';
-
-
-                    option.style.cssText = `
-                        padding:8px 12px;
-                        cursor:pointer;
-                        border-bottom:1px solid #f1f5f9;
-                        font-size:.9rem;
-                        color:#1e293b;
-                    `;
-
-
-                    option.addEventListener('click', function () {
-
-                        window.location.href =
-                            `/search/?q=${encodeURIComponent(
-                                item.value || ''
-                            )}`;
-
-                    });
-
-
-                    option.addEventListener(
-                        'mouseover',
-                        function () {
-
-                            this.style.background =
-                                '#f1f5f9';
-
-                        }
-                    );
-
-
-                    option.addEventListener(
-                        'mouseout',
-                        function () {
-
-                            this.style.background =
-                                'transparent';
-
-                        }
-                    );
-
-
-                    wrapper.appendChild(option);
-
-                    autocompleteList.appendChild(wrapper);
-
-                });
-
-
-                autocompleteList.style.display = 'block';
-
-            })
-
-
-            .catch(error => {
-
-                console.error(
-                    'Autocomplete Error:',
-                    error
+                clearTimeout(
+                    currentTimeout
                 );
 
-                autocompleteList.style.display = 'none';
 
-            });
+                currentTimeout =
+                    setTimeout(
+                        function () {
+
+                            fetch(
+                                `/autocomplete/?term=${encodeURIComponent(value)}`
+                            )
+
+                            .then(
+                                function (response) {
+
+                                    if (
+                                        !response.ok
+                                    ) {
+                                        throw new Error(
+                                            "Autocomplete request failed"
+                                        );
+                                    }
+
+                                    return response.json();
+                                }
+                            )
+
+                            .then(
+                                function (data) {
+
+                                    autocompleteList.innerHTML =
+                                        "";
 
 
-        }, 300);
+                                    if (
+                                        !Array.isArray(data) ||
+                                        data.length === 0
+                                    ) {
 
-    });
+                                        autocompleteList.style.display =
+                                            "none";
+
+                                        return;
+                                    }
 
 
-    /* =========================================================
-       CLOSE AUTOCOMPLETE WHEN CLICKING OUTSIDE
-       ========================================================= */
+                                    data.forEach(
+                                        function (item) {
 
-    document.addEventListener('click', function (event) {
+                                            const wrapper =
+                                                document.createElement(
+                                                    "div"
+                                                );
 
-        if (!event.target.closest('.site-search')) {
 
-            autocompleteList.style.display = 'none';
+                                            const option =
+                                                document.createElement(
+                                                    "div"
+                                                );
 
-        }
 
-    });
+                                            option.textContent =
+                                                item.label ||
+                                                item.value ||
+                                                "";
 
-});
+
+                                            option.addEventListener(
+                                                "click",
+                                                function () {
+
+                                                    const searchValue =
+                                                        item.value ||
+                                                        item.label ||
+                                                        "";
+
+                                                    window.location.href =
+                                                        `/search/?q=${encodeURIComponent(searchValue)}`;
+                                                }
+                                            );
+
+
+                                            wrapper.appendChild(
+                                                option
+                                            );
+
+
+                                            autocompleteList.appendChild(
+                                                wrapper
+                                            );
+
+                                        }
+                                    );
+
+
+                                    autocompleteList.style.display =
+                                        "block";
+                                }
+                            )
+
+                            .catch(
+                                function (error) {
+
+                                    console.error(
+                                        "Autocomplete Error:",
+                                        error
+                                    );
+
+                                    autocompleteList.style.display =
+                                        "none";
+                                }
+                            );
+
+                        },
+                        300
+                    );
+
+            }
+        );
+
+
+        /* =====================================================
+           CLOSE AUTOCOMPLETE
+           ===================================================== */
+
+        document.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    !event.target.closest(
+                        ".site-search"
+                    )
+                ) {
+
+                    autocompleteList.style.display =
+                        "none";
+                }
+
+            }
+        );
+
+    }
+);
 
 </script>
 
 
-<!-- =========================================================
-     CSRF HELPER
-     ========================================================= -->
+<!-- =============================================================
+     CSRF AJAX HELPER
+     ============================================================= -->
 
 <script>
 
@@ -1114,68 +1784,106 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function getCookie(name) {
 
-        const match =
-            document.cookie.match(
-                new RegExp(
-                    '(^|;)\\s*' +
-                    name +
-                    '\\s*=\\s*([^;]+)'
-                )
-            );
+        const cookies =
+            document.cookie.split(";");
 
-        return match
-            ? decodeURIComponent(match.pop())
-            : '';
 
+        for (
+            let i = 0;
+            i < cookies.length;
+            i++
+        ) {
+
+            const cookie =
+                cookies[i].trim();
+
+
+            if (
+                cookie.substring(
+                    0,
+                    name.length + 1
+                ) ===
+                name + "="
+            ) {
+
+                return decodeURIComponent(
+                    cookie.substring(
+                        name.length + 1
+                    )
+                );
+            }
+        }
+
+
+        return "";
     }
 
 
     window.getCsrfTokenFromCookie =
         function () {
 
-            return getCookie('csrftoken');
-
+            return getCookie(
+                "csrftoken"
+            );
         };
 
 
     window.csrfFetch =
-        function (url, options) {
+        function (
+            url,
+            options
+        ) {
 
-            options = options || {};
+            options =
+                options || {};
+
 
             options.headers =
                 options.headers || {};
 
 
             const method =
-                (options.method || 'GET').toUpperCase();
+                (
+                    options.method ||
+                    "GET"
+                ).toUpperCase();
 
 
             if (
-                ['POST', 'PUT', 'PATCH', 'DELETE']
-                    .includes(method)
+                [
+                    "POST",
+                    "PUT",
+                    "PATCH",
+                    "DELETE"
+                ].includes(method)
             ) {
 
                 if (
-                    !options.headers['X-CSRFToken'] &&
-                    !options.headers['x-csrf-token']
+                    !options.headers["X-CSRFToken"] &&
+                    !options.headers["x-csrf-token"]
                 ) {
 
-                    options.headers['X-CSRFToken'] =
-                        getCookie('csrftoken');
-
+                    options.headers["X-CSRFToken"] =
+                        getCookie(
+                            "csrftoken"
+                        );
                 }
-
             }
 
 
-            return fetch(url, options);
-
+            return fetch(
+                url,
+                options
+            );
         };
 
 })();
 
 </script>
+
+
+{% block extra_js %}
+{% endblock %}
 
 
 </body>

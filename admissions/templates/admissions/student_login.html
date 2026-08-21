@@ -1,32 +1,353 @@
 {% extends 'admissions/public_base.html' %}
 
+{% block title %}Student Sign In | Infinity Academy{% endblock %}
+
+{% block extra_head %}
+<style>
+
+    /* ============================================================
+       INFINITY ACADEMY - STUDENT LOGIN PAGE
+       Responsive: mobile / tablet / desktop / large desktop
+       ============================================================ */
+
+    .login-page {
+        width: 100%;
+        min-height: calc(100vh - 160px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: clamp(34px, 5vw, 68px) 16px clamp(45px, 7vw, 85px);
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(180deg, #f4f8fb 0%, #ffffff 48%, #f4f8fb 100%);
+    }
+
+    .login-page::before {
+        content: "";
+        position: absolute;
+        width: 380px;
+        height: 380px;
+        top: -200px;
+        left: -160px;
+        border-radius: 50%;
+        background: rgba(10, 37, 64, .035);
+        pointer-events: none;
+    }
+
+    .login-page::after {
+        content: "";
+        position: absolute;
+        width: 280px;
+        height: 280px;
+        right: -140px;
+        bottom: -150px;
+        border-radius: 50%;
+        background: rgba(201, 162, 77, .045);
+        pointer-events: none;
+    }
+
+    .login-container {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: 440px;
+        margin: 0 auto;
+    }
+
+    .login-eyebrow {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 16px;
+    }
+
+    .login-eyebrow span {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 6px 13px;
+        border: 1px solid #d8e2eb;
+        border-radius: 999px;
+        background: rgba(255,255,255,.94);
+        color: #96742f;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: .68rem;
+        font-weight: 600;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+    }
+
+    .login-card {
+        padding: clamp(26px, 5vw, 40px);
+        border: 1px solid #dce5ed;
+        border-radius: 18px;
+        background: #ffffff;
+        box-shadow: 0 14px 38px rgba(10,37,64,.08);
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 26px;
+    }
+
+    .login-icon {
+        width: 52px;
+        height: 52px;
+        margin: 0 auto 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 14px;
+        background: #edf4f8;
+        color: #0a2540;
+        font-size: 1.2rem;
+    }
+
+    .login-header h1 {
+        margin: 0 0 8px;
+        color: #0a2540;
+        font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+        font-size: clamp(1.5rem, 4vw, 1.9rem);
+        line-height: 1.25;
+    }
+
+    .login-header p {
+        margin: 0;
+        color: #718397;
+        font-size: .84rem;
+        line-height: 1.6;
+    }
+
+    .login-error {
+        margin: 0 0 18px;
+        padding: 12px 13px;
+        border: 1px solid #efcaca;
+        border-left: 3px solid #c53a3a;
+        border-radius: 8px;
+        background: #fff5f5;
+        color: #a32f2f;
+        font-size: .82rem;
+        line-height: 1.5;
+    }
+
+    .login-field {
+        width: 100%;
+        margin-bottom: 19px;
+    }
+
+    .login-field label {
+        display: block;
+        margin-bottom: 7px;
+        color: #0a2540;
+        font-size: .82rem;
+        font-weight: 700;
+    }
+
+    .login-field input {
+        display: block;
+        width: 100%;
+        min-width: 0;
+        height: 48px;
+        padding: 11px 13px;
+        border: 1px solid #cbd8e3;
+        border-radius: 9px;
+        outline: none;
+        background: #ffffff;
+        color: #0a2540;
+        font-family: inherit;
+        font-size: .9rem;
+        transition: border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .login-field input:hover {
+        border-color: #aabccc;
+    }
+
+    .login-field input:focus {
+        border-color: #0a2540;
+        box-shadow: 0 0 0 3px rgba(10,37,64,.08);
+    }
+
+    .login-field input::placeholder {
+        color: #9aaebe;
+    }
+
+    .login-field-error {
+        margin-top: 6px;
+        color: #b73535;
+        font-size: .74rem;
+        line-height: 1.4;
+    }
+
+    .login-submit {
+        width: 100%;
+        min-height: 49px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 4px;
+        padding: 11px 18px;
+        border: 1px solid #0a2540;
+        border-radius: 9px;
+        background: #0a2540;
+        color: #ffffff;
+        font-family: inherit;
+        font-size: .85rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+    }
+
+    .login-submit:hover {
+        background: #123a5c;
+        box-shadow: 0 8px 20px rgba(10,37,64,.17);
+        transform: translateY(-1px);
+    }
+
+    .login-submit:active {
+        transform: translateY(0);
+    }
+
+    .login-submit:focus-visible {
+        outline: 3px solid rgba(201,162,77,.35);
+        outline-offset: 3px;
+    }
+
+    .login-bottom-help {
+        margin-top: 22px;
+        padding-top: 19px;
+        border-top: 1px solid #e8eef3;
+        text-align: center;
+    }
+
+    .login-bottom-help p {
+        margin: 0 0 6px;
+        color: #75899b;
+        font-size: .78rem;
+        line-height: 1.6;
+    }
+
+    .login-bottom-help p:last-child {
+        margin-bottom: 0;
+    }
+
+    .login-bottom-help a {
+        color: #0a2540;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .login-bottom-help a:hover {
+        color: #9a762d;
+    }
+
+    /* ---- Responsive ---- */
+
+    @media (max-width: 480px) {
+        .login-page {
+            padding: 24px 12px 45px;
+        }
+        .login-card {
+            padding: 22px 18px;
+            border-radius: 15px;
+        }
+        .login-header h1 {
+            font-size: 1.5rem;
+        }
+        .login-field input {
+            height: 46px;
+            font-size: .86rem;
+        }
+        .login-submit {
+            min-height: 47px;
+        }
+    }
+
+    @media (max-width: 340px) {
+        .login-page {
+            padding: 20px 8px 38px;
+        }
+        .login-card {
+            padding: 18px 14px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .login-submit,
+        .login-field input,
+        .login-bottom-help a {
+            transition: none;
+        }
+    }
+
+</style>
+{% endblock %}
+
 {% block content %}
-<section class="block">
-    <div class="container">
-        <div class="section-head" style="text-align: center;">
-            <span class="eyebrow">Student portal</span>
-            <h2>Track your application</h2>
-            <p style="margin: 0 auto;">Sign in with the username and password from your admission-confirmation email to view your current status.</p>
+
+<section class="login-page" aria-labelledby="login-page-title">
+
+    <div class="login-container">
+
+        <div class="login-eyebrow">
+            <span>Student Portal</span>
         </div>
 
-        <div class="panel-card">
+        <div class="login-card">
+
+            <header class="login-header">
+                <div class="login-icon" aria-hidden="true">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <h1 id="login-page-title">Sign In</h1>
+                <p>Enter your username and password to view your application status.</p>
+            </header>
+
             <form method="post" novalidate>
+
                 {% csrf_token %}
-                <div class="field">
-                    {{ form.username.label_tag }}
-                    {{ form.username }}
-                    {% if form.username.errors %}{{ form.username.errors }}{% endif %}
-                </div>
-                <div class="field">
-                    {{ form.password.label_tag }}
-                    {{ form.password }}
-                    {% if form.password.errors %}{{ form.password.errors }}{% endif %}
-                </div>
-                <button type="submit" class="btn btn-fill btn-block">View my status</button>
+
+                {% if form.non_field_errors %}
+                    <div class="login-error" role="alert">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                {% for field in form %}
+                    <div class="login-field">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+
+                        {% if field.errors %}
+                            <div class="login-field-error" role="alert">
+                                {{ field.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <button type="submit" class="login-submit">
+                    <i class="fa-solid fa-arrow-right-to-bracket" aria-hidden="true"></i>
+                    <span>Sign In</span>
+                </button>
+
             </form>
-            <p class="helper-text">Your username and password-setup link were sent by email when you applied.</p>
-            <p class="helper-text"><a href="{% url 'student_password_setup_request' %}">Didn't get the email? Set your password here instead</a></p>
+
+            <div class="login-bottom-help">
+                <p>
+                    Don't have a password yet or forgot it?
+                    <a href="{% url 'student_password_setup_request' %}">Set up your password</a>
+                </p>
+                <p>
+                    New to Infinity Academy?
+                    <a href="{% url 'admission_form' %}">Apply for admission</a>
+                </p>
+            </div>
+
         </div>
+
     </div>
+
 </section>
+
 {% endblock %}
